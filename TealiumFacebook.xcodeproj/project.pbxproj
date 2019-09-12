@@ -7,15 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF0D01DD232AB5D9005BFE15 /* FirebaseCommandRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01D5232AB5B9005BFE15 /* FirebaseCommandRunnerTests.swift */; };
-		CF0D01DE232AB5DC005BFE15 /* FirebaseCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01D7232AB5B9005BFE15 /* FirebaseCommandTests.swift */; };
-		CF0D01DF232AB5DE005BFE15 /* MockFirebaseCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01D6232AB5B9005BFE15 /* MockFirebaseCommandRunner.swift */; };
+		CF010348232AFEC4007A03EE /* TealiumCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0216232AC283005BFE15 /* TealiumCore.framework */; };
+		CF010349232AFEC4007A03EE /* TealiumRemoteCommands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */; };
 		CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */; };
 		CF0D021A232AC283005BFE15 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */; };
 		CF0D021B232AC283005BFE15 /* TealiumCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0216232AC283005BFE15 /* TealiumCore.framework */; };
 		CF0D021C232AC283005BFE15 /* TealiumRemoteCommands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */; };
 		CF0D021D232AC283005BFE15 /* TealiumDelegate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */; };
 		CF0D021E232AC283005BFE15 /* TealiumTagManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */; };
+		CF904C81232AE9C5004F2C06 /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C80232AE9C5004F2C06 /* EnumMap.swift */; };
+		CF904C83232AE9F0004F2C06 /* TealiumRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */; };
+		CF904C85232AEA18004F2C06 /* IntConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C84232AEA18004F2C06 /* IntConverter.swift */; };
+		CF9B51BC232AF3BC003019F9 /* FacebookCommandRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51B9232AF3BB003019F9 /* FacebookCommandRunnerTests.swift */; };
+		CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */; };
+		CF9B51BE232AF3BC003019F9 /* MockFacebookCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BB232AF3BC003019F9 /* MockFacebookCommandRunner.swift */; };
 		CFC8D9B3232AB3A400A4987F /* TealiumFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CFC8D9BC232AB43C00A4987F /* FacebookCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9B9232AB43C00A4987F /* FacebookCommandRunner.swift */; };
 		CFC8D9BD232AB43C00A4987F /* FacebookCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */; };
@@ -34,15 +39,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CF0D01D5232AB5B9005BFE15 /* FirebaseCommandRunnerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCommandRunnerTests.swift; sourceTree = "<group>"; };
-		CF0D01D6232AB5B9005BFE15 /* MockFirebaseCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFirebaseCommandRunner.swift; sourceTree = "<group>"; };
-		CF0D01D7232AB5B9005BFE15 /* FirebaseCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCommandTests.swift; sourceTree = "<group>"; };
 		CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTestHelpers.swift; sourceTree = "<group>"; };
 		CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Carthage/Build/iOS/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		CF0D0216232AC283005BFE15 /* TealiumCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumCore.framework; path = Carthage/Build/iOS/TealiumCore.framework; sourceTree = "<group>"; };
 		CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumRemoteCommands.framework; path = Carthage/Build/iOS/TealiumRemoteCommands.framework; sourceTree = "<group>"; };
 		CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumDelegate.framework; path = Carthage/Build/iOS/TealiumDelegate.framework; sourceTree = "<group>"; };
 		CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumTagManagement.framework; path = Carthage/Build/iOS/TealiumTagManagement.framework; sourceTree = "<group>"; };
+		CF904C80232AE9C5004F2C06 /* EnumMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumMap.swift; sourceTree = "<group>"; };
+		CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TealiumRegistration.swift; sourceTree = "<group>"; };
+		CF904C84232AEA18004F2C06 /* IntConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntConverter.swift; sourceTree = "<group>"; };
+		CF9B51B9232AF3BB003019F9 /* FacebookCommandRunnerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommandRunnerTests.swift; sourceTree = "<group>"; };
+		CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommandTests.swift; sourceTree = "<group>"; };
+		CF9B51BB232AF3BC003019F9 /* MockFacebookCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFacebookCommandRunner.swift; sourceTree = "<group>"; };
 		CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TealiumFacebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TealiumFacebook.h; sourceTree = "<group>"; };
 		CFC8D9B2232AB3A400A4987F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF010348232AFEC4007A03EE /* TealiumCore.framework in Frameworks */,
+				CF010349232AFEC4007A03EE /* TealiumRemoteCommands.framework in Frameworks */,
 				CFC8D9E6232AB52C00A4987F /* TealiumFacebook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,6 +124,9 @@
 				CFC8D9BB232AB43C00A4987F /* Facebook.swift */,
 				CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */,
 				CFC8D9B9232AB43C00A4987F /* FacebookCommandRunner.swift */,
+				CF904C80232AE9C5004F2C06 /* EnumMap.swift */,
+				CF904C84232AEA18004F2C06 /* IntConverter.swift */,
+				CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */,
 				CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */,
 				CFC8D9B2232AB3A400A4987F /* Info.plist */,
 			);
@@ -123,9 +136,9 @@
 		CFC8D9E2232AB52C00A4987F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				CF0D01D5232AB5B9005BFE15 /* FirebaseCommandRunnerTests.swift */,
-				CF0D01D7232AB5B9005BFE15 /* FirebaseCommandTests.swift */,
-				CF0D01D6232AB5B9005BFE15 /* MockFirebaseCommandRunner.swift */,
+				CF9B51B9232AF3BB003019F9 /* FacebookCommandRunnerTests.swift */,
+				CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */,
+				CF9B51BB232AF3BC003019F9 /* MockFacebookCommandRunner.swift */,
 				CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */,
 				CFC8D9E5232AB52C00A4987F /* Info.plist */,
 			);
@@ -292,7 +305,10 @@
 			files = (
 				CFC8D9BC232AB43C00A4987F /* FacebookCommandRunner.swift in Sources */,
 				CFC8D9BE232AB43C00A4987F /* Facebook.swift in Sources */,
+				CF904C85232AEA18004F2C06 /* IntConverter.swift in Sources */,
+				CF904C83232AE9F0004F2C06 /* TealiumRegistration.swift in Sources */,
 				CFC8D9BD232AB43C00A4987F /* FacebookCommand.swift in Sources */,
+				CF904C81232AE9C5004F2C06 /* EnumMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,10 +316,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF0D01DF232AB5DE005BFE15 /* MockFirebaseCommandRunner.swift in Sources */,
-				CF0D01DE232AB5DC005BFE15 /* FirebaseCommandTests.swift in Sources */,
-				CF0D01DD232AB5D9005BFE15 /* FirebaseCommandRunnerTests.swift in Sources */,
+				CF9B51BC232AF3BC003019F9 /* FacebookCommandRunnerTests.swift in Sources */,
+				CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */,
 				CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */,
+				CF9B51BE232AF3BC003019F9 /* MockFacebookCommandRunner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +457,7 @@
 		CFC8D9B7232AB3A400A4987F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -465,12 +482,14 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "";
 			};
 			name = Debug;
 		};
 		CFC8D9B8232AB3A400A4987F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -494,14 +513,20 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "";
 			};
 			name = Release;
 		};
 		CFC8D9EA232AB52C00A4987F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XC939GDC9P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -512,14 +537,20 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "";
 			};
 			name = Debug;
 		};
 		CFC8D9EB232AB52C00A4987F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XC939GDC9P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -530,6 +561,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "";
 			};
 			name = Release;
 		};

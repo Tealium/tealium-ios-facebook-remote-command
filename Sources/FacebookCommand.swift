@@ -162,3 +162,6 @@ struct FacebookCommand {
     }
 }
 
+extension TealiumRemoteCommand {
+    static let commandName = "command_name"
+}

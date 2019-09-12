@@ -13,8 +13,8 @@ struct RemoteCommandResponsePayload: Codable {
     var payload: [String: String]
 }
 
-class HttpTestHelpers {
-    class func httpRequest(commandId: String, payload: [String: String]) -> URLRequest? {
+public class HttpTestHelpers {
+    public class func httpRequest(commandId: String, payload: [String: String]) -> URLRequest? {
         let url = "tealium://\(commandId)?request="
         
         let response = RemoteCommandResponsePayload(config: ["response_id": "00000"], payload: payload)
@@ -29,7 +29,7 @@ class HttpTestHelpers {
         return nil
     }
     
-    class func httpRequest(commandId: String, config: [String: Any], payload: [String: Any]) -> URLRequest? {
+    public class func httpRequest(commandId: String, config: [String: Any], payload: [String: Any]) -> URLRequest? {
         let url = "tealium://\(commandId)?request="
         let remoteCommandrc = ["config": config, "payload": payload] as [String: Any]
         let json = try! JSONSerialization.data(withJSONObject: remoteCommandrc, options: .prettyPrinted)
