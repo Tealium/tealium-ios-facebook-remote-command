@@ -8,7 +8,14 @@
 
 import Foundation
 import FBSDKCoreKit
+#if COCOAPODS
 import TealiumSwift
+#else
+import TealiumCore
+import TealiumDelegate
+import TealiumTagManagement
+import TealiumRemoteCommands
+#endif
 
 struct FacebookCommand {
     

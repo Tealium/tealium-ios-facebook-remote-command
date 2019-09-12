@@ -11,6 +11,11 @@
 		CF0D01DE232AB5DC005BFE15 /* FirebaseCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01D7232AB5B9005BFE15 /* FirebaseCommandTests.swift */; };
 		CF0D01DF232AB5DE005BFE15 /* MockFirebaseCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01D6232AB5B9005BFE15 /* MockFirebaseCommandRunner.swift */; };
 		CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */; };
+		CF0D021A232AC283005BFE15 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */; };
+		CF0D021B232AC283005BFE15 /* TealiumCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0216232AC283005BFE15 /* TealiumCore.framework */; };
+		CF0D021C232AC283005BFE15 /* TealiumRemoteCommands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */; };
+		CF0D021D232AC283005BFE15 /* TealiumDelegate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */; };
+		CF0D021E232AC283005BFE15 /* TealiumTagManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */; };
 		CFC8D9B3232AB3A400A4987F /* TealiumFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CFC8D9BC232AB43C00A4987F /* FacebookCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9B9232AB43C00A4987F /* FacebookCommandRunner.swift */; };
 		CFC8D9BD232AB43C00A4987F /* FacebookCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */; };
@@ -33,6 +38,11 @@
 		CF0D01D6232AB5B9005BFE15 /* MockFirebaseCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFirebaseCommandRunner.swift; sourceTree = "<group>"; };
 		CF0D01D7232AB5B9005BFE15 /* FirebaseCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCommandTests.swift; sourceTree = "<group>"; };
 		CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTestHelpers.swift; sourceTree = "<group>"; };
+		CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Carthage/Build/iOS/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		CF0D0216232AC283005BFE15 /* TealiumCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumCore.framework; path = Carthage/Build/iOS/TealiumCore.framework; sourceTree = "<group>"; };
+		CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumRemoteCommands.framework; path = Carthage/Build/iOS/TealiumRemoteCommands.framework; sourceTree = "<group>"; };
+		CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumDelegate.framework; path = Carthage/Build/iOS/TealiumDelegate.framework; sourceTree = "<group>"; };
+		CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumTagManagement.framework; path = Carthage/Build/iOS/TealiumTagManagement.framework; sourceTree = "<group>"; };
 		CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TealiumFacebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TealiumFacebook.h; sourceTree = "<group>"; };
 		CFC8D9B2232AB3A400A4987F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -48,6 +58,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF0D021A232AC283005BFE15 /* FBSDKCoreKit.framework in Frameworks */,
+				CF0D021B232AC283005BFE15 /* TealiumCore.framework in Frameworks */,
+				CF0D021C232AC283005BFE15 /* TealiumRemoteCommands.framework in Frameworks */,
+				CF0D021D232AC283005BFE15 /* TealiumDelegate.framework in Frameworks */,
+				CF0D021E232AC283005BFE15 /* TealiumTagManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,12 +77,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF0D0214232AC282005BFE15 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */,
+				CF0D0216232AC283005BFE15 /* TealiumCore.framework */,
+				CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */,
+				CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */,
+				CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CFC8D9A4232AB3A400A4987F = {
 			isa = PBXGroup;
 			children = (
 				CFC8D9B0232AB3A400A4987F /* Sources */,
 				CFC8D9E2232AB52C00A4987F /* Tests */,
 				CFC8D9AF232AB3A400A4987F /* Products */,
+				CF0D0214232AC282005BFE15 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +154,7 @@
 				CFC8D9AA232AB3A400A4987F /* Sources */,
 				CFC8D9AB232AB3A400A4987F /* Frameworks */,
 				CFC8D9AC232AB3A400A4987F /* Resources */,
+				CF0D021F232AC28B005BFE15 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -143,6 +172,7 @@
 				CFC8D9DD232AB52C00A4987F /* Sources */,
 				CFC8D9DE232AB52C00A4987F /* Frameworks */,
 				CFC8D9DF232AB52C00A4987F /* Resources */,
+				CF0D0220232AC54F005BFE15 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -208,6 +238,52 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CF0D021F232AC28B005BFE15 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/TealiumCore.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/TealiumDelegate.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/TealiumTagManagement.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/TealiumRemoteCommands.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FBSDKCoreKit.framework",
+			);
+			name = Carthage;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n\n";
+		};
+		CF0D0220232AC54F005BFE15 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/TealiumRemoteCommands.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/TealiumCore.framework",
+			);
+			name = Carthage;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CFC8D9AA232AB3A400A4987F /* Sources */ = {
@@ -372,6 +448,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -398,6 +478,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
