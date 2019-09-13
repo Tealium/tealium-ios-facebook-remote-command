@@ -71,13 +71,13 @@ public class FacebookCommand {
             return AppEvents.Name.spentCredits
         }
     }
-
-   var facebookCommandRunner: FacebookCommandRunnable
-
+    
+    var facebookCommandRunner: FacebookCommandRunnable
+    
     init(facebookCommandRunner: FacebookCommandRunnable) {
         self.facebookCommandRunner = facebookCommandRunner
     }
-
+    
     /// Parses the remote command
     func remoteCommand() -> TealiumRemoteCommand {
         return TealiumRemoteCommand(commandId: "facebook", description: "Facebook Remote Command") { response in
@@ -89,77 +89,82 @@ public class FacebookCommand {
             let facebookCommands = commands.map { command in
                 return command.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             }
-            facebookCommands.forEach { command in
-                let lowercasedCommand = command.lowercased()
-                if let fbEvent = Facebook.StandardEventNames(rawValue: lowercasedCommand) {
-                    let event = self.facebookEvent[fbEvent]
-                    if let valueToSum = payload[Facebook.Event.valueToSum] as? Double {
-                        if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
-                            return self.facebookCommandRunner.logEvent(event, with: valueToSum, and: parameters)
-                        } else {
-                            return self.facebookCommandRunner.logEvent(event, with: valueToSum)
-                        }
-                    } else if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
-                        return self.facebookCommandRunner.logEvent(event, with: parameters)
+            self.parseCommands(facebookCommands, payload: payload)
+        }
+    }
+    
+    public func parseCommands(_ commands: [String], payload: [String: Any]) {
+        commands.forEach { command in
+            let lowercasedCommand = command.lowercased()
+            if let fbEvent = Facebook.StandardEventNames(rawValue: lowercasedCommand) {
+                let event = self.facebookEvent[fbEvent]
+                if let valueToSum = payload[Facebook.Event.valueToSum] as? Double {
+                    if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
+                        return self.facebookCommandRunner.logEvent(event, with: valueToSum, and: parameters)
                     } else {
-                        return self.facebookCommandRunner.logEvent(event)
+                        return self.facebookCommandRunner.logEvent(event, with: valueToSum)
                     }
+                } else if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
+                    return self.facebookCommandRunner.logEvent(event, with: parameters)
+                } else {
+                    return self.facebookCommandRunner.logEvent(event)
                 }
-                switch lowercasedCommand {
-                case Facebook.Commands.logPurchase:
-                    if let purchase = payload[Facebook.Purchase.purchase] as? [String: Any],
-                        let amount = purchase[Facebook.Purchase.purchaseAmount] as? Double,
-                        let currency = purchase[Facebook.Purchase.purchaseCurrency] as? String {
-                        guard let parameters = purchase[Facebook.Purchase.purchaseParameters] as? [String: Any] else {
-                            return self.facebookCommandRunner.logPurchase(of: amount, with: currency)
-                        }
-                        return self.facebookCommandRunner.logPurchase(of: amount, with: currency, and: parameters)
+            }
+            switch lowercasedCommand {
+            case Facebook.Commands.logPurchase:
+                if let purchase = payload[Facebook.Purchase.purchase] as? [String: Any],
+                    let amount = purchase[Facebook.Purchase.purchaseAmount] as? Double,
+                    let currency = purchase[Facebook.Purchase.purchaseCurrency] as? String {
+                    guard let parameters = purchase[Facebook.Purchase.purchaseParameters] as? [String: Any] else {
+                        return self.facebookCommandRunner.logPurchase(of: amount, with: currency)
                     }
-                case Facebook.Commands.setUser:
-                    guard let userData = payload[Facebook.User.user] as? [String: Any] else {
-                            print("User key doesn't exist in the payload")
-                            return
-                        }
-                        do {
-                            let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
-                            return self.facebookCommandRunner.setUser(from: json)
-                        } catch {
-                            print("Could not convert payload to json")
-                    }
-                case Facebook.Commands.setUserId:
-                    guard let userId = payload[Facebook.User.userId] as? String else {
-                        print("User id does not exist in the payload")
-                        return
-                    }
-                    self.facebookCommandRunner.setUserId(to: userId)
-                case Facebook.Commands.clearUserId:
-                    self.facebookCommandRunner.clearUserId()
-                case Facebook.Commands.clearUser:
-                    self.facebookCommandRunner.clearUser()
-                case Facebook.Commands.updateUserValue:
-                    if let userValue = payload[Facebook.User.userParameterValue] as? String,
-                        let userKey = payload[Facebook.User.userParameter] as? String {
-                        return self.facebookCommandRunner.setUser(value: userValue, for: userKey)
-                    }
-                case Facebook.Commands.logProductItem:
-                    guard let productItemData = payload[Facebook.Product.productItem] as? [String: Any] else {
-                        print("Product item key doesn't exist in the payload")
-                        return
-                    }
-                    do {
-                        let json = try JSONSerialization.data(withJSONObject: productItemData, options: .prettyPrinted)
-                        return self.facebookCommandRunner.logProductItem(using: json)
-                    } catch {
-                        print("Could not convert payload to json")
-                    }
-                case Facebook.Commands.flush:
-                    return self.facebookCommandRunner.flush()
-                default:
-                    break
+                    return self.facebookCommandRunner.logPurchase(of: amount, with: currency, and: parameters)
                 }
+            case Facebook.Commands.setUser:
+                guard let userData = payload[Facebook.User.user] as? [String: Any] else {
+                    print("User key doesn't exist in the payload")
+                    return
+                }
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
+                    return self.facebookCommandRunner.setUser(from: json)
+                } catch {
+                    print("Could not convert payload to json")
+                }
+            case Facebook.Commands.setUserId:
+                guard let userId = payload[Facebook.User.userId] as? String else {
+                    print("User id does not exist in the payload")
+                    return
+                }
+                self.facebookCommandRunner.setUserId(to: userId)
+            case Facebook.Commands.clearUserId:
+                self.facebookCommandRunner.clearUserId()
+            case Facebook.Commands.clearUser:
+                self.facebookCommandRunner.clearUser()
+            case Facebook.Commands.updateUserValue:
+                if let userValue = payload[Facebook.User.userParameterValue] as? String,
+                    let userKey = payload[Facebook.User.userParameter] as? String {
+                    return self.facebookCommandRunner.setUser(value: userValue, for: userKey)
+                }
+            case Facebook.Commands.logProductItem:
+                guard let productItemData = payload[Facebook.Product.productItem] as? [String: Any] else {
+                    print("Product item key doesn't exist in the payload")
+                    return
+                }
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: productItemData, options: .prettyPrinted)
+                    return self.facebookCommandRunner.logProductItem(using: json)
+                } catch {
+                    print("Could not convert payload to json")
+                }
+            case Facebook.Commands.flush:
+                return self.facebookCommandRunner.flush()
+            default:
+                break
             }
         }
     }
+    
 }
 
 extension TealiumRemoteCommand {
