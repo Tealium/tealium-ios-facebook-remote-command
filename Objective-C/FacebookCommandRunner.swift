@@ -8,19 +8,13 @@
 
 import Foundation
 import FBSDKCoreKit
-#if COCOAPODS
-import TealiumSwift
-#else
-import TealiumCore
-import TealiumDelegate
-import TealiumTagManagement
-import TealiumRemoteCommands
-#endif
+import TealiumIOS
 
+@objc
 public protocol FacebookCommandRunnable {
     // Facebook Standard Events
     func logEvent(_ event: AppEvents.Name, with parameters: [String: Any])
-    func logEvent(_ event: AppEvents.Name, with valueToSum: Double)
+    func logEventWithValue(_ event: AppEvents.Name, valueToSum: Double)
     func logEvent(_ event: AppEvents.Name, with valueToSum: Double, and parameters: [String: Any])
     func logEvent(_ event: AppEvents.Name)
     func logPurchase(of amount: Double, with currency: String)
@@ -39,14 +33,15 @@ public protocol FacebookCommandRunnable {
     func flush()
 }
 
-public class FacebookCommandRunner: FacebookCommandRunnable, TealiumRegistration {
+@objc
+public class FacebookCommandRunner: NSObject, FacebookCommandRunnable, TealiumRegistration {
 
     // MARK: Facebook Standard Events
     public func logEvent(_ event: AppEvents.Name, with parameters: [String: Any]) {
         AppEvents.logEvent(event, parameters: parameters)
     }
     
-    public func logEvent(_ event: AppEvents.Name, with valueToSum: Double) {
+    public func logEventWithValue(_ event: AppEvents.Name, valueToSum: Double) {
         AppEvents.logEvent(event, valueToSum: valueToSum)
     }
     

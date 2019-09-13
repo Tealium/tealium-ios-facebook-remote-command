@@ -8,16 +8,9 @@
 
 import Foundation
 import FBSDKCoreKit
-#if COCOAPODS
-import TealiumSwift
-#else
-import TealiumCore
-import TealiumDelegate
-import TealiumTagManagement
-import TealiumRemoteCommands
-#endif
+import TealiumIOS
 
-public class FacebookCommand {
+public class FacebookCommand: NSObject {
     
     let facebookEvent = EnumMap<Facebook.StandardEventNames, AppEvents.Name> { command in
         switch command {
@@ -72,17 +65,21 @@ public class FacebookCommand {
         }
     }
 
-   var facebookCommandRunner: FacebookCommandRunnable
-
-    init(facebookCommandRunner: FacebookCommandRunnable) {
+    var facebookCommandRunner: FacebookCommandRunnable
+    
+    @objc
+    public init(facebookCommandRunner: FacebookCommandRunnable) {
         self.facebookCommandRunner = facebookCommandRunner
     }
 
     /// Parses the remote command
-    func remoteCommand() -> TealiumRemoteCommand {
-        return TealiumRemoteCommand(commandId: "facebook", description: "Facebook Remote Command") { response in
-            let payload = response.payload()
-            guard let command = payload[TealiumRemoteCommand.commandName] as? String else {
+    @objc
+    public func remoteCommand() -> TEALRemoteCommandResponseBlock {
+        return { response in
+            guard let payload = response?.requestPayload as? [String: Any] else {
+                return
+            }
+            guard let command = payload[Facebook.commandName] as? String else {
                 return
             }
             let commands = command.split(separator: ",")
@@ -97,7 +94,7 @@ public class FacebookCommand {
                         if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
                             return self.facebookCommandRunner.logEvent(event, with: valueToSum, and: parameters)
                         } else {
-                            return self.facebookCommandRunner.logEvent(event, with: valueToSum)
+                            return self.facebookCommandRunner.logEventWithValue(event, valueToSum: valueToSum)
                         }
                     } else if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
                         return self.facebookCommandRunner.logEvent(event, with: parameters)
@@ -160,8 +157,4 @@ public class FacebookCommand {
             }
         }
     }
-}
-
-extension TealiumRemoteCommand {
-    static let commandName = "command_name"
 }
