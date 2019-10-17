@@ -18,11 +18,11 @@
 		CF904C81232AE9C5004F2C06 /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C80232AE9C5004F2C06 /* EnumMap.swift */; };
 		CF904C83232AE9F0004F2C06 /* TealiumRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */; };
 		CF904C85232AEA18004F2C06 /* IntConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C84232AEA18004F2C06 /* IntConverter.swift */; };
-		CF9B51BC232AF3BC003019F9 /* FacebookCommandRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51B9232AF3BB003019F9 /* FacebookCommandRunnerTests.swift */; };
+		CF9B51BC232AF3BC003019F9 /* FacebookTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51B9232AF3BB003019F9 /* FacebookTrackerTests.swift */; };
 		CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */; };
-		CF9B51BE232AF3BC003019F9 /* MockFacebookCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BB232AF3BC003019F9 /* MockFacebookCommandRunner.swift */; };
+		CF9B51BE232AF3BC003019F9 /* MockFacebookTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BB232AF3BC003019F9 /* MockFacebookTracker.swift */; };
 		CFC8D9B3232AB3A400A4987F /* TealiumFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CFC8D9BC232AB43C00A4987F /* FacebookCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9B9232AB43C00A4987F /* FacebookCommandRunner.swift */; };
+		CFC8D9BC232AB43C00A4987F /* FacebookTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9B9232AB43C00A4987F /* FacebookTracker.swift */; };
 		CFC8D9BD232AB43C00A4987F /* FacebookCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */; };
 		CFC8D9BE232AB43C00A4987F /* Facebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9BB232AB43C00A4987F /* Facebook.swift */; };
 		CFC8D9E6232AB52C00A4987F /* TealiumFacebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */; };
@@ -48,13 +48,13 @@
 		CF904C80232AE9C5004F2C06 /* EnumMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumMap.swift; sourceTree = "<group>"; };
 		CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TealiumRegistration.swift; sourceTree = "<group>"; };
 		CF904C84232AEA18004F2C06 /* IntConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntConverter.swift; sourceTree = "<group>"; };
-		CF9B51B9232AF3BB003019F9 /* FacebookCommandRunnerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommandRunnerTests.swift; sourceTree = "<group>"; };
+		CF9B51B9232AF3BB003019F9 /* FacebookTrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookTrackerTests.swift; sourceTree = "<group>"; };
 		CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommandTests.swift; sourceTree = "<group>"; };
-		CF9B51BB232AF3BC003019F9 /* MockFacebookCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFacebookCommandRunner.swift; sourceTree = "<group>"; };
+		CF9B51BB232AF3BC003019F9 /* MockFacebookTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFacebookTracker.swift; sourceTree = "<group>"; };
 		CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TealiumFacebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TealiumFacebook.h; sourceTree = "<group>"; };
 		CFC8D9B2232AB3A400A4987F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CFC8D9B9232AB43C00A4987F /* FacebookCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommandRunner.swift; sourceTree = "<group>"; };
+		CFC8D9B9232AB43C00A4987F /* FacebookTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookTracker.swift; sourceTree = "<group>"; };
 		CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommand.swift; sourceTree = "<group>"; };
 		CFC8D9BB232AB43C00A4987F /* Facebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Facebook.swift; sourceTree = "<group>"; };
 		CFC8D9E1232AB52C00A4987F /* TealiumFacebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TealiumFacebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,7 +123,7 @@
 			children = (
 				CFC8D9BB232AB43C00A4987F /* Facebook.swift */,
 				CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */,
-				CFC8D9B9232AB43C00A4987F /* FacebookCommandRunner.swift */,
+				CFC8D9B9232AB43C00A4987F /* FacebookTracker.swift */,
 				CF904C80232AE9C5004F2C06 /* EnumMap.swift */,
 				CF904C84232AEA18004F2C06 /* IntConverter.swift */,
 				CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */,
@@ -136,9 +136,9 @@
 		CFC8D9E2232AB52C00A4987F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				CF9B51B9232AF3BB003019F9 /* FacebookCommandRunnerTests.swift */,
+				CF9B51B9232AF3BB003019F9 /* FacebookTrackerTests.swift */,
 				CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */,
-				CF9B51BB232AF3BC003019F9 /* MockFacebookCommandRunner.swift */,
+				CF9B51BB232AF3BC003019F9 /* MockFacebookTracker.swift */,
 				CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */,
 				CFC8D9E5232AB52C00A4987F /* Info.plist */,
 			);
@@ -303,7 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFC8D9BC232AB43C00A4987F /* FacebookCommandRunner.swift in Sources */,
+				CFC8D9BC232AB43C00A4987F /* FacebookTracker.swift in Sources */,
 				CFC8D9BE232AB43C00A4987F /* Facebook.swift in Sources */,
 				CF904C85232AEA18004F2C06 /* IntConverter.swift in Sources */,
 				CF904C83232AE9F0004F2C06 /* TealiumRegistration.swift in Sources */,
@@ -316,10 +316,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF9B51BC232AF3BC003019F9 /* FacebookCommandRunnerTests.swift in Sources */,
+				CF9B51BC232AF3BC003019F9 /* FacebookTrackerTests.swift in Sources */,
 				CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */,
 				CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */,
-				CF9B51BE232AF3BC003019F9 /* MockFacebookCommandRunner.swift in Sources */,
+				CF9B51BE232AF3BC003019F9 /* MockFacebookTracker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

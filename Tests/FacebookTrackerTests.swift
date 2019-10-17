@@ -1,5 +1,5 @@
 //
-//  FacebookCommandRunnerTests.swift
+//  FacebookTrackerTests.swift
 //  TealiumRemoteCommandTests
 //
 //  Created by Christina Sund on 5/22/19.
@@ -10,14 +10,14 @@ import XCTest
 @testable import TealiumFacebook
 import TealiumRemoteCommands
 
-class FacebookCommandRunnerTests: XCTestCase {
+class FacebookTrackerTests: XCTestCase {
 
-    let facebookCommandRunner = MockFacebookCommandRunner()
+    let facebookTracker = MockFacebookTracker()
     var facebookCommand: FacebookCommand!
     var remoteCommand: TealiumRemoteCommand!
 
     override func setUp() {
-        facebookCommand = FacebookCommand(facebookCommandRunner: facebookCommandRunner)
+        facebookCommand = FacebookCommand(facebookTracker: facebookTracker)
         remoteCommand = facebookCommand.remoteCommand()
     }
 
@@ -41,7 +41,7 @@ class FacebookCommandRunnerTests: XCTestCase {
                                                 "fb_currency": "USD"]]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(3, facebookCommandRunner.logEventWithParametersNoValueCount)
+            XCTAssertEqual(3, facebookTracker.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -52,7 +52,7 @@ class FacebookCommandRunnerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "submitapplication,subscribe,schedule", "fb_value_to_sum": 21.99]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(3, facebookCommandRunner.logEventWithValueNoParametersCount)
+            XCTAssertEqual(3, facebookTracker.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -67,7 +67,7 @@ class FacebookCommandRunnerTests: XCTestCase {
                                       "fb_value_to_sum": 21.99]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(3, facebookCommandRunner.logEventWithValueAndParametersCount)
+            XCTAssertEqual(3, facebookTracker.logEventWithValueAndParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -78,7 +78,7 @@ class FacebookCommandRunnerTests: XCTestCase {
         let payload = ["command_name": "unlockachievement, spentcredits, logcontact"]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(3, facebookCommandRunner.logEventNoValueNoParametersCount)
+            XCTAssertEqual(3, facebookTracker.logEventNoValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -93,7 +93,7 @@ class FacebookCommandRunnerTests: XCTestCase {
                                        "param2": "purchase2value"]]]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.logPurchaseWithParametersCount)
+            XCTAssertEqual(1, facebookTracker.logPurchaseWithParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -106,7 +106,7 @@ class FacebookCommandRunnerTests: XCTestCase {
             "fb_purchase_currency": "USD"]]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.logPurchaseNoParametersCount)
+            XCTAssertEqual(1, facebookTracker.logPurchaseNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -128,7 +128,7 @@ class FacebookCommandRunnerTests: XCTestCase {
                                                        "fb_product_parameters": ["productparam1": "productparam1value"]]]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.logProductItemCount)
+            XCTAssertEqual(1, facebookTracker.logProductItemCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -149,7 +149,7 @@ class FacebookCommandRunnerTests: XCTestCase {
                                                "country": "test"]]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.setUserCount)
+            XCTAssertEqual(1, facebookTracker.setUserCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -160,7 +160,7 @@ class FacebookCommandRunnerTests: XCTestCase {
         let payload = ["command_name": "updateuservalue", "fb_user_value": "test", "fb_user_key": "ln"]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.setUserValueCount)
+            XCTAssertEqual(1, facebookTracker.setUserValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -172,7 +172,7 @@ class FacebookCommandRunnerTests: XCTestCase {
                                       "fb_user_id": "ABC123"]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.setUserIdCount)
+            XCTAssertEqual(1, facebookTracker.setUserIdCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -183,7 +183,7 @@ class FacebookCommandRunnerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "clearuser"]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.clearUserCount)
+            XCTAssertEqual(1, facebookTracker.clearUserCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -194,7 +194,7 @@ class FacebookCommandRunnerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "clearuserid"]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.clearUserIdCount)
+            XCTAssertEqual(1, facebookTracker.clearUserIdCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -205,7 +205,7 @@ class FacebookCommandRunnerTests: XCTestCase {
         let payload = ["command_name": "flush"]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(1, facebookCommandRunner.flushCount)
+            XCTAssertEqual(1, facebookTracker.flushCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)

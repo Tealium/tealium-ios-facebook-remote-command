@@ -1,5 +1,5 @@
 //
-//  MockFacebookCommandRunner.swift
+//  MockFacebookTracker.swift
 //  TealiumRemoteCommandTests
 //
 //  Created by Christina Sund on 5/22/19.
@@ -10,7 +10,7 @@ import Foundation
 @testable import TealiumFacebook
 @testable import FBSDKCoreKit
 
-class MockFacebookCommandRunner: FacebookCommandRunnable {
+class MockFacebookTracker: FacebookTrackable {
 
     var logEventWithParametersNoValueCount = 0
     var logEventWithValueNoParametersCount = 0

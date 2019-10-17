@@ -13,7 +13,7 @@ import TealiumRemoteCommands
 
 class FacebookCommandTests: XCTestCase {
 
-    let facebookCommandRunner = FacebookCommandRunner()
+    let facebookCommandRunner = FacebookTracker()
     var facebookCommand: FacebookCommand!
     var remoteCommand: TealiumRemoteCommand!
 
