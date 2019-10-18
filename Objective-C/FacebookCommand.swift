@@ -65,11 +65,11 @@ public class FacebookCommand: NSObject {
         }
     }
     
-    var facebookCommandRunner: FacebookCommandRunnable
+    var facebookTracker: FacebookTrackable
     
     @objc
-    public init(facebookCommandRunner: FacebookCommandRunnable) {
-        self.facebookCommandRunner = facebookCommandRunner
+    public init(facebookTracker: FacebookTrackable) {
+        self.facebookTracker = facebookTracker
     }
     
     /// Parses the remote command
@@ -97,14 +97,14 @@ public class FacebookCommand: NSObject {
                 let event = self.facebookEvent[fbEvent]
                 if let valueToSum = payload[Facebook.Event.valueToSum] as? Double {
                     if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
-                        return self.facebookCommandRunner.logEvent(event, with: valueToSum, and: parameters)
+                        return self.facebookTracker.logEvent(event, with: valueToSum, and: parameters)
                     } else {
-                        return self.facebookCommandRunner.logEventWithValue(event, valueToSum: valueToSum)
+                        return self.facebookTracker.logEventWithValue(event, valueToSum: valueToSum)
                     }
                 } else if let parameters = payload[Facebook.Event.eventParameters] as? [String: Any] {
-                    return self.facebookCommandRunner.logEvent(event, with: parameters)
+                    return self.facebookTracker.logEvent(event, with: parameters)
                 } else {
-                    return self.facebookCommandRunner.logEvent(event)
+                    return self.facebookTracker.logEvent(event)
                 }
             }
             switch lowercasedCommand {
@@ -113,9 +113,9 @@ public class FacebookCommand: NSObject {
                     let amount = purchase[Facebook.Purchase.purchaseAmount] as? Double,
                     let currency = purchase[Facebook.Purchase.purchaseCurrency] as? String {
                     guard let parameters = purchase[Facebook.Purchase.purchaseParameters] as? [String: Any] else {
-                        return self.facebookCommandRunner.logPurchase(of: amount, with: currency)
+                        return self.facebookTracker.logPurchase(of: amount, with: currency)
                     }
-                    return self.facebookCommandRunner.logPurchase(of: amount, with: currency, and: parameters)
+                    return self.facebookTracker.logPurchase(of: amount, with: currency, and: parameters)
                 }
             case Facebook.Commands.setUser:
                 guard let userData = payload[Facebook.User.user] as? [String: Any] else {
@@ -124,7 +124,7 @@ public class FacebookCommand: NSObject {
                 }
                 do {
                     let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
-                    return self.facebookCommandRunner.setUser(from: json)
+                    return self.facebookTracker.setUser(from: json)
                 } catch {
                     print("Could not convert payload to json")
                 }
@@ -133,15 +133,15 @@ public class FacebookCommand: NSObject {
                     print("User id does not exist in the payload")
                     return
                 }
-                self.facebookCommandRunner.setUserId(to: userId)
+                self.facebookTracker.setUserId(to: userId)
             case Facebook.Commands.clearUserId:
-                self.facebookCommandRunner.clearUserId()
+                self.facebookTracker.clearUserId()
             case Facebook.Commands.clearUser:
-                self.facebookCommandRunner.clearUser()
+                self.facebookTracker.clearUser()
             case Facebook.Commands.updateUserValue:
                 if let userValue = payload[Facebook.User.userParameterValue] as? String,
                     let userKey = payload[Facebook.User.userParameter] as? String {
-                    return self.facebookCommandRunner.setUser(value: userValue, for: userKey)
+                    return self.facebookTracker.setUser(value: userValue, for: userKey)
                 }
             case Facebook.Commands.logProductItem:
                 guard let productItemData = payload[Facebook.Product.productItem] as? [String: Any] else {
@@ -150,12 +150,12 @@ public class FacebookCommand: NSObject {
                 }
                 do {
                     let json = try JSONSerialization.data(withJSONObject: productItemData, options: .prettyPrinted)
-                    return self.facebookCommandRunner.logProductItem(using: json)
+                    return self.facebookTracker.logProductItem(using: json)
                 } catch {
                     print("Could not convert payload to json")
                 }
             case Facebook.Commands.flush:
-                return self.facebookCommandRunner.flush()
+                return self.facebookTracker.flush()
             default:
                 break
             }

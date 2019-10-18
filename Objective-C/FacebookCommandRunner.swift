@@ -1,5 +1,5 @@
 //
-//  FacebookCommandRunner.swift
+//  FacebookTracker.swift
 //  TealiumRemoteCommand
 //
 //  Created by Christina Sund on 5/20/19.
@@ -11,7 +11,7 @@ import FBSDKCoreKit
 import TealiumIOS
 
 @objc
-public protocol FacebookCommandRunnable {
+public protocol FacebookTrackable {
     // Facebook Standard Events
     func logEvent(_ event: AppEvents.Name, with parameters: [String: Any])
     func logEventWithValue(_ event: AppEvents.Name, valueToSum: Double)
@@ -34,7 +34,7 @@ public protocol FacebookCommandRunnable {
 }
 
 @objc
-public class FacebookCommandRunner: NSObject, FacebookCommandRunnable, TealiumRegistration {
+public class FacebookTracker: NSObject, FacebookTrackable, TealiumRegistration {
 
     // MARK: Facebook Standard Events
     public func logEvent(_ event: AppEvents.Name, with parameters: [String: Any]) {

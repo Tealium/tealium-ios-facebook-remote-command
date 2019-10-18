@@ -10,11 +10,16 @@
 		CF010348232AFEC4007A03EE /* TealiumCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0216232AC283005BFE15 /* TealiumCore.framework */; };
 		CF010349232AFEC4007A03EE /* TealiumRemoteCommands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */; };
 		CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */; };
-		CF0D021A232AC283005BFE15 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */; };
-		CF0D021B232AC283005BFE15 /* TealiumCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0216232AC283005BFE15 /* TealiumCore.framework */; };
-		CF0D021C232AC283005BFE15 /* TealiumRemoteCommands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */; };
-		CF0D021D232AC283005BFE15 /* TealiumDelegate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */; };
-		CF0D021E232AC283005BFE15 /* TealiumTagManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */; };
+		CF17C3732359414A00FC306D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */; };
+		CF17C3742359414A00FC306D /* FBSDKCoreKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF17C3752359414A00FC306D /* TealiumCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0216232AC283005BFE15 /* TealiumCore.framework */; };
+		CF17C3762359414A00FC306D /* TealiumCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0216232AC283005BFE15 /* TealiumCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF17C3772359414A00FC306D /* TealiumDelegate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */; };
+		CF17C3782359414A00FC306D /* TealiumDelegate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF17C3792359414A00FC306D /* TealiumRemoteCommands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */; };
+		CF17C37A2359414A00FC306D /* TealiumRemoteCommands.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF17C37B2359414A00FC306D /* TealiumTagManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */; };
+		CF17C37C2359414A00FC306D /* TealiumTagManagement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CF904C81232AE9C5004F2C06 /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C80232AE9C5004F2C06 /* EnumMap.swift */; };
 		CF904C83232AE9F0004F2C06 /* TealiumRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */; };
 		CF904C85232AEA18004F2C06 /* IntConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF904C84232AEA18004F2C06 /* IntConverter.swift */; };
@@ -37,6 +42,24 @@
 			remoteInfo = TealiumFacebook;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CF17C37D2359414A00FC306D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CF17C3742359414A00FC306D /* FBSDKCoreKit.framework in Embed Frameworks */,
+				CF17C3782359414A00FC306D /* TealiumDelegate.framework in Embed Frameworks */,
+				CF17C37A2359414A00FC306D /* TealiumRemoteCommands.framework in Embed Frameworks */,
+				CF17C3762359414A00FC306D /* TealiumCore.framework in Embed Frameworks */,
+				CF17C37C2359414A00FC306D /* TealiumTagManagement.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTestHelpers.swift; sourceTree = "<group>"; };
@@ -66,11 +89,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF0D021A232AC283005BFE15 /* FBSDKCoreKit.framework in Frameworks */,
-				CF0D021B232AC283005BFE15 /* TealiumCore.framework in Frameworks */,
-				CF0D021C232AC283005BFE15 /* TealiumRemoteCommands.framework in Frameworks */,
-				CF0D021D232AC283005BFE15 /* TealiumDelegate.framework in Frameworks */,
-				CF0D021E232AC283005BFE15 /* TealiumTagManagement.framework in Frameworks */,
+				CF17C3732359414A00FC306D /* FBSDKCoreKit.framework in Frameworks */,
+				CF17C3772359414A00FC306D /* TealiumDelegate.framework in Frameworks */,
+				CF17C3792359414A00FC306D /* TealiumRemoteCommands.framework in Frameworks */,
+				CF17C3752359414A00FC306D /* TealiumCore.framework in Frameworks */,
+				CF17C37B2359414A00FC306D /* TealiumTagManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +191,7 @@
 				CFC8D9AB232AB3A400A4987F /* Frameworks */,
 				CFC8D9AC232AB3A400A4987F /* Resources */,
 				CF0D021F232AC28B005BFE15 /* Carthage */,
+				CF17C37D2359414A00FC306D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
