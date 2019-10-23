@@ -18,7 +18,7 @@ class FacebookCommandTests: XCTestCase {
     var remoteCommand: TealiumRemoteCommand!
 
     override func setUp() {
-        facebookCommand = FacebookCommand(facebookCommandRunner: facebookTracker)
+        facebookCommand = FacebookCommand(facebookTracker: facebookTracker)
         remoteCommand = facebookCommand.remoteCommand()
     }
 
