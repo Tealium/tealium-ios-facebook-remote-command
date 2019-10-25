@@ -40,8 +40,6 @@ public protocol FacebookTrackable {
 }
 
 public class FacebookTracker: FacebookTrackable, TealiumRegistration {
-    
-    public init() {}
 
     // MARK: Facebook Standard Events
     public func logEvent(_ event: AppEvents.Name, with parameters: [String: Any]) {

@@ -74,12 +74,12 @@ public class FacebookCommand {
     
     var facebookTracker: FacebookTrackable
     
-    public init(facebookTracker: FacebookTrackable) {
+    init(facebookTracker: FacebookTrackable) {
         self.facebookTracker = facebookTracker
     }
     
     /// Parses the remote command
-    public func remoteCommand() -> TealiumRemoteCommand {
+    func remoteCommand() -> TealiumRemoteCommand {
         return TealiumRemoteCommand(commandId: "facebook", description: "Facebook Remote Command") { response in
             let payload = response.payload()
             guard let command = payload[TealiumRemoteCommand.commandName] as? String else {
