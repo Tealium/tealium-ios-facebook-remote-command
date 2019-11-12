@@ -26,6 +26,12 @@
 		CF9B51BC232AF3BC003019F9 /* FacebookTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51B9232AF3BB003019F9 /* FacebookTrackerTests.swift */; };
 		CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */; };
 		CF9B51BE232AF3BC003019F9 /* MockFacebookTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BB232AF3BC003019F9 /* MockFacebookTracker.swift */; };
+		CFA5C553237B30ED00D1C267 /* Facebook.swift in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9BB232AB43C00A4987F /* Facebook.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		CFA5C554237B30ED00D1C267 /* FacebookCommand.swift in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		CFA5C555237B30ED00D1C267 /* FacebookTracker.swift in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9B9232AB43C00A4987F /* FacebookTracker.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		CFA5C556237B30ED00D1C267 /* EnumMap.swift in Headers */ = {isa = PBXBuildFile; fileRef = CF904C80232AE9C5004F2C06 /* EnumMap.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		CFA5C557237B30ED00D1C267 /* IntConverter.swift in Headers */ = {isa = PBXBuildFile; fileRef = CF904C84232AEA18004F2C06 /* IntConverter.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		CFA5C558237B31AA00D1C267 /* TealiumRegistration.swift in Headers */ = {isa = PBXBuildFile; fileRef = CF904C82232AE9EF004F2C06 /* TealiumRegistration.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		CFC8D9B3232AB3A400A4987F /* TealiumFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CFC8D9BC232AB43C00A4987F /* FacebookTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9B9232AB43C00A4987F /* FacebookTracker.swift */; };
 		CFC8D9BD232AB43C00A4987F /* FacebookCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8D9BA232AB43C00A4987F /* FacebookCommand.swift */; };
@@ -208,6 +214,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFC8D9B3232AB3A400A4987F /* TealiumFacebook.h in Headers */,
+				CFA5C553237B30ED00D1C267 /* Facebook.swift in Headers */,
+				CFA5C554237B30ED00D1C267 /* FacebookCommand.swift in Headers */,
+				CFA5C555237B30ED00D1C267 /* FacebookTracker.swift in Headers */,
+				CFA5C556237B30ED00D1C267 /* EnumMap.swift in Headers */,
+				CFA5C557237B30ED00D1C267 /* IntConverter.swift in Headers */,
+				CFA5C558237B31AA00D1C267 /* TealiumRegistration.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
