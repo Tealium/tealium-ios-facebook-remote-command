@@ -10,12 +10,12 @@ import Foundation
 import FBSDKCoreKit
 
 #if COCOAPODS
-import TealiumSwift
+    import TealiumSwift
 #else
-import TealiumCore
-import TealiumDelegate
-import TealiumTagManagement
-import TealiumRemoteCommands
+    import TealiumCore
+    import TealiumDelegate
+    import TealiumTagManagement
+    import TealiumRemoteCommands
 #endif
 
 public protocol FacebookTrackable {

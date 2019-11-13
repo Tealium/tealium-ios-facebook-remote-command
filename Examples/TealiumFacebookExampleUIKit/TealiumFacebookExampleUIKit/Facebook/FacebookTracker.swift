@@ -8,16 +8,21 @@
 
 import Foundation
 import FBSDKCoreKit
+
 #if COCOAPODS
-import TealiumSwift
+    import TealiumSwift
 #else
-import TealiumCore
-import TealiumDelegate
-import TealiumTagManagement
-import TealiumRemoteCommands
+    import TealiumCore
+    import TealiumDelegate
+    import TealiumTagManagement
+    import TealiumRemoteCommands
 #endif
 
 public protocol FacebookTrackable {
+    // Settings
+    func setAutoLogAppEventsEnabled(_ enabled: Bool)
+    func setAutoInitEnabled(_ enabled: Bool)
+    func enableAdvertiserIDCollection(_ enabled: Bool)
     // Facebook Standard Events
     func logEvent(_ event: AppEvents.Name, with parameters: [String: Any])
     func logEvent(_ event: AppEvents.Name, with valueToSum: Double)
@@ -36,11 +41,27 @@ public protocol FacebookTrackable {
     func clearUser()
     func clearUserId()
     // Flush Events
+    func setFlushBehavior(flushBehavior: UInt)
     func flush()
 }
 
 public class FacebookTracker: FacebookTrackable, TealiumRegistration {
 
+    // MARK: Settings
+    public func setAutoLogAppEventsEnabled(_ enabled: Bool) {
+        Settings.isAutoLogAppEventsEnabled = enabled
+    }
+    
+    public func setAutoInitEnabled(_ enabled: Bool) {
+        Settings.isAutoInitEnabled = enabled
+        ApplicationDelegate.initializeSDK(nil)
+    }
+    
+    
+    public func enableAdvertiserIDCollection(_ enabled: Bool) {
+        Settings.isAdvertiserIDCollectionEnabled = enabled
+    }
+    
     // MARK: Facebook Standard Events
     public func logEvent(_ event: AppEvents.Name, with parameters: [String: Any]) {
         AppEvents.logEvent(event, parameters: parameters)
@@ -81,12 +102,12 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
         do {
             let product = try JSONDecoder().decode(FacebookProductItem.self, from: data)
             guard let availability = AppEvents.ProductAvailability(rawValue: product.productAvailablility.convertToUInt), let condition = AppEvents.ProductCondition(rawValue: product.productCondition.convertToUInt) else {
-                print("Product availability and condition are required, the type should be Integer")
+                print("\(Facebook.Error.prepend)logProductItem - Product availability and condition are required, the type should be Integer")
                 return
             }
             AppEvents.logProductItem(product.productId, availability: availability, condition: condition, description: product.productDescription, imageLink: product.productImageLink, link: product.productLink, title: product.productTitle, priceAmount: product.productPrice, currency: product.productCurrency, gtin: product.productGtin, mpn: product.productMpn, brand: product.productBrand, parameters: product.productParameters)
         } catch {
-            print("Unable to decode product item")
+            print("\(Facebook.Error.prepend)logProductItem - Unable to decode product item")
         }
         
 
@@ -102,7 +123,7 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
             let user = try JSONDecoder().decode(FacebookUser.self, from: data)
             AppEvents.setUser(email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, dateOfBirth: user.dob, gender: user.gender, city: user.city, state: user.state, zip: user.zip, country: user.country)
         } catch {
-            print("Could not decode UserParameters: \(error)")
+            print("\(Facebook.Error.prepend)setUser - Could not decode UserParameters: \(error)")
         }
     }
     
@@ -119,10 +140,17 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
     }
     
     // MARK: Flush Events
+    public func setFlushBehavior(flushBehavior: UInt) {
+        guard let flush = AppEvents.FlushBehavior(rawValue: flushBehavior) else {
+            print("\(Facebook.Error.prepend)Could not set flush behavior because the value is invalid")
+            return
+        }
+        AppEvents.flushBehavior = flush
+    }
+    
     public func flush() {
         AppEvents.flush()
     }
-    
     
 }
 
