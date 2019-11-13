@@ -8,6 +8,7 @@
 import Foundation
 import TealiumSwift
 import FBSDKCoreKit
+import TFB
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"

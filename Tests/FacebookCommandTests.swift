@@ -119,5 +119,22 @@ class FacebookCommandTests: XCTestCase {
         }
         XCTAssertEqual(AppEvents.ProductCondition.used, productCondition)
     }
+    
+    func testTypeCheckReturnsExpectedDictionary() {
+        let input: [String: Any] = ["stringValue": "hello",
+                                    "intValue": 1,
+                                    "boolValue": true,
+                                    "doubleValue": 9.99,
+                                    "otherValue1": ["blah": "blah1"]]
+        let expectedKeys = ["stringValue","intValue","boolValue","doubleValue"]
+        
+        let actualOutput: [String: Any] = facebookCommand.typeCheck(input)
+        
+        let actualKeys = actualOutput.map { $0.key }
+        
+        XCTAssertEqual(4, actualOutput.count)
+        XCTAssertEqual(expectedKeys.sorted(), actualKeys.sorted())
+        
+    }
 
 }

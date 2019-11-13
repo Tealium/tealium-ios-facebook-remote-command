@@ -47,6 +47,8 @@ public protocol FacebookTrackable {
 
 public class FacebookTracker: FacebookTrackable, TealiumRegistration {
 
+    public init() { }
+    
     // MARK: Settings
     public func setAutoLogAppEventsEnabled(_ enabled: Bool) {
         Settings.isAutoLogAppEventsEnabled = enabled

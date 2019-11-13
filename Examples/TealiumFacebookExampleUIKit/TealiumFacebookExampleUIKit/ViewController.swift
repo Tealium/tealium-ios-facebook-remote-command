@@ -29,23 +29,32 @@ class ViewController: UIViewController {
     }
     
     @IBAction func setUserTapped(_ sender: UIButton) {
-        TealiumHelper.trackEvent(title: "set_user", data: nil)
+        TealiumHelper.trackEvent(title: "setUser", data: ["customer_id": "CUST123"])
     }
     
     @IBAction func updateUserTapped(_ sender: UIButton) {
-        TealiumHelper.trackEvent(title: "update_user_value", data: nil)
+        TealiumHelper.trackEvent(title: "updateUserValue", data: ["customer_name": "John Doe"])
     }
     
     @IBAction func achieveLevel(_ sender: UIButton) {
-        TealiumHelper.trackEvent(title: "achieve_level", data: nil)
+        TealiumHelper.trackEvent(title: "achievedLevel", data: ["level": "Level 5"])
     }
     
+    @IBAction func completedRegistration(_ sender: UIButton) {
+        TealiumHelper.trackEvent(title: "completedRegistration", data: ["registration_method": "Twitter"])
+    }
+
+    
     @IBAction func logProductItem(_ sender: UIButton) {
-        TealiumHelper.trackEvent(title: "log_product_item", data: nil)
+        TealiumHelper.trackEvent(title: "logProductItem", data: ["product_id": "abc123",
+                                                                 "product_name": "chocolate",
+                                                                 "product_price": 9.99])
     }
     
     @IBAction func logPurchase(_ sender: UIButton) {
-        TealiumHelper.trackEvent(title: "log_product_item", data: nil)
+        TealiumHelper.trackEvent(title: "logPurchase", data: ["purchase": ["product_id": "abc123",
+                                                                            "product_name": "chocolate",
+                                                                            "product_price": 9.99]])
     }
     
     @IBAction func flush(_ sender: UIButton) {

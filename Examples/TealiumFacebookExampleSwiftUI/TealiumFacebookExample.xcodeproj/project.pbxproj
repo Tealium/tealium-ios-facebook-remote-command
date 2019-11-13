@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		1DCDE0D41C6F993211D10C6B /* Pods_TealiumFacebookExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F42AE1DC101D03B1452479 /* Pods_TealiumFacebookExample.framework */; };
 		CFA56111236106A60097583D /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA56110236106A60097583D /* ButtonView.swift */; };
-		CFA5611923610A300097583D /* TealiumRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5611323610A300097583D /* TealiumRegistration.swift */; };
-		CFA5611A23610A300097583D /* IntConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5611423610A300097583D /* IntConverter.swift */; };
-		CFA5611B23610A300097583D /* Facebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5611523610A300097583D /* Facebook.swift */; };
-		CFA5611C23610A300097583D /* FacebookTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5611623610A300097583D /* FacebookTracker.swift */; };
-		CFA5611D23610A300097583D /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5611723610A300097583D /* EnumMap.swift */; };
-		CFA5611E23610A300097583D /* FacebookCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5611823610A300097583D /* FacebookCommand.swift */; };
 		CFA5C55A237B32F700D1C267 /* TealiumHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5C559237B32F700D1C267 /* TealiumHelper.swift */; };
 		CFB3683F2360CF7900CAEF99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB3683E2360CF7900CAEF99 /* AppDelegate.swift */; };
 		CFB368412360CF7900CAEF99 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB368402360CF7900CAEF99 /* SceneDelegate.swift */; };
@@ -28,12 +22,6 @@
 /* Begin PBXFileReference section */
 		2E3265619E3095A2E90D380A /* Pods-TealiumFacebookExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TealiumFacebookExample.release.xcconfig"; path = "Target Support Files/Pods-TealiumFacebookExample/Pods-TealiumFacebookExample.release.xcconfig"; sourceTree = "<group>"; };
 		CFA56110236106A60097583D /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
-		CFA5611323610A300097583D /* TealiumRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TealiumRegistration.swift; sourceTree = "<group>"; };
-		CFA5611423610A300097583D /* IntConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntConverter.swift; sourceTree = "<group>"; };
-		CFA5611523610A300097583D /* Facebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Facebook.swift; sourceTree = "<group>"; };
-		CFA5611623610A300097583D /* FacebookTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookTracker.swift; sourceTree = "<group>"; };
-		CFA5611723610A300097583D /* EnumMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumMap.swift; sourceTree = "<group>"; };
-		CFA5611823610A300097583D /* FacebookCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommand.swift; sourceTree = "<group>"; };
 		CFA5C559237B32F700D1C267 /* TealiumHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TealiumHelper.swift; sourceTree = "<group>"; };
 		CFB3683B2360CF7900CAEF99 /* TealiumFacebookExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TealiumFacebookExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFB3683E2360CF7900CAEF99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,19 +56,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CFA5611223610A260097583D /* Facebook */ = {
-			isa = PBXGroup;
-			children = (
-				CFA5611723610A300097583D /* EnumMap.swift */,
-				CFA5611523610A300097583D /* Facebook.swift */,
-				CFA5611823610A300097583D /* FacebookCommand.swift */,
-				CFA5611623610A300097583D /* FacebookTracker.swift */,
-				CFA5611423610A300097583D /* IntConverter.swift */,
-				CFA5611323610A300097583D /* TealiumRegistration.swift */,
-			);
-			path = Facebook;
-			sourceTree = "<group>";
-		};
 		CFB368322360CF7900CAEF99 = {
 			isa = PBXGroup;
 			children = (
@@ -102,7 +77,6 @@
 		CFB3683D2360CF7900CAEF99 /* TealiumFacebookExample */ = {
 			isa = PBXGroup;
 			children = (
-				CFA5611223610A260097583D /* Facebook */,
 				CFA5C559237B32F700D1C267 /* TealiumHelper.swift */,
 				CFB3683E2360CF7900CAEF99 /* AppDelegate.swift */,
 				CFB368402360CF7900CAEF99 /* SceneDelegate.swift */,
@@ -249,15 +223,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFA5611D23610A300097583D /* EnumMap.swift in Sources */,
-				CFA5611E23610A300097583D /* FacebookCommand.swift in Sources */,
-				CFA5611A23610A300097583D /* IntConverter.swift in Sources */,
-				CFA5611923610A300097583D /* TealiumRegistration.swift in Sources */,
 				CFB3683F2360CF7900CAEF99 /* AppDelegate.swift in Sources */,
 				CFB368412360CF7900CAEF99 /* SceneDelegate.swift in Sources */,
-				CFA5611C23610A300097583D /* FacebookTracker.swift in Sources */,
 				CFA5C55A237B32F700D1C267 /* TealiumHelper.swift in Sources */,
-				CFA5611B23610A300097583D /* Facebook.swift in Sources */,
 				CFA56111236106A60097583D /* ButtonView.swift in Sources */,
 				CFB368432360CF7900CAEF99 /* ContentView.swift in Sources */,
 				CFB368552360F12A00CAEF99 /* TitleView.swift in Sources */,

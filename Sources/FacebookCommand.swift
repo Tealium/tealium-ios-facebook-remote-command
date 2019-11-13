@@ -70,12 +70,12 @@ public class FacebookCommand {
 
     var facebookTracker: FacebookTrackable
 
-    init(facebookTracker: FacebookTrackable) {
+    public init(facebookTracker: FacebookTrackable) {
         self.facebookTracker = facebookTracker
     }
 
     /// Parses the remote command
-    func remoteCommand() -> TealiumRemoteCommand {
+    public func remoteCommand() -> TealiumRemoteCommand {
         return TealiumRemoteCommand(commandId: "facebook", description: "Facebook Remote Command") { response in
             let payload = response.payload()
             guard let command = payload[TealiumRemoteCommand.commandName] as? String else {
@@ -118,12 +118,12 @@ public class FacebookCommand {
                     guard let parameters = purchase[Facebook.Purchase.purchaseParameters] as? [String: Any] else {
                         return self.facebookTracker.logPurchase(of: amount, with: currency)
                     }
-                    return self.facebookTracker.logPurchase(of: amount, with: currency, and: parameters)
+                    return self.facebookTracker.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
                 } else {
                     print("\(Facebook.Error.prepend)logPurchase - Required variables do not exist in the payload.")
                 }
             case Facebook.Commands.setUser:
-                guard let userData = payload[Facebook.User.user] as? [String: Any] else {
+                guard let userData = payload[Facebook.User.user] as? [String: String] else {
                     print("\(Facebook.Error.prepend)setUser - User object must be populated.")
                     return
                 }
@@ -174,43 +174,43 @@ public class FacebookCommand {
                 return self.facebookTracker.flush()
             case Facebook.Commands.achievedLevel:
                 guard let eventParameters = payload[Facebook.Event.eventParameters] as? [String: Any],
-                let _ = eventParameters[Facebook.Event.level] as? String else {
-                    print("\(Facebook.Error.prepend)achievedLevel - \(Facebook.Event.level) must be populated.")
-                    return
+                    let _ = eventParameters[Facebook.Event.level] as? String else {
+                        print("\(Facebook.Error.prepend)achievedLevel - \(Facebook.Event.level) must be populated.")
+                        return
                 }
                 return self.facebookTracker.logEvent(AppEvents.Name.achievedLevel, with: payload)
             case Facebook.Commands.unlockedAchievement:
                 guard let eventParameters = payload[Facebook.Event.eventParameters] as? [String: Any],
-                let _ = eventParameters[Facebook.Event.description] as? String else {
-                    print("\(Facebook.Error.prepend)unlockedAchievement - \(Facebook.Event.description) must be populated.")
-                    return
+                    let _ = eventParameters[Facebook.Event.description] as? String else {
+                        print("\(Facebook.Error.prepend)unlockedAchievement - \(Facebook.Event.description) must be populated.")
+                        return
                 }
                 return self.facebookTracker.logEvent(AppEvents.Name.unlockedAchievement, with: eventParameters)
             case Facebook.Commands.completedRegistration:
                 guard let eventParameters = payload[Facebook.Event.eventParameters] as? [String: Any],
-                let _ = eventParameters[Facebook.Event.registrationMethod] as? String else {
-                    print("\(Facebook.Error.prepend)completedRegistration - \(Facebook.Event.registrationMethod) must be populated.")
-                    return
+                    let _ = eventParameters[Facebook.Event.registrationMethod] as? String else {
+                        print("\(Facebook.Error.prepend)completedRegistration - \(Facebook.Event.registrationMethod) must be populated.")
+                        return
                 }
                 return self.facebookTracker.logEvent(AppEvents.Name.completedRegistration, with: payload)
             case Facebook.Commands.completedTutorial:
                 guard let eventParameters = payload[Facebook.Event.eventParameters] as? [String: Any],
-                let _ = eventParameters[Facebook.Event.contentID] as? String else {
-                    print("\(Facebook.Error.prepend)completedTutorial - \(Facebook.Event.contentID) must be populated.")
-                    return
+                    let _ = eventParameters[Facebook.Event.contentID] as? String else {
+                        print("\(Facebook.Error.prepend)completedTutorial - \(Facebook.Event.contentID) must be populated.")
+                        return
                 }
                 return self.facebookTracker.logEvent(AppEvents.Name.completedTutorial, with: eventParameters)
             case Facebook.Commands.initiatedCheckout:
-                    guard let value = payload[Facebook.Event.valueToSum] as? Double else {
-                        print("\(Facebook.Error.prepend)initiatedCheckout - \(Facebook.Event.valueToSum) must be populated.")
+                guard let value = payload[Facebook.Event.valueToSum] as? Double else {
+                    print("\(Facebook.Error.prepend)initiatedCheckout - \(Facebook.Event.valueToSum) must be populated.")
                     return
                 }
                 return self.facebookTracker.logEvent(AppEvents.Name.initiatedCheckout, with: value)
             case Facebook.Commands.searched:
                 guard let eventParameters = payload[Facebook.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[Facebook.Event.searchString] as? String else {
-                    print("\(Facebook.Error.prepend)searched - \(Facebook.Event.searchString) must be populated.")
-                    return
+                        print("\(Facebook.Error.prepend)searched - \(Facebook.Event.searchString) must be populated.")
+                        return
                 }
                 return self.facebookTracker.logEvent(AppEvents.Name.searched, with: eventParameters)
             default:
@@ -232,6 +232,29 @@ public class FacebookCommand {
             }
         }
     }
+
+    func typeCheck(_ params: [String: Any]) -> [String: Any] {
+        return params.reduce(into: [String: Any]()) { result, dict in
+            switch dict.value {
+            case is Int:
+                fallthrough
+            case is UInt:
+                fallthrough
+            case is Bool:
+                fallthrough
+            case is Float:
+                fallthrough
+            case is Double:
+                fallthrough
+            case is String:
+                result[dict.key] = dict.value
+            default:
+                print("\(Facebook.Error.prepend)logPurchase - The purchase parameter values must either be a String or Int.")
+                break
+            }
+        }
+    }
+
 }
 
 extension TealiumRemoteCommand {
