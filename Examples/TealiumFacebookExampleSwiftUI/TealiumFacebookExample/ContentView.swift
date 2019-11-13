@@ -16,6 +16,7 @@ struct ContentView: View {
                 ButtonView(event: "Set User")
                 ButtonView(event: "Update User Value")
                 ButtonView(event: "Achieve Level")
+                ButtonView(event: "Completed Registration")
                 ButtonView(event: "Log Product Item")
                 ButtonView(event: "Log Purchase")
                 ButtonView(event: "Flush")

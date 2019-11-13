@@ -35,7 +35,7 @@ class FacebookTrackerTests: XCTestCase {
 
     func testLogEventWithParametersNoValue() {
         let expect = expectation(description: "test logEvent with parameters and no valueToSet")
-        let payload: [String: Any] = ["command_name": "viewedcontent,addtocart,customizeproduct",
+        let payload: [String: Any] = ["command_name": "viewedcontent,addedtocart,customizeproduct",
                                       "event": ["fb_content": "[{\"id\": \"1234\", \"quantity\": 2, \"item_price\": 5.99}, {\"id\": \"5678\", \"quantity\": 1, \"item_price\": 9.99}]",
                                                 "fb_content_type": "product",
                                                 "fb_currency": "USD"]]
@@ -60,14 +60,17 @@ class FacebookTrackerTests: XCTestCase {
 
     func testLogEventWithValueAndParameters() {
         let expect = expectation(description: "test logEvent with valueToSet and parameters")
-        let payload: [String: Any] = ["command_name": "addtowishlist,completetutorial,search",
+        let payload: [String: Any] = ["command_name": "addedtowishlist,completedtutorial,searched",
                                       "event": ["fb_content": "[{\"id\": \"1234\", \"quantity\": 2, \"item_price\": 5.99}, {\"id\": \"5678\", \"quantity\": 1, \"item_price\": 9.99}]",
                                                 "fb_content_type": "product",
-                                                "fb_currency": "USD"],
+                                                "fb_currency": "USD",
+                                                "fb_search_string": "hello",
+                                                "fb_content_id": "abc123"],
                                       "fb_value_to_sum": 21.99]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
-            XCTAssertEqual(3, facebookTracker.logEventWithValueAndParametersCount)
+            XCTAssertEqual(1, facebookTracker.logEventWithValueAndParametersCount)
+            XCTAssertEqual(2, facebookTracker.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -75,7 +78,7 @@ class FacebookTrackerTests: XCTestCase {
 
     func testLogEventNoValueNoParameters() {
         let expect = expectation(description: "test logEvent no valueToSet and no parameters")
-        let payload = ["command_name": "unlockachievement, spentcredits, logcontact"]
+        let payload: [String: Any] = ["command_name": "rated, spentcredits, contact"]
         if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
             remoteCommand.remoteCommandCompletion(response)
             XCTAssertEqual(3, facebookTracker.logEventNoValueNoParametersCount)
@@ -210,6 +213,56 @@ class FacebookTrackerTests: XCTestCase {
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
     }
-
+    
+    func testLogEventCompletedRegistrationWithReqParameter() {
+        let expect = expectation(description: "test logEvent with valueToSet and parameters")
+        let payload: [String: Any] = ["command_name": "completedregistration",
+                                      "event": ["fb_registration_method": "twitter"]]
+        if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
+            remoteCommand.remoteCommandCompletion(response)
+            XCTAssertEqual(1, facebookTracker.logEventWithParametersNoValueCount)
+        }
+        expect.fulfill()
+        wait(for: [expect], timeout: 5.0)
+    }
+    
+    func testLogEventCompletedRegistrationNoRequiredParameter() {
+        let expect = expectation(description: "test logEvent with valueToSet and parameters")
+        let payload: [String: Any] = ["command_name": "completedregistration"]
+        if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
+            remoteCommand.remoteCommandCompletion(response)
+            XCTAssertEqual(0, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(0, facebookTracker.logEventNoValueNoParametersCount)
+            XCTAssertEqual(0, facebookTracker.logEventWithValueAndParametersCount)
+            XCTAssertEqual(0, facebookTracker.logEventWithValueNoParametersCount)
+        }
+        expect.fulfill()
+        wait(for: [expect], timeout: 5.0)
+    }
+    
+    func testLogEventInitiatedCheckoutWithReqParameter() {
+        let expect = expectation(description: "test logEvent with valueToSet and parameters")
+        let payload: [String: Any] = ["command_name": "initiatedcheckout","fb_value_to_sum": 21.99]
+        if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
+            remoteCommand.remoteCommandCompletion(response)
+            XCTAssertEqual(1, facebookTracker.logEventWithValueNoParametersCount)
+        }
+        expect.fulfill()
+        wait(for: [expect], timeout: 5.0)
+    }
+    
+    func testLogEventInitiatedCheckoutNoRequiredParameter() {
+        let expect = expectation(description: "test logEvent with valueToSet and parameters")
+        let payload: [String: Any] = ["command_name": "initiatedcheckout"]
+        if let response = createRemoteCommandResponse(commandId: "facebook", payload: payload) {
+            remoteCommand.remoteCommandCompletion(response)
+            XCTAssertEqual(0, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(0, facebookTracker.logEventNoValueNoParametersCount)
+            XCTAssertEqual(0, facebookTracker.logEventWithValueAndParametersCount)
+            XCTAssertEqual(0, facebookTracker.logEventWithValueNoParametersCount)
+        }
+        expect.fulfill()
+        wait(for: [expect], timeout: 5.0)
+    }
 
 }

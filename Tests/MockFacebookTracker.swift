@@ -12,6 +12,9 @@ import Foundation
 
 class MockFacebookTracker: FacebookTrackable {
 
+    var setAutoLogAppEventsEnabledCount = 0
+    var setAutoInitEnabledCount = 0
+    var enableAdvertiserIDCollectionCount = 0
     var logEventWithParametersNoValueCount = 0
     var logEventWithValueNoParametersCount = 0
     var logEventWithValueAndParametersCount = 0
@@ -26,7 +29,20 @@ class MockFacebookTracker: FacebookTrackable {
     var clearUserCount = 0
     var clearUserIdCount = 0
     var setUserValueCount = 0
+    var setFlushBehaviorCount = 0
     var flushCount = 0
+    
+    func setAutoLogAppEventsEnabled(_ enabled: Bool) {
+        setAutoLogAppEventsEnabledCount += 1
+    }
+    
+    func setAutoInitEnabled(_ enabled: Bool) {
+        setAutoInitEnabledCount += 1
+    }
+    
+    func enableAdvertiserIDCollection(_ enabled: Bool) {
+        enableAdvertiserIDCollectionCount += 1
+    }
     
     func logEvent(_ event: AppEvents.Name, with parameters: [String : Any]) {
         logEventWithParametersNoValueCount += 1
@@ -78,6 +94,10 @@ class MockFacebookTracker: FacebookTrackable {
     
     func clearUserId() {
         clearUserIdCount += 1
+    }
+    
+    func setFlushBehavior(flushBehavior: UInt) {
+        setFlushBehaviorCount += 1
     }
     
     func flush() {

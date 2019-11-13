@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FBSDKCoreKit
 
 /// Decode product_item object from payload
 struct FacebookProductItem: Decodable {
@@ -107,18 +108,19 @@ struct FacebookUser: Decodable {
 enum Facebook {
     
     enum StandardEventNames: String, CaseIterable {
-        case achievelevel
-        case adclick
-        case adimpression
-        case addpaymentinfo
-        case addtocart
-        case addtowishlist
-        case completeregistration
-        case completetutorial
-        case logcontact
+        case completedregistration
         case viewedcontent
-        case search
-        case rate
+        case searched
+        case rated
+        case completedtutorial
+        case addedtocart
+        case addedtowishlist
+        case initiatedcheckout
+        case addedpaymentinfo
+        case achievedlevel
+        case unlockedachievement
+        case spentcredits
+        case contact
         case customizeproduct
         case donate
         case findlocation
@@ -126,14 +128,15 @@ enum Facebook {
         case starttrial
         case submitapplication
         case subscribe
-        case subscriptionheartbeat
-        case initiatecheckout
-        case purchase
-        case unlockachievement
-        case spentcredits
+        case adimpression
+        case adclick
     }
     
     enum Commands {
+        static let initialize = "initialize"
+        static let setAutoLogAppEventsEnabled = "setautologappeventsenabled"
+        static let setAutoInitEnabled = "setautoinitenabled"
+        static let enableAdvertiserIDCollection = "enableadvertiseridcollection"
         static let logPurchase = "logpurchase"
         static let setUser = "setuser"
         static let setUserId = "setuserid"
@@ -141,27 +144,98 @@ enum Facebook {
         static let clearUserId = "clearuserid"
         static let updateUserValue = "updateuservalue"
         static let logProductItem = "logproductitem"
-        static let pushNotificationOpen = "logpushnotificationopen"
+        static let setFlushBehavior = "setflushbehavior"
         static let flush = "flush"
+        static let achievedLevel = "achievedlevel"
+        static let unlockedAchievement = "unlockedachievement"
+        static let completedRegistration = "completedregistration"
+        static let completedTutorial = "compledtetutorial"
+        static let initiatedCheckout = "initiatecheckout"
+        static let searched = "searched"
+        static let activatedApp = "activatedapp"
+        static let deactivatedApp = "deactivatedapp"
+        static let sessionInterruptions = "sessioninterruptions"
+        static let timebetweensessions = "timebetweensessions"
+        static let adClicked = "adclicked"
+        static let adImpression = "adimpression"
+        static let addedPaymentinfo = "addedpaymentinfo"
+        static let addedToCart = "addedtocart"
+        static let addedToWishlist = "addedtowishlist"
+        static let contact = "contact"
+        static let viewedContent = "viewedcontent"
+        static let rated = "rated"
+        static let customizeProduct = "customizeproduct"
+        static let donate = "donate"
+        static let findLocation = "findlocation"
+        static let schedule = "schedule"
+        static let startTrial = "starttrial"
+        static let submitApplication = "submitapplication"
+        static let subscribe = "subscribe"
+        static let purchased = "purchased"
+        static let spentCredits = "spentcredits"
+        static let liveStreamingStart = "livestreamingstart"
+        static let liveStreamingStop = "livestreamingstop"
+        static let liveStreamingPause = "livestreamingpause"
+        static let liveStreamingResume = "livestreamingresume"
+        static let liveStreamingError = "livestreamingerror"
+        static let liveStreamingUpdateStatus = "livestreamingupdatestatus"
+        static let productCatalogUpdate = "productcatalogupdate"
+    }
+    
+    enum Error {
+        static let prepend = "[❗️] TealiumFacebook Remote Command Error: "
     }
     
     enum Event {
         static let eventParameters = "event"
         static let valueToSum = "fb_value_to_sum"
+        static let currency = "fb_currency"
+        static let registrationMethod = "fb_registration_method"
+        static let contentType = "fb_content_type"
+        static let content = "fb_content"
+        static let contentID = "fb_content_id"
+        static let searchString = "fb_search_string"
+        static let success = "fb_success"
+        static let maxRatingValue = "fb_max_rating_value"
+        static let paymentInfoAvailable = "fb_payment_info_available"
+        static let numItems = "fb_num_items"
+        static let level = "fb_level"
+        static let description = "fb_description"
+        static let mobileLaunchSource = "fb_mobile_launch_source"
+        static let adType = "ad_type"
+        static let orderID = "fb_order_id"
     }
     
-    enum User {
-        static let userParameter = "fb_user_value"
-        static let userParameterValue = "fb_user_key"
-        static let user = "user"
-        static let userId = "fb_user_id"
+    enum Flush {
+        static let flushBehavior = "flush_behavior"
     }
     
     enum Product {
+        static let productItem = "product_item" // logProductItem object
         static let productPrice = "fb_product_price_amount"
         static let productCurrency = "fb_product_price_currency"
         static let productParameters = "fb_product_parameters"
-        static let productItem = "product_item"
+        static let productCustomLabel0 = "fb_product_custom_label_0"
+        static let productCustomLabel1 = "fb_product_custom_label_1"
+        static let productCustomLabel2 = "fb_product_custom_label_2"
+        static let productCustomLabel3 = "fb_product_custom_label_3"
+        static let productCustomLabel4 = "fb_product_custom_label_4"
+        static let category = "fb_product_category"
+        static let appLinkIOSUrl = "fb_product_applink_ios_url"
+        static let appLinkIOSAppStoreID = "fb_product_applink_ios_app_store_id"
+        static let appLinkIOSAppName = "fb_product_applink_ios_app_name"
+        static let appLinkIPhoneUrl = "fb_product_applink_iphone_url"
+        static let appLinkIPhoneAppStoreID = "fb_product_applink_iphone_app_store_id"
+        static let appLinkIPhoneAppName = "fb_product_applink_iphone_app_name"
+        static let appLinkIPadUrl = "fb_product_applink_ipad_url"
+        static let appLinkIPadAppStoreID = "fb_product_applink_ipad_app_store_id"
+        static let appLinkIPadAppName = "fb_product_applink_ipad_app_name"
+        static let appLinkAndroidUrl = "fb_product_applink_android_url"
+        static let appLinkAndroidPackage = "fb_product_applink_android_package"
+        static let appLinkAndroidAppName = "fb_product_applink_android_app_name"
+        static let appLinkWindowsPhoneUrl = "fb_product_applink_windows_phone_url"
+        static let appLinkWindowsPhoneAppID = "fb_product_applink_windows_phone_app_id"
+        static let appLinkWindowsPhoneAppName = "fb_product_applink_windows_phone_app_name"
     }
     
     enum Purchase {
@@ -176,6 +250,20 @@ enum Facebook {
         static let pushPayload = "fb_push_payload"
         static let push = "push"
     }
+    
+    enum Settings {
+        static let autoLogEventsEnabled = "auto_log_events_enabled"
+        static let autoInitEnabled = "auto_init_enabled"
+        static let advertiserIDCollectionEnabled = "advertiser_id_collection_enabled"
+    }
+    
+    enum User {
+        static let user = "user" // userData object
+        static let userParameter = "fb_user_value"
+        static let userParameterValue = "fb_user_key"
+        static let userId = "fb_user_id"
+    }
+    
 }
 
 
