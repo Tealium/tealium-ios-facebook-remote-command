@@ -1,0 +1,2 @@
+github "tealium/tealium-swift" "master"
+github "facebook/facebook-ios-sdk"
