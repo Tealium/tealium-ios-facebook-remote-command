@@ -61,12 +61,12 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb545412586003667</string>
+				<string>fb999999999999999</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
-	<string>545412586003667</string>
+	<string>999999999999999</string>
 	<key>FacebookDisplayName</key>
 	<string>TealiumExampleSwiftUI</string>
 	<key>LSApplicationQueriesSchemes</key>
