@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1DCDE0D41C6F993211D10C6B /* Pods_TealiumFacebookExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F42AE1DC101D03B1452479 /* Pods_TealiumFacebookExample.framework */; };
 		CF9F5A7B237CAD730007FB0D /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F5A7A237CAD730007FB0D /* Profile.swift */; };
+		CF9F5A8C237DD9CC0007FB0D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F5A8B237DD9CC0007FB0D /* Product.swift */; };
+		CF9F5A8E237DD9DB0007FB0D /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F5A8D237DD9DB0007FB0D /* Purchase.swift */; };
+		CF9F5A91237DD9F50007FB0D /* Encodable+toDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F5A90237DD9F50007FB0D /* Encodable+toDictionary.swift */; };
 		CFA56111236106A60097583D /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA56110236106A60097583D /* ButtonView.swift */; };
 		CFA5C55A237B32F700D1C267 /* TealiumHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5C559237B32F700D1C267 /* TealiumHelper.swift */; };
 		CFB3683F2360CF7900CAEF99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB3683E2360CF7900CAEF99 /* AppDelegate.swift */; };
@@ -23,6 +26,9 @@
 /* Begin PBXFileReference section */
 		2E3265619E3095A2E90D380A /* Pods-TealiumFacebookExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TealiumFacebookExample.release.xcconfig"; path = "Target Support Files/Pods-TealiumFacebookExample/Pods-TealiumFacebookExample.release.xcconfig"; sourceTree = "<group>"; };
 		CF9F5A7A237CAD730007FB0D /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		CF9F5A8B237DD9CC0007FB0D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		CF9F5A8D237DD9DB0007FB0D /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
+		CF9F5A90237DD9F50007FB0D /* Encodable+toDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+toDictionary.swift"; sourceTree = "<group>"; };
 		CFA56110236106A60097583D /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		CFA5C559237B32F700D1C267 /* TealiumHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TealiumHelper.swift; sourceTree = "<group>"; };
 		CFB3683B2360CF7900CAEF99 /* TealiumFacebookExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TealiumFacebookExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,8 +68,18 @@
 			isa = PBXGroup;
 			children = (
 				CF9F5A7A237CAD730007FB0D /* Profile.swift */,
+				CF9F5A8B237DD9CC0007FB0D /* Product.swift */,
+				CF9F5A8D237DD9DB0007FB0D /* Purchase.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CF9F5A8F237DD9E40007FB0D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CF9F5A90237DD9F50007FB0D /* Encodable+toDictionary.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CFB368322360CF7900CAEF99 = {
@@ -97,6 +113,7 @@
 				CFB368442360CF7A00CAEF99 /* Assets.xcassets */,
 				CFB368492360CF7A00CAEF99 /* LaunchScreen.storyboard */,
 				CFB3684C2360CF7A00CAEF99 /* Info.plist */,
+				CF9F5A8F237DD9E40007FB0D /* Extensions */,
 				CFB368462360CF7A00CAEF99 /* Preview Content */,
 			);
 			path = TealiumFacebookExample;
@@ -235,7 +252,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFB3683F2360CF7900CAEF99 /* AppDelegate.swift in Sources */,
+				CF9F5A8C237DD9CC0007FB0D /* Product.swift in Sources */,
+				CF9F5A8E237DD9DB0007FB0D /* Purchase.swift in Sources */,
 				CFB368412360CF7900CAEF99 /* SceneDelegate.swift in Sources */,
+				CF9F5A91237DD9F50007FB0D /* Encodable+toDictionary.swift in Sources */,
 				CFA5C55A237B32F700D1C267 /* TealiumHelper.swift in Sources */,
 				CF9F5A7B237CAD730007FB0D /* Profile.swift in Sources */,
 				CFA56111236106A60097583D /* ButtonView.swift in Sources */,

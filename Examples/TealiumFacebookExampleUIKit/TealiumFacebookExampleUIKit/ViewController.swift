@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     }
 
     @objc func showInfoScreen() {
-        let alertController = UIAlertController(title: "Tealium Facebook 0.0.1", message: "Tealium Swift 1.8.1", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Tealium Facebook 0.0.1", message: "Tealium Swift 1.8.0", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertController, animated: true)
     }
@@ -46,15 +46,30 @@ class ViewController: UIViewController {
 
     
     @IBAction func logProductItem(_ sender: UIButton) {
-        TealiumHelper.trackEvent(title: "logProductItem", data: ["product_id": "abc123",
-                                                                 "product_name": "chocolate",
-                                                                 "product_price": 9.99])
+        let productItemData: [String: Any] = ["product_event_object":
+            ["product_id": "abc12354",
+             "product_availability": 1,
+             "product_condition": 2,
+             "product_description": "really cool",
+             "product_image_url": "https://link.to.image",
+             "product_url": "https://link.to.product",
+             "product_name": "some cool product",
+             "product_gtin": "ASDF235562SDFSDF",
+             "product_brand": "awesome brand",
+             "product_unit_price": 19.99,
+             "product_currency": "USD",
+             "product_parameters": ["productparameter1": "productparamvalue1",
+                                    "productparameter2": "22.00"]]]
+        TealiumHelper.trackEvent(title: "logProductItem", data: productItemData)
     }
     
     @IBAction func logPurchase(_ sender: UIButton) {
-        TealiumHelper.trackEvent(title: "logPurchase", data: ["purchase": ["product_id": "abc123",
-                                                                            "product_name": "chocolate",
-                                                                            "product_price": 9.99]])
+        let purchaseData: [String: Any] = ["purchase_object":
+            ["order_total": 19.99,
+             "order_currency": "USD",
+             "purchase_parameters": ["purchaseparameter1": "purchaseparamvalue1",
+                                     "purchaseparameter2": true]]]
+        TealiumHelper.trackEvent(title: "logPurchase", data: purchaseData)
     }
     
     @IBAction func flush(_ sender: UIButton) {

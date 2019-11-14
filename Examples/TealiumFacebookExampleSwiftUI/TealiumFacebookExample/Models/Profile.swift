@@ -9,19 +9,19 @@
 import Foundation
 
 struct Profile {
-    var userId: String
-    var userName: String
+    var customerId: String
+    var customerName: String
     var level: String
     var registrationMethod: String
     
-    static let `default` = Self(userId: "adventure",
-                                userName: "parzival",
+    static let `default` = Self(customerId: "adventure",
+                                customerName: "parzival",
                                 level: "99999999",
                                 registrationMethod: "extra life")
     
-    init(userId: String, userName: String, level: String, registrationMethod: String) {
-        self.userId = userId
-        self.userName = userName
+    init(customerId: String, customerName: String, level: String, registrationMethod: String) {
+        self.customerId = customerId
+        self.customerName = customerName
         self.level = level
         self.registrationMethod = registrationMethod
     }
