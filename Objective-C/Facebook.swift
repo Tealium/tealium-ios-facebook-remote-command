@@ -188,7 +188,7 @@ enum Facebook {
     
     enum Event {
         static let eventParameters = "event"
-        static let valueToSum = "fb_value_to_sum"
+        static let valueToSum = "_valueToSum"
         static let currency = "fb_currency"
         static let registrationMethod = "fb_registration_method"
         static let contentType = "fb_content_type"
