@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Used to convert command name to AppsFlyer Event Name
+/// Used to convert command name to Facebook Event Name
 struct EnumMap<T: CaseIterable & Hashable, U> {
     private let values: [T: U]
     
