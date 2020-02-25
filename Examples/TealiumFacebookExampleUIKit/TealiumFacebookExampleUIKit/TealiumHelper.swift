@@ -32,7 +32,7 @@ class TealiumHelper {
     private init() {
         config.logLevel = .verbose
         config.shouldUseRemotePublishSettings = false
-        config.batchingEnabled = false
+        
         tealium = Tealium(config: config,
                           enableCompletion: { [weak self] _ in
                               guard let self = self else { return }
