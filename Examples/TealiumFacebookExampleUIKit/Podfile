@@ -6,5 +6,11 @@ target 'TealiumFacebookExampleUIKit' do
   use_frameworks!
 
   # Pods for TealiumFacebookExampleUIKit
-  pod "TFB"
+  #!!! NOTE: Import TealiumFacebook instead of below 
+  pod 'TFB'
+  pod 'tealium-swift/TealiumLogger'
+  pod 'tealium-swift/TealiumTagManagement'
+  pod 'tealium-swift/TealiumAppData'
+  pod 'tealium-swift/TealiumDeviceData'
+  pod 'tealium-swift/TealiumLifecycle'
 end

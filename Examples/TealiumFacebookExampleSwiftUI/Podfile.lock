@@ -1,35 +1,51 @@
 PODS:
-  - FBSDKCoreKit (5.10.1):
-    - FBSDKCoreKit/Basics (= 5.10.1)
-    - FBSDKCoreKit/Core (= 5.10.1)
-  - FBSDKCoreKit/Basics (5.10.1)
-  - FBSDKCoreKit/Core (5.10.1):
+  - FBSDKCoreKit (6.0.0):
+    - FBSDKCoreKit/Basics (= 6.0.0)
+    - FBSDKCoreKit/Core (= 6.0.0)
+  - FBSDKCoreKit/Basics (6.0.0)
+  - FBSDKCoreKit/Core (6.0.0):
     - FBSDKCoreKit/Basics
-  - tealium-swift (1.7.1):
-    - tealium-swift/TealiumFull (= 1.7.1)
-  - tealium-swift/TealiumFull (1.7.1):
-    - TealiumCrashReporter
-  - TealiumCrashReporter (1.3.5)
-  - TFB (1.0.1):
+  - tealium-swift/Core (1.9.1)
+  - tealium-swift/TealiumAppData (1.9.1):
+    - tealium-swift/Core
+  - tealium-swift/TealiumDelegate (1.9.1):
+    - tealium-swift/Core
+  - tealium-swift/TealiumDeviceData (1.9.1):
+    - tealium-swift/Core
+  - tealium-swift/TealiumLifecycle (1.9.1):
+    - tealium-swift/Core
+  - tealium-swift/TealiumLogger (1.9.1):
+    - tealium-swift/Core
+  - tealium-swift/TealiumRemoteCommands (1.9.1):
+    - tealium-swift/Core
+  - tealium-swift/TealiumTagManagement (1.9.1):
+    - tealium-swift/Core
+  - TFB (1.0.2):
     - FBSDKCoreKit
-    - tealium-swift
+    - tealium-swift/Core
+    - tealium-swift/TealiumDelegate
+    - tealium-swift/TealiumRemoteCommands
+    - tealium-swift/TealiumTagManagement
 
 DEPENDENCIES:
+  - tealium-swift/TealiumAppData
+  - tealium-swift/TealiumDeviceData
+  - tealium-swift/TealiumLifecycle
+  - tealium-swift/TealiumLogger
+  - tealium-swift/TealiumTagManagement
   - TFB
 
 SPEC REPOS:
   trunk:
     - FBSDKCoreKit
     - tealium-swift
-    - TealiumCrashReporter
     - TFB
 
 SPEC CHECKSUMS:
-  FBSDKCoreKit: aa8887f21898ac5bcf07bef4fb253aa41c91be04
-  tealium-swift: d58c620f1af8522751773e5125334f32b6252ad3
-  TealiumCrashReporter: 74fbdd3703a65740c04e983cd0b360c673199b53
-  TFB: d581065f89f2bf34e0cfc8c7c357ef0a576af790
+  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
+  tealium-swift: bb99ff358f297765346ab98e416196420511a677
+  TFB: 4ee42420e138c93f1066ae2599cd2a3f0e906d04
 
-PODFILE CHECKSUM: 5054d652179d5c5dde1983b459cfc578b722f42d
+PODFILE CHECKSUM: 32852e3d2d9e9310ebeaed03375ecc8ef54d4440
 
 COCOAPODS: 1.8.4

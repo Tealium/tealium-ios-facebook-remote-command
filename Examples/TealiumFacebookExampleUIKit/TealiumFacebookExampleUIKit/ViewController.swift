@@ -23,7 +23,9 @@ class ViewController: UIViewController {
     }
 
     @objc func showInfoScreen() {
-        let alertController = UIAlertController(title: "Tealium Facebook 0.0.1", message: "Tealium Swift 1.8.0", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Tealium Facebook \(tealiumFacebookVersion)",
+            message: "Tealium Swift \(tealiumLibraryVersion)",
+            preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertController, animated: true)
     }
