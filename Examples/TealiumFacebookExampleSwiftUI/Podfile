@@ -6,12 +6,10 @@ target 'TealiumFacebookExample' do
   use_frameworks!
 
   # Pods for TealiumFacebookExample
-
-  #!!! NOTE: Import TealiumFacebook instead of below 
-  pod 'TealiumFacebook', :path=> '/Users/christina/Projects/work-repos/github/tealium-ios-facebook-remote-command'
-  pod 'tealium-swift/TealiumLogger'
-  pod 'tealium-swift/TealiumTagManagement'
-  pod 'tealium-swift/TealiumAppData'
-  pod 'tealium-swift/TealiumDeviceData'
-  pod 'tealium-swift/TealiumLifecycle'
+  pod 'TealiumFacebook', '~> 1.0'
+  pod 'tealium-swift/TealiumLogger', '~> 1.9'
+  pod 'tealium-swift/TealiumTagManagement', '~> 1.9'
+  pod 'tealium-swift/TealiumAppData', '~> 1.9'
+  pod 'tealium-swift/TealiumDeviceData', '~> 1.9'
+  pod 'tealium-swift/TealiumLifecycle', '~> 1.9'
 end
