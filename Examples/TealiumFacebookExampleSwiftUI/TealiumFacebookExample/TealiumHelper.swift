@@ -8,10 +8,10 @@
 import Foundation
 import TealiumSwift
 import FBSDKCoreKit
-import TFB
+import TealiumFacebook
 
-let tealiumFacebookVersion = "0.0.1"
-let tealiumLibraryVersion = "1.9.1"
+let tealiumFacebookVersion = "1.0.0"
+let tealiumLibraryVersion = "1.9.3"
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"
@@ -40,8 +40,7 @@ class TealiumHelper {
                                   return
                               }
                               // MARK: Facebook
-                              let facebookCommand = FacebookCommand(facebookTracker: FacebookTracker())
-                              let facebookRemoteCommand = facebookCommand.remoteCommand()
+                              let facebookRemoteCommand = FacebookRemoteCommand().remoteCommand()
                               remoteCommands.add(facebookRemoteCommand)
                           })
 

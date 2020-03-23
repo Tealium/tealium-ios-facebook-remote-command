@@ -1,9 +1,9 @@
 PODS:
-  - FBSDKCoreKit (6.0.0):
-    - FBSDKCoreKit/Basics (= 6.0.0)
-    - FBSDKCoreKit/Core (= 6.0.0)
-  - FBSDKCoreKit/Basics (6.0.0)
-  - FBSDKCoreKit/Core (6.0.0):
+  - FBSDKCoreKit (6.2.0):
+    - FBSDKCoreKit/Basics (= 6.2.0)
+    - FBSDKCoreKit/Core (= 6.2.0)
+  - FBSDKCoreKit/Basics (6.2.0)
+  - FBSDKCoreKit/Core (6.2.0):
     - FBSDKCoreKit/Basics
   - tealium-swift/Core (1.9.1)
   - tealium-swift/TealiumAppData (1.9.1):
@@ -20,12 +20,12 @@ PODS:
     - tealium-swift/Core
   - tealium-swift/TealiumTagManagement (1.9.1):
     - tealium-swift/Core
-  - TFB (1.0.2):
-    - FBSDKCoreKit
-    - tealium-swift/Core
-    - tealium-swift/TealiumDelegate
-    - tealium-swift/TealiumRemoteCommands
-    - tealium-swift/TealiumTagManagement
+  - TealiumFacebook (1.0.0):
+    - FBSDKCoreKit (~> 6.0)
+    - tealium-swift/Core (~> 1.9)
+    - tealium-swift/TealiumDelegate (~> 1.9)
+    - tealium-swift/TealiumRemoteCommands (~> 1.9)
+    - tealium-swift/TealiumTagManagement (~> 1.9)
 
 DEPENDENCIES:
   - tealium-swift/TealiumAppData
@@ -33,19 +33,22 @@ DEPENDENCIES:
   - tealium-swift/TealiumLifecycle
   - tealium-swift/TealiumLogger
   - tealium-swift/TealiumTagManagement
-  - TFB
+  - TealiumFacebook (from `/Users/christina/Projects/work-repos/github/tealium-ios-facebook-remote-command`)
 
 SPEC REPOS:
   trunk:
     - FBSDKCoreKit
     - tealium-swift
-    - TFB
+
+EXTERNAL SOURCES:
+  TealiumFacebook:
+    :path: "/Users/christina/Projects/work-repos/github/tealium-ios-facebook-remote-command"
 
 SPEC CHECKSUMS:
-  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
+  FBSDKCoreKit: a7bb9f5ac56c1e11d5f8ae0b90a3610f8744b43a
   tealium-swift: bb99ff358f297765346ab98e416196420511a677
-  TFB: 4ee42420e138c93f1066ae2599cd2a3f0e906d04
+  TealiumFacebook: 9657652ba8f6c36d93600173798aaf6c01d79074
 
-PODFILE CHECKSUM: 0a73131a9a8c50ee1c6623ab54969ce1ec035344
+PODFILE CHECKSUM: b3d43941e1b1b0fe39d5206eb99f654e45de4078
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

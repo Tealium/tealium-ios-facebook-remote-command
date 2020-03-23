@@ -7,7 +7,7 @@ target 'TealiumFacebookExampleUIKit' do
 
   # Pods for TealiumFacebookExampleUIKit
   #!!! NOTE: Import TealiumFacebook instead of below 
-  pod 'TFB'
+  pod 'TealiumFacebook', :path=> '/Users/christina/Projects/work-repos/github/tealium-ios-facebook-remote-command'
   pod 'tealium-swift/TealiumLogger'
   pod 'tealium-swift/TealiumTagManagement'
   pod 'tealium-swift/TealiumAppData'
