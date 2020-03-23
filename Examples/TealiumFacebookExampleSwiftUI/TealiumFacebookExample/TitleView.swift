@@ -11,8 +11,8 @@ import SwiftUI
 struct TitleView: View {
     @State var alertShown = false
     var versions: Alert {
-        Alert(title: Text("Tealium Facebook 0.0.1"),
-              message: Text("Tealium Swift 1.8.0"),
+        Alert(title: Text("Tealium Facebook \(tealiumFacebookVersion)"),
+              message: Text("Tealium Swift \(tealiumLibraryVersion)"),
               dismissButton: Alert.Button.default(Text("Ok")))
     }
     var body: some View {

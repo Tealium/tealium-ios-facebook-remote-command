@@ -8,7 +8,10 @@
 import Foundation
 import TealiumSwift
 import FBSDKCoreKit
-import TFB
+import TealiumFacebook
+
+let tealiumFacebookVersion = "1.0.0"
+let tealiumLibraryVersion = "1.9.3"
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"
@@ -27,10 +30,9 @@ class TealiumHelper {
     var tealium: Tealium?
 
     private init() {
-        config.setLogLevel(logLevel: .verbose)
-        let list = TealiumModulesList(isWhitelist: false,
-                                      moduleNames: ["autotracking", "collect", "consentmanager"])
-        config.setModulesList(list)
+        config.logLevel = .verbose
+        config.shouldUseRemotePublishSettings = false
+        
         tealium = Tealium(config: config,
                           enableCompletion: { [weak self] _ in
                               guard let self = self else { return }
@@ -38,8 +40,7 @@ class TealiumHelper {
                                   return
                               }
                               // MARK: Facebook
-                              let facebookCommand = FacebookCommand(facebookTracker: FacebookTracker())
-                              let facebookRemoteCommand = facebookCommand.remoteCommand()
+                              let facebookRemoteCommand = FacebookRemoteCommand().remoteCommand()
                               remoteCommands.add(facebookRemoteCommand)
                           })
 

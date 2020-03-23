@@ -1,5 +1,5 @@
 //
-//  Facebook.swift
+//  FacebookConstants.swift
 //  TealiumRemoteCommand
 //
 //  Created by Christina Sund on 5/21/19.
@@ -105,7 +105,7 @@ struct FacebookUser: Decodable {
 }
 
 /// All keys associated with Facebook remote command
-enum Facebook {
+enum FacebookConstants {
     
     enum StandardEventNames: String, CaseIterable {
         case completedregistration

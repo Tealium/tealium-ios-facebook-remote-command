@@ -1,3 +1,3 @@
-binary "https://tags.tiqcdn.com/dle/tealiummobile/tealium-ios-carthage/tealium-carthage-plcrashreporter.json" "1.3.6"
-github "facebook/facebook-ios-sdk" "v5.10.0"
-github "tealium/tealium-swift" "faabf2036795b7edcf86981b98b61ab233866f70"
+github "facebook/facebook-ios-sdk" "v6.2.0"
+github "tealium/plcrashreporter" "1.3.9"
+github "tealium/tealium-swift" "1.9.3"

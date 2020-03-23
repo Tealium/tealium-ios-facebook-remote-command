@@ -6,5 +6,10 @@ target 'TealiumFacebookExampleUIKit' do
   use_frameworks!
 
   # Pods for TealiumFacebookExampleUIKit
-  pod "TFB"
+  pod 'TealiumFacebook', '~> 1.0'
+  pod 'tealium-swift/TealiumLogger', '~> 1.9'
+  pod 'tealium-swift/TealiumTagManagement', '~> 1.9'
+  pod 'tealium-swift/TealiumAppData', '~> 1.9'
+  pod 'tealium-swift/TealiumDeviceData', '~> 1.9'
+  pod 'tealium-swift/TealiumLifecycle', '~> 1.9'
 end
