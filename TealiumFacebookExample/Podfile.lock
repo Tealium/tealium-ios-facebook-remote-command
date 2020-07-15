@@ -33,7 +33,7 @@ DEPENDENCIES:
   - tealium-swift/TealiumLifecycle (~> 1.9)
   - tealium-swift/TealiumLogger (~> 1.9)
   - tealium-swift/TealiumTagManagement (~> 1.9)
-  - TealiumFacebook (from `../../`)
+  - TealiumFacebook (from `../`)
 
 SPEC REPOS:
   trunk:
@@ -42,13 +42,13 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TealiumFacebook:
-    :path: "../../"
+    :path: "../"
 
 SPEC CHECKSUMS:
   FBSDKCoreKit: ada5c8a05188daefc9addb985c52b8a1b26da519
   tealium-swift: 787575f86c7470a345e858356a9009bcff24fe77
   TealiumFacebook: daae781c1d6a91e2831496704f552e3ecfd48dc9
 
-PODFILE CHECKSUM: ec3eadc52e30d42eb3b56de1d4e7e802d1dbecac
+PODFILE CHECKSUM: dc60914b40078f90e8732deaf5c6139cd49c91b3
 
 COCOAPODS: 1.9.1
