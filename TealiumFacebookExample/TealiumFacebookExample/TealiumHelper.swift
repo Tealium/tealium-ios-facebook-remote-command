@@ -11,11 +11,11 @@ import FBSDKCoreKit
 import TealiumFacebook
 
 let tealiumFacebookVersion = "1.0.0"
-let tealiumLibraryVersion = "1.9.3"
+let tealiumLibraryVersion = "1.9.5"
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"
-    static let profile = "facebook"
+    static let profile = "facebook-tag"
     static let environment = "dev"
 }
 
@@ -30,7 +30,7 @@ class TealiumHelper {
     var tealium: Tealium?
 
     private init() {
-        config.logLevel = .verbose
+        config.logLevel = .none 
         config.shouldUseRemotePublishSettings = false
         
         tealium = Tealium(config: config,
@@ -40,7 +40,7 @@ class TealiumHelper {
                                   return
                               }
                               // MARK: Facebook
-                              let facebookRemoteCommand = FacebookRemoteCommand().remoteCommand()
+                            let facebookRemoteCommand = FacebookRemoteCommand().remoteCommand()
                               remoteCommands.add(facebookRemoteCommand)
                           })
 

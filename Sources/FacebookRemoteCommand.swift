@@ -20,6 +20,7 @@ import FBSDKCoreKit
 public class FacebookRemoteCommand {
 
     var facebookTracker: FacebookTrackable
+    var debug = false
 
     public init(facebookTracker: FacebookTrackable = FacebookTracker()) {
         self.facebookTracker = facebookTracker
@@ -29,10 +30,14 @@ public class FacebookRemoteCommand {
     public func remoteCommand() -> TealiumRemoteCommand {
         return TealiumRemoteCommand(commandId: "facebook", description: "Facebook Remote Command") { response in
             let payload = response.payload()
-            guard let command = payload[TealiumRemoteCommand.commandName] as? String else {
+            guard let command = payload[FacebookConstants.commandName] as? String else {
                 return
             }
-            let commands = command.split(separator: ",")
+            if let tagDebug = payload[FacebookConstants.debug] as? Bool,
+                tagDebug == true {
+                self.debug = true
+            }
+            let commands = command.split(separator: FacebookConstants.separator)
             let facebookCommands = commands.map { command in
                 return command.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             }
@@ -41,142 +46,202 @@ public class FacebookRemoteCommand {
     }
 
     public func parseCommands(_ commands: [String], payload: [String: Any]) {
-        commands.forEach { command in
-            let lowercasedCommand = command.lowercased()
-            switch lowercasedCommand {
-            case FacebookConstants.Commands.setAutoLogAppEventsEnabled:
+        commands.forEach {
+            let command = FacebookConstants.Commands(rawValue: $0.lowercased())
+            switch command {
+            case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
-                    print("\(FacebookConstants.Error.prepend)setAutoLogAppEventsEnabled - \(FacebookConstants.Settings.autoLogEventsEnabled) must be populated.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)setAutoLogAppEventsEnabled - \(FacebookConstants.Settings.autoLogEventsEnabled) must be populated.")
+                    }
                     return
                 }
                 return self.facebookTracker.setAutoLogAppEventsEnabled(autoLogEvents)
-            case FacebookConstants.Commands.setAutoInitEnabled:
+            case .setAutoInitEnabled:
                 guard let autoInit = payload[FacebookConstants.Settings.autoInitEnabled] as? Bool else {
-                    print("\(FacebookConstants.Error.prepend)setAutoInitEnabled - \(FacebookConstants.Settings.autoInitEnabled) must be populated.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)setAutoInitEnabled - \(FacebookConstants.Settings.autoInitEnabled) must be populated.")
+                    }
                     return
                 }
                 return self.facebookTracker.setAutoInitEnabled(autoInit)
-            case FacebookConstants.Commands.enableAdvertiserIDCollection:
+            case .enableAdvertiserIDCollection:
                 guard let enableAidCollection = payload[FacebookConstants.Settings.advertiserIDCollectionEnabled] as? Bool else {
-                    print("\(FacebookConstants.Error.prepend)enableAdvertiserIDCollection - \(FacebookConstants.Settings.advertiserIDCollectionEnabled) must be populated.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)enableAdvertiserIDCollection - \(FacebookConstants.Settings.advertiserIDCollectionEnabled) must be populated.")
+                    }
                     return
                 }
                 return self.facebookTracker.enableAdvertiserIDCollection(enableAidCollection)
-            case FacebookConstants.Commands.logPurchase:
+            case .logPurchase:
                 if let purchase = payload[FacebookConstants.Purchase.purchase] as? [String: Any],
-                    let amount = purchase[FacebookConstants.Purchase.purchaseAmount] as? Double,
+                    let amount = purchase[FacebookConstants.Purchase.purchaseAmount] as? String,
+                    let value = Double(amount),
                     let currency = purchase[FacebookConstants.Purchase.purchaseCurrency] as? String {
                     guard let parameters = purchase[FacebookConstants.Purchase.purchaseParameters] as? [String: Any] else {
-                        return self.facebookTracker.logPurchase(of: amount, with: currency)
+                        return self.facebookTracker.logPurchase(of: value, with: currency)
                     }
-                    return self.facebookTracker.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
+                    return self.facebookTracker.logPurchase(of: value, with: currency, and: typeCheck(parameters))
                 } else {
-                    print("\(FacebookConstants.Error.prepend)logPurchase - Required variables do not exist in the payload.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)logPurchase - Required variables do not exist in the payload.")
+                    }
                 }
-            case FacebookConstants.Commands.setUser:
+            case .setUser:
                 guard let userData = payload[FacebookConstants.User.user] as? [String: String] else {
-                    print("\(FacebookConstants.Error.prepend)setUser - User object must be populated.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)setUser - User object must be populated.")
+                    }
                     return
                 }
                 do {
                     let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
                     return self.facebookTracker.setUser(from: json)
                 } catch {
-                    print("\(FacebookConstants.Error.prepend)setUser - Could not convert userData to json.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)setUser - Could not convert userData to json.")
+                    }
                 }
-            case FacebookConstants.Commands.setUserId:
+            case .setUserId:
                 guard let userId = payload[FacebookConstants.User.userId] as? String else {
-                    print("\(FacebookConstants.Error.prepend)setUserId - User id must be poulated.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)setUserId - User id must be poulated.")
+                    }
                     return
                 }
                 self.facebookTracker.setUserId(to: userId)
-            case FacebookConstants.Commands.clearUserId:
+            case .clearUserId:
                 self.facebookTracker.clearUserId()
-            case FacebookConstants.Commands.clearUser:
+            case .clearUser:
                 self.facebookTracker.clearUser()
-            case FacebookConstants.Commands.updateUserValue:
+            case .updateUserValue:
                 if let userValue = payload[FacebookConstants.User.userParameterValue] as? String,
                     let userKey = payload[FacebookConstants.User.userParameter] as? String {
                     return self.facebookTracker.setUser(value: userValue, for: userKey)
                 } else {
-                    print("""
-                        \(FacebookConstants.Error.prepend)updateUserValue - \(FacebookConstants.User.userParameter)
-                               and \(FacebookConstants.User.userParameterValue) must be populated.
-                        """)
+                    if debug {
+                        print("""
+                            \(FacebookConstants.errorPrefix)updateUserValue - \(FacebookConstants.User.userParameter)
+                                   and \(FacebookConstants.User.userParameterValue) must be populated.
+                            """)
+                    }
                 }
-            case FacebookConstants.Commands.logProductItem:
-                guard let productItemData = payload[FacebookConstants.Product.productItem] as? [String: Any] else {
-                    print("\(FacebookConstants.Error.prepend)logProductItem - Product item object must be populated.")
+            case .logProductItem:
+                guard let productItemData = payload[FacebookConstants.Product.productItem] as? [String: Any],
+                    let productId = productItemData["fb_product_item_id"] as? [String] else {
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)logProductItem - Product item object must be populated with all required parameters.")
+                    }
                     return
                 }
-                do {
-                    let json = try JSONSerialization.data(withJSONObject: productItemData, options: .prettyPrinted)
-                    return self.facebookTracker.logProductItem(using: json)
-                } catch {
-                    print("\(FacebookConstants.Error.prepend)logProductItem - Could not convert productItemData to json.")
+                productId.enumerated().forEach {
+                    var temp = [String: Any]()
+                    let offset = $0.offset
+                    temp = productItemData.reduce(into: [String: Any](), { result, dictionary in
+                        switch dictionary.value {
+                            case let val as [String]:
+                                result[dictionary.key] = val[offset]
+                            case let val as [Int]:
+                                result[dictionary.key] = val[offset]
+                            case let val as [Double]:
+                                result[dictionary.key] = val[offset]
+                            case let val as [Float]:
+                                result[dictionary.key] = val[offset]
+                            case let val as [Bool]:
+                                result[dictionary.key] = val[offset]
+                            case let val as [[String: Any]]:
+                                result[dictionary.key] = val[offset]
+                            default:
+                                break
+                        }
+                    })
+                    do {
+                        let json = try JSONSerialization.data(withJSONObject: temp, options: .prettyPrinted)
+                        return self.facebookTracker.logProductItem(using: json)
+                    } catch {
+                        if debug {
+                            print("\(FacebookConstants.errorPrefix)logProductItem - Could not convert productItemData to json.")
+                        }
+                    }
                 }
-            case FacebookConstants.Commands.setFlushBehavior:
+            case .setFlushBehavior:
                 guard let flushBehavior = payload[FacebookConstants.Flush.flushBehavior] as? String, let flush = UInt(flushBehavior) else {
-                    print("\(FacebookConstants.Error.prepend)setFlushBehavior - \(FacebookConstants.Flush.flushBehavior) must be populated.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)setFlushBehavior - \(FacebookConstants.Flush.flushBehavior) must be populated.")
+                    }
                     return
                 }
                 return self.facebookTracker.setFlushBehavior(flushBehavior: UInt(flush))
-            case FacebookConstants.Commands.flush:
+            case .flush:
                 return self.facebookTracker.flush()
-            case FacebookConstants.Commands.achievedLevel:
+            case .achieveLevel:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.level] as? String else {
-                        print("\(FacebookConstants.Error.prepend)achievedLevel - \(FacebookConstants.Event.level) must be populated.")
+                        if debug {
+                            print("\(FacebookConstants.errorPrefix)achievedLevel - \(FacebookConstants.Event.level) must be populated.")
+                        }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.achievedLevel, with: payload)
-            case FacebookConstants.Commands.unlockedAchievement:
+                return self.facebookTracker.logEvent(AppEvents.Name.achievedLevel, with: typeCheck(eventParameters))
+            case .unlockAchievement:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.description] as? String else {
-                        print("\(FacebookConstants.Error.prepend)unlockedAchievement - \(FacebookConstants.Event.description) must be populated.")
+                        if debug {
+                            print("\(FacebookConstants.errorPrefix)unlockedAchievement - \(FacebookConstants.Event.description) must be populated.")
+                        }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.unlockedAchievement, with: eventParameters)
-            case FacebookConstants.Commands.completedRegistration:
+                return self.facebookTracker.logEvent(AppEvents.Name.unlockedAchievement, with: typeCheck(eventParameters))
+            case .completeRegistration:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.registrationMethod] as? String else {
-                        print("\(FacebookConstants.Error.prepend)completedRegistration - \(FacebookConstants.Event.registrationMethod) must be populated.")
+                        if debug {
+                            print("\(FacebookConstants.errorPrefix)completedRegistration - \(FacebookConstants.Event.registrationMethod) must be populated.")
+                        }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.completedRegistration, with: payload)
-            case FacebookConstants.Commands.completedTutorial:
+                return self.facebookTracker.logEvent(AppEvents.Name.completedRegistration, with: typeCheck(eventParameters))
+            case .completeTutorial:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.contentID] as? String else {
-                        print("\(FacebookConstants.Error.prepend)completedTutorial - \(FacebookConstants.Event.contentID) must be populated.")
+                        if debug {
+                            print("\(FacebookConstants.errorPrefix)completedTutorial - \(FacebookConstants.Event.contentID) must be populated.")
+                        }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.completedTutorial, with: eventParameters)
-            case FacebookConstants.Commands.initiatedCheckout:
+                return self.facebookTracker.logEvent(AppEvents.Name.completedTutorial, with: typeCheck(eventParameters))
+            case .initiateCheckout:
                 guard let value = payload[FacebookConstants.Event.valueToSum] as? Double else {
-                    print("\(FacebookConstants.Error.prepend)initiatedCheckout - \(FacebookConstants.Event.valueToSum) must be populated.")
+                    if debug {
+                        print("\(FacebookConstants.errorPrefix)initiatedCheckout - \(FacebookConstants.Event.valueToSum) must be populated.")
+                    }
                     return
                 }
                 return self.facebookTracker.logEvent(AppEvents.Name.initiatedCheckout, with: value)
-            case FacebookConstants.Commands.searched:
+            case .search:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.searchString] as? String else {
-                        print("\(FacebookConstants.Error.prepend)searched - \(FacebookConstants.Event.searchString) must be populated.")
+                        if debug {
+                            print("\(FacebookConstants.errorPrefix)searched - \(FacebookConstants.Event.searchString) must be populated.")
+                        }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.searched, with: eventParameters)
+                return self.facebookTracker.logEvent(AppEvents.Name.searched, with: typeCheck(eventParameters))
             default:
-                if let fbEvent = FacebookConstants.StandardEventNames(rawValue: lowercasedCommand) {
-                    let event = self.facebookEvent[fbEvent]
+                if let fbEvent = FacebookConstants.StandardEventNames(rawValue: $0.lowercased()) {
+                    print("💜 FACEBOOK logEvent no properties: \($0.lowercased()), fbEvent: \(fbEvent)")
+                    let event = AppEvents.Name(eventName: fbEvent)
                     if let valueToSum = payload[FacebookConstants.Event.valueToSum] as? Double {
                         if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
-                            return self.facebookTracker.logEvent(event, with: valueToSum, and: properties)
+                            return facebookTracker.logEvent(event, with: valueToSum, and: typeCheck(properties))
                         } else {
-                            return self.facebookTracker.logEvent(event, with: valueToSum)
+                            return facebookTracker.logEvent(event, with: valueToSum)
                         }
                     } else if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
-                        return self.facebookTracker.logEvent(event, with: properties)
+                        print("💜 FACEBOOK logEvent no properties: \($0.lowercased()), properties: \(properties), fbEvent: \(fbEvent)")
+                        return facebookTracker.logEvent(event, with: typeCheck(properties))
                     } else {
-                        return self.facebookTracker.logEvent(event)
+                        return facebookTracker.logEvent(event)
                     }
                 }
                 break
@@ -199,64 +264,62 @@ public class FacebookRemoteCommand {
                 fallthrough
             case is String:
                 result[dict.key] = dict.value
+            case let value as [Int]:
+                result[dict.key] = value[0]
+            case let value as [UInt]:
+                result[dict.key] = value[0]
+            case let value as [Bool]:
+                result[dict.key] = value[0]
+            case let value as [Float]:
+                result[dict.key] = value[0]
+            case let value as [Double]:
+                result[dict.key] = value[0]
+            case let value as [String]:
+                result[dict.key] = value[0]
             default:
-                print("\(FacebookConstants.Error.prepend)logPurchase - The purchase parameter values must either be a String or Int.")
+                print("\(FacebookConstants.errorPrefix)logPurchase - The purchase parameter values must either be a String or Int.")
                 break
             }
-        }
-    }
-    
-    let facebookEvent = EnumMap<FacebookConstants.StandardEventNames, AppEvents.Name> { command in
-        switch command {
-        case .achievedlevel:
-            return AppEvents.Name.achievedLevel
-        case .adclick:
-            return AppEvents.Name.adClick
-        case .adimpression:
-            return AppEvents.Name.adImpression
-        case .addedpaymentinfo:
-            return AppEvents.Name.addedPaymentInfo
-        case .addedtocart:
-            return AppEvents.Name.addedToCart
-        case .addedtowishlist:
-            return AppEvents.Name.addedToWishlist
-        case .completedregistration:
-            return AppEvents.Name.completedRegistration
-        case .completedtutorial:
-            return AppEvents.Name.completedTutorial
-        case .contact:
-            return AppEvents.Name.contact
-        case .viewedcontent:
-            return AppEvents.Name.viewedContent
-        case .searched:
-            return AppEvents.Name.searched
-        case .rated:
-            return AppEvents.Name.rated
-        case .customizeproduct:
-            return AppEvents.Name.customizeProduct
-        case .donate:
-            return AppEvents.Name.donate
-        case .findlocation:
-            return AppEvents.Name.findLocation
-        case .schedule:
-            return AppEvents.Name.schedule
-        case .starttrial:
-            return AppEvents.Name.startTrial
-        case .submitapplication:
-            return AppEvents.Name.submitApplication
-        case .subscribe:
-            return AppEvents.Name.subscribe
-        case .initiatedcheckout:
-            return AppEvents.Name.initiatedCheckout
-        case .unlockedachievement:
-            return AppEvents.Name.unlockedAchievement
-        case .spentcredits:
-            return AppEvents.Name.spentCredits
         }
     }
 
 }
 
-extension TealiumRemoteCommand {
-    static let commandName = "command_name"
+fileprivate extension AppEvents.Name {
+    init(eventName: FacebookConstants.StandardEventNames) {
+        switch eventName {
+        case .adclick:
+            self = AppEvents.Name.adClick
+        case .adimpression:
+            self = AppEvents.Name.adImpression
+        case .addpaymentinfo:
+            self = AppEvents.Name.addedPaymentInfo
+        case .addtocart:
+            self = AppEvents.Name.addedToCart
+        case .addtowishlist:
+            self = AppEvents.Name.addedToWishlist
+        case .contact:
+            self = AppEvents.Name.contact
+        case .viewedcontent:
+            self = AppEvents.Name.viewedContent
+        case .rate:
+            self = AppEvents.Name.rated
+        case .customizeproduct:
+            self = AppEvents.Name.customizeProduct
+        case .donate:
+            self = AppEvents.Name.donate
+        case .findlocation:
+            self = AppEvents.Name.findLocation
+        case .schedule:
+            self = AppEvents.Name.schedule
+        case .starttrial:
+            self = AppEvents.Name.startTrial
+        case .submitapplication:
+            self = AppEvents.Name.submitApplication
+        case .subscribe:
+            self = AppEvents.Name.subscribe
+        case .spentcredits:
+            self = AppEvents.Name.spentCredits
+        }
+    }
 }

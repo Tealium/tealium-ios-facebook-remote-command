@@ -14,14 +14,17 @@ struct ContentView: View {
     var purchase: Purchase
     var body: some View {
         VStack {
-           TitleView().padding(.bottom, 30)
+           TitleView()
+            //.padding(.bottom, 30)
             VStack(spacing: 30) {
-                ButtonView(event: "Set User", ["customer_id": profile.customerId])
-                ButtonView(event: "Update User Value", ["customer_name": profile.customerName])
-                ButtonView(event: "Achieve Level", ["event_object": ["level": profile.level]])
-                ButtonView(event: "Completed Registration", ["event_object": ["registration_method": profile.registrationMethod]])
-                ButtonView(event: "Log Product Item", product.data)
-                ButtonView(event: "Log Purchase", purchase.data)
+                ButtonView(event: "Set User", profile.user.dictionary)
+                ButtonView(event: "Set User Id", ["customer_id": profile.customerId])
+                ButtonView(event: "Update User Value", ["customer_update_key": "customer_last_name", "customer_update_value": "Smith"])
+                ButtonView(event: "Achieve Level", ["level": profile.level])
+                ButtonView(event: "Completed Registration", ["registration_method": profile.registrationMethod])
+                ButtonView(event: "Add To Cart", ["product_id": [product.id], "product_price": [product.price]])
+                ButtonView(event: "Log Product Item", product.dictionary)
+                ButtonView(event: "Log Purchase", purchase.dictionary)
                 ButtonView(event: "Flush")
             }
             Spacer()
@@ -49,6 +52,14 @@ struct ContentView_Previews: PreviewProvider {
             ContentView(profile: Profile.default, product: Product.default, purchase: Purchase.default)
                .previewDevice(PreviewDevice(rawValue: "iPad Pro (11-inch)"))
                .previewDisplayName("iPad Pro (11-inch)")
+            
+            ContentView(profile: Profile.default, product: Product.default, purchase: Purchase.default)
+               .previewDevice(PreviewDevice(rawValue: "iPhone SE (1st gen)"))
+               .previewDisplayName("iPhone SE (1st gen)")
+            
+            ContentView(profile: Profile.default, product: Product.default, purchase: Purchase.default)
+               .previewDevice(PreviewDevice(rawValue: "iPhone SE (2nd gen)"))
+               .previewDisplayName("iPhone SE (2nd gen)")
         }
     }
 }

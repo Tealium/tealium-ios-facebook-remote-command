@@ -20,7 +20,8 @@ struct Product: Encodable {
     var brand: String
     var price: Double
     var currency: String
-    var parameters: [String: String]
+    var onlineStoreId: String // custom - product_parameters object
+    var bulkDiscountPercentage: String // custom - product_parameters object
 
     static let `default` = Self(id: "abc123",
         availability: 1,
@@ -32,10 +33,10 @@ struct Product: Encodable {
         gtin: "ASDF235562SDFSDF",
         brand: "awesome brand",
         price: 19.99, currency: "USD",
-        parameters: ["productparameter1": "productparamvalue1",
-                     "productparameter2": "22.00"]
+        onlineStoreId: "ABC234SDF",
+        bulkDiscountPercentage: "15"
     )
-
+    
     init(id: String,
          availability: Int,
          condition: Int,
@@ -47,7 +48,8 @@ struct Product: Encodable {
          brand: String,
          price: Double,
          currency: String,
-         parameters: [String: String]) {
+         onlineStoreId: String,
+         bulkDiscountPercentage: String) {
         self.id = id
         self.availability = availability
         self.condition = condition
@@ -59,11 +61,24 @@ struct Product: Encodable {
         self.brand = brand
         self.price = price
         self.currency = currency
-        self.parameters = parameters
+        self.onlineStoreId = onlineStoreId
+        self.bulkDiscountPercentage = bulkDiscountPercentage
     }
     
-    var data: [String: Any] {
-        return ["purchse_object": Product.default.dictionary ?? [String: Any]()]
+    var dictionary: [String: Any] {
+        ["product_id": [id],
+         "product_availability": [availability],
+         "product_condition": [condition],
+         "product_description": [description],
+         "product_image_url": [imageUrl],
+         "product_url": [url],
+         "product_name": [name],
+         "product_gtin": [gtin],
+         "product_brand": [brand],
+         "product_unit_price": [price],
+         "currency": currency,
+         "online_store_id": [onlineStoreId],
+         "product_bulk_discount": [bulkDiscountPercentage]]
     }
 
 }

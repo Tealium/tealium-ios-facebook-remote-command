@@ -104,12 +104,12 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
         do {
             let product = try JSONDecoder().decode(FacebookProductItem.self, from: data)
             guard let availability = AppEvents.ProductAvailability(rawValue: product.productAvailablility.convertToUInt), let condition = AppEvents.ProductCondition(rawValue: product.productCondition.convertToUInt) else {
-                print("\(FacebookConstants.Error.prepend)logProductItem - Product availability and condition are required, the type should be Integer")
+                print("\(FacebookConstants.errorPrefix)logProductItem - Product availability and condition are required, the type should be Integer")
                 return
             }
             AppEvents.logProductItem(product.productId, availability: availability, condition: condition, description: product.productDescription, imageLink: product.productImageLink, link: product.productLink, title: product.productTitle, priceAmount: product.productPrice, currency: product.productCurrency, gtin: product.productGtin, mpn: product.productMpn, brand: product.productBrand, parameters: product.productParameters)
         } catch {
-            print("\(FacebookConstants.Error.prepend)logProductItem - Unable to decode product item")
+            print("\(FacebookConstants.errorPrefix)logProductItem - Unable to decode product item: \(error)")
         }
         
 
@@ -125,7 +125,7 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
             let user = try JSONDecoder().decode(FacebookUser.self, from: data)
             AppEvents.setUser(email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, dateOfBirth: user.dob, gender: user.gender, city: user.city, state: user.state, zip: user.zip, country: user.country)
         } catch {
-            print("\(FacebookConstants.Error.prepend)setUser - Could not decode UserParameters: \(error)")
+            print("\(FacebookConstants.errorPrefix)setUser - Could not decode UserParameters: \(error)")
         }
     }
     
@@ -144,7 +144,7 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
     // MARK: Flush Events
     public func setFlushBehavior(flushBehavior: UInt) {
         guard let flush = AppEvents.FlushBehavior(rawValue: flushBehavior) else {
-            print("\(FacebookConstants.Error.prepend)Could not set flush behavior because the value is invalid")
+            print("\(FacebookConstants.errorPrefix)Could not set flush behavior because the value is invalid")
             return
         }
         AppEvents.flushBehavior = flush
