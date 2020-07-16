@@ -22,7 +22,7 @@ struct ContentView: View {
                     ButtonView(event: "Update User Value", ["customer_update_key": "customer_last_name", "customer_update_value": "Smith"])
                     ButtonView(event: "Achieve Level", ["level": profile.level])
                     ButtonView(event: "Completed Registration", ["registration_method": profile.registrationMethod])
-                    ButtonView(event: "Add To Cart", ["product_id": [product.id], "product_price": [product.price]])
+                    ButtonView(event: "Add To Cart", ["product_id": [product.id], "product_unit_price": [product.price]])
                     ButtonView(event: "Log Product Item", product.dictionary)
                     ButtonView(event: "Log Purchase", purchase.dictionary)
                     ButtonView(event: "Flush")
