@@ -33,9 +33,8 @@ public class FacebookRemoteCommand {
             guard let command = payload[FacebookConstants.commandName] as? String else {
                 return
             }
-            if let tagDebug = payload[FacebookConstants.debug] as? Bool,
-                tagDebug == true {
-                self.debug = true
+            if let tagDebug = payload[FacebookConstants.debug] as? Bool {
+                self.debug = tagDebug
             }
             let commands = command.split(separator: FacebookConstants.separator)
             let facebookCommands = commands.map { command in
@@ -94,14 +93,7 @@ public class FacebookRemoteCommand {
                     }
                     return
                 }
-                do {
-                    let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
-                    return self.facebookTracker.setUser(from: json)
-                } catch {
-                    if debug {
-                        print("\(FacebookConstants.errorPrefix)setUser - Could not convert userData to json.")
-                    }
-                }
+                setUser(with: userData)
             case .setUserId:
                 guard let userId = payload[FacebookConstants.User.userId] as? String else {
                     if debug {
@@ -127,43 +119,13 @@ public class FacebookRemoteCommand {
                     }
                 }
             case .logProductItem:
-                guard let productItemData = payload[FacebookConstants.Product.productItem] as? [String: Any],
-                    let productId = productItemData["fb_product_item_id"] as? [String] else {
+                guard let productItemData = payload[FacebookConstants.Product.productItem] as? [String: Any] else {
                     if debug {
                         print("\(FacebookConstants.errorPrefix)logProductItem - Product item object must be populated with all required parameters.")
                     }
                     return
                 }
-                productId.enumerated().forEach {
-                    var temp = [String: Any]()
-                    let offset = $0.offset
-                    temp = productItemData.reduce(into: [String: Any](), { result, dictionary in
-                        switch dictionary.value {
-                            case let val as [String]:
-                                result[dictionary.key] = val[offset]
-                            case let val as [Int]:
-                                result[dictionary.key] = val[offset]
-                            case let val as [Double]:
-                                result[dictionary.key] = val[offset]
-                            case let val as [Float]:
-                                result[dictionary.key] = val[offset]
-                            case let val as [Bool]:
-                                result[dictionary.key] = val[offset]
-                            case let val as [[String: Any]]:
-                                result[dictionary.key] = val[offset]
-                            default:
-                                break
-                        }
-                    })
-                    do {
-                        let json = try JSONSerialization.data(withJSONObject: temp, options: .prettyPrinted)
-                        return self.facebookTracker.logProductItem(using: json)
-                    } catch {
-                        if debug {
-                            print("\(FacebookConstants.errorPrefix)logProductItem - Could not convert productItemData to json.")
-                        }
-                    }
-                }
+                logProductItem(with: productItemData)
             case .setFlushBehavior:
                 guard let flushBehavior = payload[FacebookConstants.Flush.flushBehavior] as? String, let flush = UInt(flushBehavior) else {
                     if debug {
@@ -229,7 +191,6 @@ public class FacebookRemoteCommand {
                 return self.facebookTracker.logEvent(AppEvents.Name.searched, with: typeCheck(eventParameters))
             default:
                 if let fbEvent = FacebookConstants.StandardEventNames(rawValue: $0.lowercased()) {
-                    print("💜 FACEBOOK logEvent no properties: \($0.lowercased()), fbEvent: \(fbEvent)")
                     let event = AppEvents.Name(eventName: fbEvent)
                     if let valueToSum = payload[FacebookConstants.Event.valueToSum] as? Double {
                         if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
@@ -238,7 +199,6 @@ public class FacebookRemoteCommand {
                             return facebookTracker.logEvent(event, with: valueToSum)
                         }
                     } else if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
-                        print("💜 FACEBOOK logEvent no properties: \($0.lowercased()), properties: \(properties), fbEvent: \(fbEvent)")
                         return facebookTracker.logEvent(event, with: typeCheck(properties))
                     } else {
                         return facebookTracker.logEvent(event)
@@ -249,7 +209,11 @@ public class FacebookRemoteCommand {
         }
     }
 
-    func typeCheck(_ params: [String: Any]) -> [String: Any] {
+    private func typeCheck(_ params: [String: Any], and offset: Int? = nil) -> [String: Any] {
+        var index = 0
+        if let offset = offset {
+            index = offset
+        }
         return params.reduce(into: [String: Any]()) { result, dict in
             switch dict.value {
             case is Int:
@@ -265,20 +229,53 @@ public class FacebookRemoteCommand {
             case is String:
                 result[dict.key] = dict.value
             case let value as [Int]:
-                result[dict.key] = value[0]
+                result[dict.key] = value[index]
             case let value as [UInt]:
-                result[dict.key] = value[0]
+                result[dict.key] = value[index]
             case let value as [Bool]:
-                result[dict.key] = value[0]
+                result[dict.key] = value[index]
             case let value as [Float]:
-                result[dict.key] = value[0]
+                result[dict.key] = value[index]
             case let value as [Double]:
-                result[dict.key] = value[0]
+                result[dict.key] = value[index]
             case let value as [String]:
-                result[dict.key] = value[0]
+                result[dict.key] = value[index]
+            case let value as [String: Any]:
+                result[dict.key] = typeCheck(value)
             default:
-                print("\(FacebookConstants.errorPrefix)logPurchase - The purchase parameter values must either be a String or Int.")
+                print("\(FacebookConstants.errorPrefix)eCommerce - Parameter values must either be a String or Int.")
                 break
+            }
+        }
+    }
+    
+    private func logProductItem(with productData: [String: Any]) {
+        guard let productId = productData[FacebookConstants.Product.productId] as? [String] else {
+            if debug {
+                print("\(FacebookConstants.errorPrefix)logProductItem - Required parameters not populated.")
+            }
+            return
+        }
+        productId.enumerated().forEach {
+            let validatedProductData = typeCheck(productData, and: $0.offset)
+            do {
+                let json = try JSONSerialization.data(withJSONObject: validatedProductData, options: .prettyPrinted)
+                return self.facebookTracker.logProductItem(using: json)
+            } catch {
+                if debug {
+                    print("\(FacebookConstants.errorPrefix)logProductItem - Could not convert productItemData to json.")
+                }
+            }
+        }
+    }
+    
+    private func setUser(with userData: [String: Any]) {
+        do {
+            let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
+            return self.facebookTracker.setUser(from: json)
+        } catch {
+            if debug {
+                print("\(FacebookConstants.errorPrefix)setUser - Could not convert userData to json.")
             }
         }
     }

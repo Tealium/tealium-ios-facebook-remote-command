@@ -1,10 +1,9 @@
 PODS:
-  - FBSDKCoreKit (6.5.2):
-    - FBSDKCoreKit/Basics (= 6.5.2)
-    - FBSDKCoreKit/Core (= 6.5.2)
   - FBSDKCoreKit/Basics (6.5.2)
   - FBSDKCoreKit/Core (6.5.2):
     - FBSDKCoreKit/Basics
+  - FBSDKCoreKit/Swift (6.5.2):
+    - FBSDKCoreKit/Core
   - tealium-swift/Core (1.9.5)
   - tealium-swift/TealiumAppData (1.9.5):
     - tealium-swift/Core
@@ -21,7 +20,7 @@ PODS:
   - tealium-swift/TealiumTagManagement (1.9.5):
     - tealium-swift/Core
   - TealiumFacebook (0.0.1):
-    - FBSDKCoreKit (~> 6.0)
+    - FBSDKCoreKit/Swift
     - tealium-swift/Core (~> 1.9)
     - tealium-swift/TealiumDelegate (~> 1.9)
     - tealium-swift/TealiumRemoteCommands (~> 1.9)
@@ -47,7 +46,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FBSDKCoreKit: ada5c8a05188daefc9addb985c52b8a1b26da519
   tealium-swift: 787575f86c7470a345e858356a9009bcff24fe77
-  TealiumFacebook: daae781c1d6a91e2831496704f552e3ecfd48dc9
+  TealiumFacebook: 2d10fb37eac94872422a78346f806e984886fe4c
 
 PODFILE CHECKSUM: dc60914b40078f90e8732deaf5c6139cd49c91b3
 

@@ -67,7 +67,7 @@ extension TealiumHelper {
 
     // Init helper
     func initializeFacebook(application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         Settings.enableLoggingBehavior(.appEvents)
         AppEvents.activateApp()
     }
