@@ -1,9 +1,9 @@
 //
 //  FacebookRemoteCommand.swift
-//  TealiumRemoteCommand
+//  TealiumFacebook
 //
-//  Created by Christina Sund on 5/20/19.
-//  Copyright © 2019 Christina. All rights reserved.
+//  Created by Christina S on 5/20/19.
+//  Copyright © 2019 Tealium. All rights reserved.
 //
 
 import Foundation
@@ -12,42 +12,50 @@ import FBSDKCoreKit
     import TealiumSwift
 #else
     import TealiumCore
-    import TealiumDelegate
     import TealiumTagManagement
     import TealiumRemoteCommands
 #endif
 
-public class FacebookRemoteCommand {
+public class FacebookRemoteCommand: RemoteCommand {
 
-    var facebookTracker: FacebookTrackable
+    var facebookTracker: FacebookTrackable?
     var debug = false
 
-    public init(facebookTracker: FacebookTrackable = FacebookTracker()) {
+    public init(facebookTracker: FacebookTrackable = FacebookTracker(), type: RemoteCommandType = .webview) {
         self.facebookTracker = facebookTracker
+        weak var selfWorkaround: FacebookRemoteCommand?
+        super.init(commandId: FacebookConstants.commandId,
+                   description: FacebookConstants.description,
+            type: type,
+            completion: { response in
+                guard let payload = response.payload else {
+                    return
+                }
+                selfWorkaround?.processRemoteCommand(with: payload)
+            })
+        selfWorkaround = self
     }
 
-    /// Parses the remote command
-    public func remoteCommand() -> TealiumRemoteCommand {
-        return TealiumRemoteCommand(commandId: "facebook", description: "Facebook Remote Command") { response in
-            let payload = response.payload()
-            guard let command = payload[FacebookConstants.commandName] as? String else {
+    func processRemoteCommand(with payload: [String: Any]) {
+        guard let facebookTracker = facebookTracker,
+            let command = payload[FacebookConstants.commandName] as? String else {
                 return
-            }
-            if let tagDebug = payload[FacebookConstants.debug] as? Bool {
-                self.debug = tagDebug
-            }
-            let commands = command.split(separator: FacebookConstants.separator)
-            let facebookCommands = commands.map { command in
-                return command.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            }
-            self.parseCommands(facebookCommands, payload: payload)
         }
-    }
+        if let tagDebug = payload[FacebookConstants.debug] as? Bool,
+            tagDebug == true {
+            debug = true
+        }
+        let commands = command.split(separator: FacebookConstants.separator)
+        let facebookCommands = commands.map { command in
+            return command.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        }
 
-    public func parseCommands(_ commands: [String], payload: [String: Any]) {
-        commands.forEach {
+        facebookCommands.forEach {
             let command = FacebookConstants.Commands(rawValue: $0.lowercased())
+
             switch command {
+            case .initialize:
+                facebookTracker.initialize()
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {
@@ -55,15 +63,7 @@ public class FacebookRemoteCommand {
                     }
                     return
                 }
-                return self.facebookTracker.setAutoLogAppEventsEnabled(autoLogEvents)
-            case .setAutoInitEnabled:
-                guard let autoInit = payload[FacebookConstants.Settings.autoInitEnabled] as? Bool else {
-                    if debug {
-                        print("\(FacebookConstants.errorPrefix)setAutoInitEnabled - \(FacebookConstants.Settings.autoInitEnabled) must be populated.")
-                    }
-                    return
-                }
-                return self.facebookTracker.setAutoInitEnabled(autoInit)
+                return facebookTracker.setAutoLogAppEventsEnabled(autoLogEvents)
             case .enableAdvertiserIDCollection:
                 guard let enableAidCollection = payload[FacebookConstants.Settings.advertiserIDCollectionEnabled] as? Bool else {
                     if debug {
@@ -71,21 +71,33 @@ public class FacebookRemoteCommand {
                     }
                     return
                 }
-                return self.facebookTracker.enableAdvertiserIDCollection(enableAidCollection)
+                return facebookTracker.enableAdvertiserIDCollection(enableAidCollection)
             case .logPurchase:
-                if let purchase = payload[FacebookConstants.Purchase.purchase] as? [String: Any],
-                    let amount = purchase[FacebookConstants.Purchase.purchaseAmount] as? String,
-                    let value = Double(amount),
-                    let currency = purchase[FacebookConstants.Purchase.purchaseCurrency] as? String {
-                    guard let parameters = purchase[FacebookConstants.Purchase.purchaseParameters] as? [String: Any] else {
-                        return self.facebookTracker.logPurchase(of: value, with: currency)
-                    }
-                    return self.facebookTracker.logPurchase(of: value, with: currency, and: typeCheck(parameters))
-                } else {
+                var amount: Double = 0.0
+                guard let purchase = payload[FacebookConstants.Purchase.purchase] as? [String: Any],
+                      let currency = purchase[FacebookConstants.Purchase.purchaseCurrency] as? String else {
                     if debug {
                         print("\(FacebookConstants.errorPrefix)logPurchase - Required variables do not exist in the payload.")
                     }
+                    return
                 }
+                
+                if let value = purchase[FacebookConstants.Purchase.purchaseAmount] as? String,
+                   let doubleValue = Double(value) {
+                    amount = doubleValue
+                } else if let value = purchase[FacebookConstants.Purchase.purchaseAmount] as? Double {
+                    amount = value
+                } else if let value = purchase[FacebookConstants.Purchase.purchaseAmount] as? Int {
+                    amount = Double(value)
+                }
+                
+                if let parameters = purchase[FacebookConstants.Purchase.purchaseParameters] as? [String: Any] {
+                    return facebookTracker.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
+                }
+                if let parameters = payload[FacebookConstants.Purchase.purchaseParameters] as? [String: Any] {
+                    return facebookTracker.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
+                }
+                return facebookTracker.logPurchase(of: amount, with: currency)
             case .setUser:
                 guard let userData = payload[FacebookConstants.User.user] as? [String: String] else {
                     if debug {
@@ -101,51 +113,48 @@ public class FacebookRemoteCommand {
                     }
                     return
                 }
-                self.facebookTracker.setUserId(to: userId)
+                facebookTracker.setUserId(to: userId)
             case .clearUserId:
-                self.facebookTracker.clearUserId()
+                facebookTracker.clearUserId()
             case .clearUser:
-                self.facebookTracker.clearUser()
+                facebookTracker.clearUser()
             case .updateUserValue:
                 if let userValue = payload[FacebookConstants.User.userParameterValue] as? String,
                     let userKey = payload[FacebookConstants.User.userParameter] as? String {
-                    return self.facebookTracker.setUser(value: userValue, for: userKey)
-                } else {
-                    if debug {
-                        print("""
-                            \(FacebookConstants.errorPrefix)updateUserValue - \(FacebookConstants.User.userParameter)
-                                   and \(FacebookConstants.User.userParameterValue) must be populated.
-                            """)
-                    }
+                    return facebookTracker.setUser(value: userValue, for: userKey)
+                } else if debug {
+                    print("""
+                        \(FacebookConstants.errorPrefix)updateUserValue - \(FacebookConstants.User.userParameter)
+                               and \(FacebookConstants.User.userParameterValue) must be populated.
+                        """)
                 }
             case .logProductItem:
-                guard let productItemData = payload[FacebookConstants.Product.productItem] as? [String: Any] else {
-                    if debug {
-                        print("\(FacebookConstants.errorPrefix)logProductItem - Product item object must be populated with all required parameters.")
-                    }
+                guard var productItemData = payload[FacebookConstants.Product.productItem] as? [String: Any] else {
+                    print("\(FacebookConstants.errorPrefix)logProductItem - Product item object must be populated.")
                     return
+                }
+                if let parameters = payload[FacebookConstants.Product.fbProductParameters] as? [String: Any] {
+                    productItemData[FacebookConstants.Product.fbProductParameters] = parameters
                 }
                 logProductItem(with: productItemData)
             case .setFlushBehavior:
                 guard let flushBehavior = payload[FacebookConstants.Flush.flushBehavior] as? String, let flush = UInt(flushBehavior) else {
-                    if debug {
-                        print("\(FacebookConstants.errorPrefix)setFlushBehavior - \(FacebookConstants.Flush.flushBehavior) must be populated.")
-                    }
+                    print("\(FacebookConstants.errorPrefix)setFlushBehavior - \(FacebookConstants.Flush.flushBehavior) must be populated.")
                     return
                 }
-                return self.facebookTracker.setFlushBehavior(flushBehavior: UInt(flush))
+                return facebookTracker.setFlushBehavior(flushBehavior: UInt(flush))
             case .flush:
-                return self.facebookTracker.flush()
-            case .achieveLevel:
+                return facebookTracker.flush()
+            case .achievedLevel:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
-                    let _ = eventParameters[FacebookConstants.Event.level] as? String else {
+                    let _ = eventParameters[FacebookConstants.Event.level] else {
                         if debug {
                             print("\(FacebookConstants.errorPrefix)achievedLevel - \(FacebookConstants.Event.level) must be populated.")
                         }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.achievedLevel, with: typeCheck(eventParameters))
-            case .unlockAchievement:
+                return facebookTracker.logEvent(AppEvents.Name.achievedLevel, with: typeCheck(eventParameters))
+            case .unlockedAchievement:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.description] as? String else {
                         if debug {
@@ -153,8 +162,8 @@ public class FacebookRemoteCommand {
                         }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.unlockedAchievement, with: typeCheck(eventParameters))
-            case .completeRegistration:
+                return facebookTracker.logEvent(AppEvents.Name.unlockedAchievement, with: typeCheck(eventParameters))
+            case .completedRegistration:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.registrationMethod] as? String else {
                         if debug {
@@ -162,8 +171,8 @@ public class FacebookRemoteCommand {
                         }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.completedRegistration, with: typeCheck(eventParameters))
-            case .completeTutorial:
+                return facebookTracker.logEvent(AppEvents.Name.completedRegistration, with: typeCheck(eventParameters))
+            case .completedTutorial:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.contentID] as? String else {
                         if debug {
@@ -171,16 +180,16 @@ public class FacebookRemoteCommand {
                         }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.completedTutorial, with: typeCheck(eventParameters))
-            case .initiateCheckout:
+                return facebookTracker.logEvent(AppEvents.Name.completedTutorial, with: typeCheck(eventParameters))
+            case .initiatedCheckout:
                 guard let value = payload[FacebookConstants.Event.valueToSum] as? Double else {
                     if debug {
                         print("\(FacebookConstants.errorPrefix)initiatedCheckout - \(FacebookConstants.Event.valueToSum) must be populated.")
                     }
                     return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.initiatedCheckout, with: value)
-            case .search:
+                return facebookTracker.logEvent(AppEvents.Name.initiatedCheckout, with: value)
+            case .searched:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.searchString] as? String else {
                         if debug {
@@ -188,7 +197,7 @@ public class FacebookRemoteCommand {
                         }
                         return
                 }
-                return self.facebookTracker.logEvent(AppEvents.Name.searched, with: typeCheck(eventParameters))
+                return facebookTracker.logEvent(AppEvents.Name.searched, with: typeCheck(eventParameters))
             default:
                 if let fbEvent = FacebookConstants.StandardEventNames(rawValue: $0.lowercased()) {
                     let event = AppEvents.Name(eventName: fbEvent)
@@ -208,7 +217,7 @@ public class FacebookRemoteCommand {
             }
         }
     }
-
+    
     private func typeCheck(_ params: [String: Any], and offset: Int? = nil) -> [String: Any] {
         var index = 0
         if let offset = offset {
@@ -250,6 +259,22 @@ public class FacebookRemoteCommand {
     }
     
     private func logProductItem(with productData: [String: Any]) {
+        guard let facebookTracker = facebookTracker else {
+            return
+        }
+        
+        if let _ = productData[FacebookConstants.Product.productId] as? String {
+            let validatedProductData = typeCheck(productData)
+            do {
+                let json = try JSONSerialization.data(withJSONObject: validatedProductData, options: .prettyPrinted)
+                return facebookTracker.logProductItem(using: json)
+            } catch {
+                if debug {
+                    print("\(FacebookConstants.errorPrefix)logProductItem - Could not convert productItemData to json.")
+                }
+            }
+        }
+        
         guard let productId = productData[FacebookConstants.Product.productId] as? [String] else {
             if debug {
                 print("\(FacebookConstants.errorPrefix)logProductItem - Required parameters not populated.")
@@ -260,7 +285,7 @@ public class FacebookRemoteCommand {
             let validatedProductData = typeCheck(productData, and: $0.offset)
             do {
                 let json = try JSONSerialization.data(withJSONObject: validatedProductData, options: .prettyPrinted)
-                return self.facebookTracker.logProductItem(using: json)
+                return facebookTracker.logProductItem(using: json)
             } catch {
                 if debug {
                     print("\(FacebookConstants.errorPrefix)logProductItem - Could not convert productItemData to json.")
@@ -270,9 +295,12 @@ public class FacebookRemoteCommand {
     }
     
     private func setUser(with userData: [String: Any]) {
+        guard let facebookTracker = facebookTracker else {
+            return
+        }
         do {
             let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
-            return self.facebookTracker.setUser(from: json)
+            return facebookTracker.setUser(from: json)
         } catch {
             if debug {
                 print("\(FacebookConstants.errorPrefix)setUser - Could not convert userData to json.")
@@ -289,17 +317,17 @@ fileprivate extension AppEvents.Name {
             self = AppEvents.Name.adClick
         case .adimpression:
             self = AppEvents.Name.adImpression
-        case .addpaymentinfo:
+        case .addedpaymentinfo:
             self = AppEvents.Name.addedPaymentInfo
-        case .addtocart:
+        case .addedtocart:
             self = AppEvents.Name.addedToCart
-        case .addtowishlist:
+        case .addedtowishlist:
             self = AppEvents.Name.addedToWishlist
         case .contact:
             self = AppEvents.Name.contact
         case .viewedcontent:
             self = AppEvents.Name.viewedContent
-        case .rate:
+        case .rated:
             self = AppEvents.Name.rated
         case .customizeproduct:
             self = AppEvents.Name.customizeProduct

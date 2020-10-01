@@ -1,25 +1,23 @@
 //
 //  FacebookCommandTests.swift
-//  TealiumRemoteCommandTests
+//  TealiumFacebook
 //
 //  Created by Christina Sund on 5/22/19.
-//  Copyright © 2019 Christina. All rights reserved.
+//  Copyright © 2019 Tealium. All rights reserved.
 //
 
 import XCTest
 @testable import TealiumFacebook
 import TealiumRemoteCommands
-@testable import FBSDKCoreKit
+import FacebookCore
 
 class FacebookCommandTests: XCTestCase {
 
     let facebookTracker = FacebookTracker()
     var facebookCommand: FacebookRemoteCommand!
-    var remoteCommand: TealiumRemoteCommand!
 
     override func setUp() {
         facebookCommand = FacebookRemoteCommand(facebookTracker: facebookTracker)
-        remoteCommand = facebookCommand.remoteCommand()
     }
 
     override func tearDown() { }
@@ -104,7 +102,7 @@ class FacebookCommandTests: XCTestCase {
 
     func testConvertProductAvailability() {
         let availability = 1
-        guard let productAvailability: AppEvents.ProductAvailability = AppEvents.ProductAvailability(rawValue: availability.convertToUInt) else {
+        guard let productAvailability: AppEvents.ProductAvailability = AppEvents.ProductAvailability(rawValue: availability.toUInt) else {
             XCTFail("Could not convert product availability")
             return
         }
@@ -113,28 +111,11 @@ class FacebookCommandTests: XCTestCase {
 
     func testConvertProductCondition() {
         let condition = 2
-        guard let productCondition: AppEvents.ProductCondition = AppEvents.ProductCondition(rawValue: condition.convertToUInt) else {
+        guard let productCondition: AppEvents.ProductCondition = AppEvents.ProductCondition(rawValue: condition.toUInt) else {
             XCTFail("Could not convert product condition")
             return
         }
         XCTAssertEqual(AppEvents.ProductCondition.used, productCondition)
-    }
-    
-    func testTypeCheckReturnsExpectedDictionary() {
-        let input: [String: Any] = ["stringValue": "hello",
-                                    "intValue": 1,
-                                    "boolValue": true,
-                                    "doubleValue": 9.99,
-                                    "otherValue1": ["blah": "blah1"]]
-        let expectedKeys = ["stringValue","intValue","boolValue","doubleValue"]
-        
-        let actualOutput: [String: Any] = facebookCommand.typeCheck(input)
-        
-        let actualKeys = actualOutput.map { $0.key }
-        
-        XCTAssertEqual(4, actualOutput.count)
-        XCTAssertEqual(expectedKeys.sorted(), actualKeys.sorted())
-        
     }
 
 }

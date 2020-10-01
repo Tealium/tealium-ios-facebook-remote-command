@@ -30,10 +30,9 @@ Pod::Spec.new do |s|
     s.ios.source_files      = "Sources/*.{swift}"
 
     # ――― Dependencies ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-    s.ios.dependency 'tealium-swift/Core', ' ~> 1.9'
-    s.ios.dependency 'tealium-swift/TealiumRemoteCommands', ' ~> 1.9'
-    s.ios.dependency 'tealium-swift/TealiumDelegate', ' ~> 1.9'
-    s.ios.dependency 'tealium-swift/TealiumTagManagement', ' ~> 1.9'
-    s.ios.dependency 'FBSDKCoreKit/Swift'
+    s.ios.dependency 'tealium-swift/Core', ' ~> 2.1'
+    s.ios.dependency 'tealium-swift/TealiumRemoteCommands', ' ~> 2.1'
+    s.ios.dependency 'tealium-swift/TealiumTagManagement', ' ~> 2.1'
+    s.ios.dependency 'FBSDKCoreKit'
 
 end

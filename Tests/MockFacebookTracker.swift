@@ -1,9 +1,9 @@
 //
 //  MockFacebookTracker.swift
-//  TealiumRemoteCommandTests
+//  TealiumFacebook
 //
 //  Created by Christina Sund on 5/22/19.
-//  Copyright © 2019 Christina. All rights reserved.
+//  Copyright © 2019 Tealium. All rights reserved.
 //
 
 import Foundation
@@ -11,7 +11,8 @@ import Foundation
 @testable import FBSDKCoreKit
 
 class MockFacebookTracker: FacebookTrackable {
-
+    
+    var initializeCount = 0
     var setAutoLogAppEventsEnabledCount = 0
     var setAutoInitEnabledCount = 0
     var enableAdvertiserIDCollectionCount = 0
@@ -31,6 +32,10 @@ class MockFacebookTracker: FacebookTrackable {
     var setUserValueCount = 0
     var setFlushBehaviorCount = 0
     var flushCount = 0
+    
+    func initialize() {
+        initializeCount += 1
+    }
     
     func setAutoLogAppEventsEnabled(_ enabled: Bool) {
         setAutoLogAppEventsEnabledCount += 1

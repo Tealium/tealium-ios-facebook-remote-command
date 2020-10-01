@@ -8,10 +8,10 @@
 import Foundation
 import TealiumSwift
 import FBSDKCoreKit
-import TealiumFacebook
+//import TealiumFacebook
 
 let tealiumFacebookVersion = "1.0.0"
-let tealiumLibraryVersion = "1.9.5"
+let tealiumLibraryVersion = "2.1.0"
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"
@@ -28,21 +28,21 @@ class TealiumHelper {
                                environment: TealiumConfiguration.environment)
 
     var tealium: Tealium?
-
+    
+    // JSON Remote Command
+    // let facebookRemoteCommand = FacebookRemoteCommand(type: .remote(url: "https://tags.tiqcdn.com/dle/tealiummobile/demo/facebook.json"))
+    let facebookRemoteCommand = FacebookRemoteCommand(type: .local(file: "facebook"))
     private init() {
-        config.logLevel = .none 
         config.shouldUseRemotePublishSettings = false
+        config.batchingEnabled = false
+        config.remoteAPIEnabled = true
+        config.logLevel = .info
+        config.collectors = [Collectors.Lifecycle]
+        config.dispatchers = [Dispatchers.TagManagement, Dispatchers.RemoteCommands]
         
-        tealium = Tealium(config: config,
-                          enableCompletion: { [weak self] _ in
-                              guard let self = self else { return }
-                              guard let remoteCommands = self.tealium?.remoteCommands() else {
-                                  return
-                              }
-                              // MARK: Facebook
-                            let facebookRemoteCommand = FacebookRemoteCommand().remoteCommand()
-                              remoteCommands.add(facebookRemoteCommand)
-                          })
+        config.addRemoteCommand(facebookRemoteCommand)
+        
+        tealium = Tealium(config: config)
 
     }
 
@@ -52,11 +52,13 @@ class TealiumHelper {
     }
 
     class func trackView(title: String, data: [String: Any]?) {
-        TealiumHelper.shared.tealium?.track(title: title, data: data, completion: nil)
+        let tealiumView = TealiumView(title, dataLayer: data)
+        TealiumHelper.shared.tealium?.track(tealiumView)
     }
-
+    
     class func trackEvent(title: String, data: [String: Any]?) {
-        TealiumHelper.shared.tealium?.track(title: title, data: data, completion: nil)
+        let tealiumEvent = TealiumEvent(title, dataLayer: data)
+        TealiumHelper.shared.tealium?.track(tealiumEvent)
     }
 
 }

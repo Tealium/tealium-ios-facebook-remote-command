@@ -66,19 +66,19 @@ struct Product: Encodable {
     }
     
     var dictionary: [String: Any] {
-        ["product_id": [id],
-         "product_availability": [availability],
-         "product_condition": [condition],
-         "product_description": [description],
-         "product_image_url": [imageUrl],
-         "product_url": [url],
-         "product_name": [name],
-         "product_gtin": [gtin],
-         "product_brand": [brand],
-         "product_unit_price": [price],
+        ["product_id": id,
+         "product_availability": availability,
+         "product_condition": condition,
+         "product_description": description,
+         "product_image_url": imageUrl,
+         "product_url": url,
+         "product_name": name,
+         "product_gtin": gtin,
+         "product_brand": brand,
+         "product_unit_price": price,
          "currency": currency,
-         "online_store_id": [onlineStoreId],
-         "product_bulk_discount": [bulkDiscountPercentage]]
+         "online_store_id": onlineStoreId,
+         "bulk_discount": bulkDiscountPercentage]
     }
 
 }

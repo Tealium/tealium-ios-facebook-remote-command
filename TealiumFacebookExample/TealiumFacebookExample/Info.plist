@@ -56,18 +56,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb9999999999999999</string>
-      </array>
-      </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>9999999999999999</string>
-    <key>FacebookDisplayName</key>
-    <string>TealiumExampleSwift</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb9999999999999999</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>9999999999999999</string>
+	<key>FacebookDisplayName</key>
+	<string>TealiumFacebookExample</string>
 </dict>
 </plist>

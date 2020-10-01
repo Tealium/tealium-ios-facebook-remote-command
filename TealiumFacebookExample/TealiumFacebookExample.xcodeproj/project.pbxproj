@@ -20,6 +20,7 @@
 		CFB368482360CF7A00CAEF99 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFB368472360CF7A00CAEF99 /* Preview Assets.xcassets */; };
 		CFB3684B2360CF7A00CAEF99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFB368492360CF7A00CAEF99 /* LaunchScreen.storyboard */; };
 		CFB368552360F12A00CAEF99 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB368542360F12A00CAEF99 /* TitleView.swift */; };
+		CFEF6B862526801100902EC6 /* facebook.json in Resources */ = {isa = PBXBuildFile; fileRef = CFEF6B852526801100902EC6 /* facebook.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		CFB3684A2360CF7A00CAEF99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CFB3684C2360CF7A00CAEF99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFB368542360F12A00CAEF99 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		CFEF6B852526801100902EC6 /* facebook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = facebook.json; sourceTree = "<group>"; };
 		F94B051B437A2FF9D781AC0E /* Pods_TealiumFacebookExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TealiumFacebookExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -100,6 +102,7 @@
 				CFB368422360CF7900CAEF99 /* ContentView.swift */,
 				CFB368542360F12A00CAEF99 /* TitleView.swift */,
 				CFA56110236106A60097583D /* ButtonView.swift */,
+				CFEF6B852526801100902EC6 /* facebook.json */,
 				CFB368442360CF7A00CAEF99 /* Assets.xcassets */,
 				CFB368492360CF7A00CAEF99 /* LaunchScreen.storyboard */,
 				CFB3684C2360CF7A00CAEF99 /* Info.plist */,
@@ -188,6 +191,7 @@
 				CFB3684B2360CF7A00CAEF99 /* LaunchScreen.storyboard in Resources */,
 				CFB368482360CF7A00CAEF99 /* Preview Assets.xcassets in Resources */,
 				CFB368452360CF7A00CAEF99 /* Assets.xcassets in Resources */,
+				CFEF6B862526801100902EC6 /* facebook.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,20 +13,24 @@ struct Profile {
     var user: User
     var level: String
     var registrationMethod: String
+    var achievementType: String
 
     static let `default` = Self(customerId: "adventure",
                                 user: User.default,
                                 level: "99999999",
-                                registrationMethod: "extra life")
+                                registrationMethod: "extra life",
+                                achievementType: "sugar crush!")
 
     init(customerId: String,
          user: User,
          level: String,
-         registrationMethod: String) {
+         registrationMethod: String,
+         achievementType: String) {
         self.customerId = customerId
         self.user = user
         self.level = level
         self.registrationMethod = registrationMethod
+        self.achievementType = achievementType
     }
 
 }

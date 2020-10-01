@@ -16,15 +16,16 @@ struct ContentView: View {
         ScrollView {
             VStack {
                TitleView()
-                VStack(spacing: 20) {
+                VStack(spacing: 15) {
                     ButtonView(event: "Set User", profile.user.dictionary)
                     ButtonView(event: "Set User Id", ["customer_id": profile.customerId])
                     ButtonView(event: "Update User Value", ["customer_update_key": "customer_last_name", "customer_update_value": "Smith"])
+                    ButtonView(event: "Add To Cart", ["product_id": [product.id], "product_unit_price": [product.price]])
+                    ButtonView(event: "Log Purchase", purchase.dictionary)
                     ButtonView(event: "Achieve Level", ["level": profile.level])
                     ButtonView(event: "Completed Registration", ["registration_method": profile.registrationMethod])
-                    ButtonView(event: "Add To Cart", ["product_id": [product.id], "product_unit_price": [product.price]])
+                    ButtonView(event: "Unlock Achievement", ["achievement_type": profile.achievementType])
                     ButtonView(event: "Log Product Item", product.dictionary)
-                    ButtonView(event: "Log Purchase", purchase.dictionary)
                     ButtonView(event: "Flush")
                 }
                 Spacer()

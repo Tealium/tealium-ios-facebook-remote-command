@@ -1,9 +1,9 @@
 //
 //  FacebookTracker.swift
-//  TealiumRemoteCommand
+//  TealiumFacebook
 //
-//  Created by Christina Sund on 5/20/19.
-//  Copyright © 2019 Christina. All rights reserved.
+//  Created by Christina S on 5/20/19.
+//  Copyright © 2019 Tealium. All rights reserved.
 //
 
 import Foundation
@@ -13,15 +13,15 @@ import FBSDKCoreKit
     import TealiumSwift
 #else
     import TealiumCore
-    import TealiumDelegate
     import TealiumTagManagement
     import TealiumRemoteCommands
 #endif
 
 public protocol FacebookTrackable {
+    // Initialize
+    func initialize()
     // Settings
     func setAutoLogAppEventsEnabled(_ enabled: Bool)
-    func setAutoInitEnabled(_ enabled: Bool)
     func enableAdvertiserIDCollection(_ enabled: Bool)
     // Facebook Standard Events
     func logEvent(_ event: AppEvents.Name, with parameters: [String: Any])
@@ -49,16 +49,17 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
 
     public init() { }
     
+    // MARK: Initialize
+    public func initialize() {
+        ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
+        Settings.enableLoggingBehavior(.appEvents)
+        AppEvents.activateApp()
+    }
+    
     // MARK: Settings
     public func setAutoLogAppEventsEnabled(_ enabled: Bool) {
         Settings.isAutoLogAppEventsEnabled = enabled
     }
-    
-    public func setAutoInitEnabled(_ enabled: Bool) {
-        Settings.isAutoInitEnabled = enabled
-        ApplicationDelegate.initializeSDK(nil)
-    }
-    
     
     public func enableAdvertiserIDCollection(_ enabled: Bool) {
         Settings.isAdvertiserIDCollectionEnabled = enabled
@@ -95,7 +96,9 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
         AppEvents.setPushNotificationsDeviceToken(pushToken)
     }
     
-    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    public func application(_ application: UIApplication,
+                            didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                            fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         AppEvents.logPushNotificationOpen(userInfo)
     }
     
@@ -103,13 +106,13 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
     public func logProductItem(using data: Data) {
         do {
             let product = try JSONDecoder().decode(FacebookProductItem.self, from: data)
-            guard let availability = AppEvents.ProductAvailability(rawValue: product.productAvailablility.convertToUInt), let condition = AppEvents.ProductCondition(rawValue: product.productCondition.convertToUInt) else {
+            guard let availability = AppEvents.ProductAvailability(rawValue: product.productAvailablility.toUInt), let condition = AppEvents.ProductCondition(rawValue: product.productCondition.toUInt) else {
                 print("\(FacebookConstants.errorPrefix)logProductItem - Product availability and condition are required, the type should be Integer")
                 return
             }
             AppEvents.logProductItem(product.productId, availability: availability, condition: condition, description: product.productDescription, imageLink: product.productImageLink, link: product.productLink, title: product.productTitle, priceAmount: product.productPrice, currency: product.productCurrency, gtin: product.productGtin, mpn: product.productMpn, brand: product.productBrand, parameters: product.productParameters)
         } catch {
-            print("\(FacebookConstants.errorPrefix)logProductItem - Unable to decode product item: \(error)")
+            print("\(FacebookConstants.errorPrefix)logProductItem - Unable to decode product item")
         }
         
 
