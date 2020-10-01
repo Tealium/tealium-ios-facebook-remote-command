@@ -6,9 +6,7 @@ target 'TealiumFacebookExample' do
   use_frameworks!
 
   # Pods for TealiumFacebookExample
-  # pod 'TealiumFacebook', :path=> '../'
-  # pod 'tealium-swift/TealiumLifecycle', '~> 2.1'
-  pod 'tealium-swift', :path=> '/Users/christina/Projects/work-repos/github/tealium-swift-builder'
-  pod 'FBSDKCoreKit'
-  
+  pod 'TealiumFacebook', :path=> '../'
+  pod 'tealium-swift/TealiumLifecycle', '~> 2.1'
+
 end
