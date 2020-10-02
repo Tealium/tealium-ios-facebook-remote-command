@@ -11,13 +11,8 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    let tealiumHelper = TealiumHelper.shared
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Tealium init
-        tealiumHelper.start()
-        // Facebook Init
-        tealiumHelper.initializeFacebook(application: application, launchOptions: launchOptions)
+        TealiumHelper.start()
         return true
     }
 

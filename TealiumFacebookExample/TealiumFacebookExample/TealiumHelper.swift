@@ -7,8 +7,7 @@
 
 import Foundation
 import TealiumSwift
-import FBSDKCoreKit
-//import TealiumFacebook
+import TealiumFacebook
 
 let tealiumFacebookVersion = "1.0.0"
 let tealiumLibraryVersion = "2.1.0"
@@ -30,8 +29,8 @@ class TealiumHelper {
     var tealium: Tealium?
     
     // JSON Remote Command
-    // let facebookRemoteCommand = FacebookRemoteCommand(type: .remote(url: "https://tags.tiqcdn.com/dle/tealiummobile/demo/facebook.json"))
-    let facebookRemoteCommand = FacebookRemoteCommand(type: .local(file: "facebook"))
+    let facebookRemoteCommand = FacebookRemoteCommand(type: .remote(url: "https://tags.tiqcdn.com/dle/tealiummobile/demo/facebook.json"))
+    
     private init() {
         config.shouldUseRemotePublishSettings = false
         config.batchingEnabled = false
@@ -47,7 +46,7 @@ class TealiumHelper {
     }
 
 
-    public func start() {
+    class func start() {
         _ = TealiumHelper.shared
     }
 
@@ -59,19 +58,6 @@ class TealiumHelper {
     class func trackEvent(title: String, data: [String: Any]?) {
         let tealiumEvent = TealiumEvent(title, dataLayer: data)
         TealiumHelper.shared.tealium?.track(tealiumEvent)
-    }
-
-}
-
-
-// MARK: Facebook
-extension TealiumHelper {
-
-    // Init helper
-    func initializeFacebook(application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-        Settings.enableLoggingBehavior(.appEvents)
-        AppEvents.activateApp()
     }
 
 }

@@ -7,7 +7,11 @@
 //
 
 import Foundation
-import FBSDKCoreKit
+#if COCOAPODS
+    import FBSDKCoreKit
+#else
+    import FacebookCore
+#endif
 
 /// All keys associated with Facebook remote command
 enum FacebookConstants {

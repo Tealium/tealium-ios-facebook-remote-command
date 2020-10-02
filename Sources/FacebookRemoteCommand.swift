@@ -7,13 +7,14 @@
 //
 
 import Foundation
-import FBSDKCoreKit
 #if COCOAPODS
     import TealiumSwift
+    import FBSDKCoreKit
 #else
     import TealiumCore
     import TealiumTagManagement
     import TealiumRemoteCommands
+    import FacebookCore
 #endif
 
 public class FacebookRemoteCommand: RemoteCommand {
