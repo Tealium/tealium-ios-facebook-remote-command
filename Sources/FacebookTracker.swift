@@ -51,9 +51,17 @@ public class FacebookTracker: FacebookTrackable, TealiumRegistration {
     
     // MARK: Initialize
     public func initialize() {
-        ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
-        Settings.enableLoggingBehavior(.appEvents)
-        AppEvents.activateApp()
+        if Thread.isMainThread {
+            ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
+            Settings.enableLoggingBehavior(.appEvents)
+            AppEvents.activateApp()
+        } else {
+            DispatchQueue.main.async {
+                ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
+                Settings.enableLoggingBehavior(.appEvents)
+                AppEvents.activateApp()
+            }
+        }
     }
     
     // MARK: Settings

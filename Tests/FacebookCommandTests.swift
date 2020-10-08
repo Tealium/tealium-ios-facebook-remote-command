@@ -2,7 +2,7 @@
 //  FacebookCommandTests.swift
 //  TealiumFacebook
 //
-//  Created by Christina Sund on 5/22/19.
+//  Created by Christina S on 5/22/19.
 //  Copyright © 2019 Tealium. All rights reserved.
 //
 

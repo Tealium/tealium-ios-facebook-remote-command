@@ -8,7 +8,7 @@
 
 import Foundation
 @testable import TealiumFacebook
-@testable import FBSDKCoreKit
+import FacebookCore
 
 class MockFacebookTracker: FacebookTrackable {
     
