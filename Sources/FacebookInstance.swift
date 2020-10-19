@@ -1,5 +1,5 @@
 //
-//  FacebookTracker.swift
+//  FacebookInstance.swift
 //  TealiumFacebook
 //
 //  Created by Christina S on 5/20/19.
@@ -17,7 +17,7 @@ import Foundation
     import FacebookCore
 #endif
 
-public protocol FacebookTrackable {
+public protocol FacebookCommand {
     // Initialize
     func initialize()
     // Settings
@@ -45,7 +45,7 @@ public protocol FacebookTrackable {
     func flush()
 }
 
-public class FacebookTracker: FacebookTrackable, TealiumRegistration {
+public class FacebookInstance: FacebookCommand, TealiumRegistration {
 
     public init() { }
     

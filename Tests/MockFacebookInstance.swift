@@ -1,5 +1,5 @@
 //
-//  MockFacebookTracker.swift
+//  MockFacebookInstance.swift
 //  TealiumFacebook
 //
 //  Created by Christina Sund on 5/22/19.
@@ -10,7 +10,7 @@ import Foundation
 @testable import TealiumFacebook
 import FacebookCore
 
-class MockFacebookTracker: FacebookTrackable {
+class MockFacebookInstance: FacebookCommand {
     
     var initializeCount = 0
     var setAutoLogAppEventsEnabledCount = 0

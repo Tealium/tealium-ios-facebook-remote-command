@@ -1,5 +1,5 @@
 //
-//  FacebookTrackerTests.swift
+//  FacebookInstanceTests.swift
 //  TealiumFacebook
 //
 //  Created by Christina S on 5/22/19.
@@ -10,13 +10,13 @@ import XCTest
 @testable import TealiumFacebook
 import TealiumRemoteCommands
 
-class FacebookTrackerTests: XCTestCase {
+class FacebookInstanceTests: XCTestCase {
 
-    let facebookTracker = MockFacebookTracker()
+    let facebookInstance = MockFacebookInstance()
     var facebookCommand: FacebookRemoteCommand!
 
     override func setUp() {
-        facebookCommand = FacebookRemoteCommand(facebookTracker: facebookTracker)
+        facebookCommand = FacebookRemoteCommand(facebookInstance: facebookInstance)
     }
 
     override func tearDown() {
@@ -29,7 +29,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "initialize"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.initializeCount)
+            XCTAssertEqual(1, facebookInstance.initializeCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -43,7 +43,7 @@ class FacebookTrackerTests: XCTestCase {
                                                 "fb_currency": "USD"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(3, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(3, facebookInstance.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -54,7 +54,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "submitapplication,subscribe,schedule", "_valueToSum": 21.99]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(3, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(3, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -71,8 +71,8 @@ class FacebookTrackerTests: XCTestCase {
                                       "_valueToSum": 21.99]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logEventWithValueAndParametersCount)
-            XCTAssertEqual(2, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(1, facebookInstance.logEventWithValueAndParametersCount)
+            XCTAssertEqual(2, facebookInstance.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -83,7 +83,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "rated, spentcredits, contact"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(3, facebookTracker.logEventNoValueNoParametersCount)
+            XCTAssertEqual(3, facebookInstance.logEventNoValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -98,7 +98,7 @@ class FacebookTrackerTests: XCTestCase {
                                        "param2": "purchase2value"]]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logPurchaseWithParametersCount)
+            XCTAssertEqual(1, facebookInstance.logPurchaseWithParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -111,7 +111,7 @@ class FacebookTrackerTests: XCTestCase {
             "fb_purchase_currency": "USD"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logPurchaseNoParametersCount)
+            XCTAssertEqual(1, facebookInstance.logPurchaseNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -133,7 +133,7 @@ class FacebookTrackerTests: XCTestCase {
                                                        "fb_product_parameters": ["productparam1": "productparam1value"]]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logProductItemCount)
+            XCTAssertEqual(1, facebookInstance.logProductItemCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -154,7 +154,7 @@ class FacebookTrackerTests: XCTestCase {
                                                "country": "test"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.setUserCount)
+            XCTAssertEqual(1, facebookInstance.setUserCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -165,7 +165,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload = ["command_name": "updateuservalue", "fb_user_value": "test", "fb_user_key": "ln"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.setUserValueCount)
+            XCTAssertEqual(1, facebookInstance.setUserValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -177,7 +177,7 @@ class FacebookTrackerTests: XCTestCase {
                                       "fb_user_id": "ABC123"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.setUserIdCount)
+            XCTAssertEqual(1, facebookInstance.setUserIdCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -188,7 +188,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "clearuser"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.clearUserCount)
+            XCTAssertEqual(1, facebookInstance.clearUserCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -199,7 +199,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "clearuserid"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.clearUserIdCount)
+            XCTAssertEqual(1, facebookInstance.clearUserIdCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -210,7 +210,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload = ["command_name": "flush"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.flushCount)
+            XCTAssertEqual(1, facebookInstance.flushCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -222,7 +222,7 @@ class FacebookTrackerTests: XCTestCase {
                                       "event": ["fb_registration_method": "twitter"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -233,10 +233,10 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "completedregistration"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(0, facebookTracker.logEventWithParametersNoValueCount)
-            XCTAssertEqual(0, facebookTracker.logEventNoValueNoParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueAndParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+            XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -247,7 +247,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "initiatedcheckout","_valueToSum": 21.99]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(1, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -258,10 +258,10 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "initiatedcheckout"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(0, facebookTracker.logEventWithParametersNoValueCount)
-            XCTAssertEqual(0, facebookTracker.logEventNoValueNoParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueAndParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+            XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -274,7 +274,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "initialize"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.initializeCount)
+            XCTAssertEqual(1, facebookInstance.initializeCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -288,7 +288,7 @@ class FacebookTrackerTests: XCTestCase {
                                                 "fb_currency": "USD"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(3, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(3, facebookInstance.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -299,7 +299,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "submitapplication,subscribe,schedule", "_valueToSum": 21.99]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(3, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(3, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -316,8 +316,8 @@ class FacebookTrackerTests: XCTestCase {
                                       "_valueToSum": 21.99]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logEventWithValueAndParametersCount)
-            XCTAssertEqual(2, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(1, facebookInstance.logEventWithValueAndParametersCount)
+            XCTAssertEqual(2, facebookInstance.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -328,7 +328,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "rated, spentcredits, contact"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(3, facebookTracker.logEventNoValueNoParametersCount)
+            XCTAssertEqual(3, facebookInstance.logEventNoValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -343,7 +343,7 @@ class FacebookTrackerTests: XCTestCase {
                                        "param2": "purchase2value"]]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logPurchaseWithParametersCount)
+            XCTAssertEqual(1, facebookInstance.logPurchaseWithParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -356,7 +356,7 @@ class FacebookTrackerTests: XCTestCase {
             "fb_purchase_currency": "USD"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logPurchaseNoParametersCount)
+            XCTAssertEqual(1, facebookInstance.logPurchaseNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -378,7 +378,7 @@ class FacebookTrackerTests: XCTestCase {
                                                        "fb_product_parameters": ["productparam1": "productparam1value"]]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logProductItemCount)
+            XCTAssertEqual(1, facebookInstance.logProductItemCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -399,7 +399,7 @@ class FacebookTrackerTests: XCTestCase {
                                                "country": "test"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.setUserCount)
+            XCTAssertEqual(1, facebookInstance.setUserCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -410,7 +410,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload = ["command_name": "updateuservalue", "fb_user_value": "test", "fb_user_key": "ln"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.setUserValueCount)
+            XCTAssertEqual(1, facebookInstance.setUserValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -422,7 +422,7 @@ class FacebookTrackerTests: XCTestCase {
                                       "fb_user_id": "ABC123"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.setUserIdCount)
+            XCTAssertEqual(1, facebookInstance.setUserIdCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -433,7 +433,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "clearuser"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.clearUserCount)
+            XCTAssertEqual(1, facebookInstance.clearUserCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -444,7 +444,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "clearuserid"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.clearUserIdCount)
+            XCTAssertEqual(1, facebookInstance.clearUserIdCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -455,7 +455,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload = ["command_name": "flush"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.flushCount)
+            XCTAssertEqual(1, facebookInstance.flushCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -467,7 +467,7 @@ class FacebookTrackerTests: XCTestCase {
                                       "event": ["fb_registration_method": "twitter"]]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logEventWithParametersNoValueCount)
+            XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -478,10 +478,10 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "completedregistration"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(0, facebookTracker.logEventWithParametersNoValueCount)
-            XCTAssertEqual(0, facebookTracker.logEventNoValueNoParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueAndParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+            XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -492,7 +492,7 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "initiatedcheckout","_valueToSum": 21.99]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(1, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(1, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)
@@ -503,10 +503,10 @@ class FacebookTrackerTests: XCTestCase {
         let payload: [String: Any] = ["command_name": "initiatedcheckout"]
         if let response = HttpTestHelpers.createRemoteCommandResponse(type: .webview, commandId: "facebook", payload: payload) {
             facebookCommand.completion(response)
-            XCTAssertEqual(0, facebookTracker.logEventWithParametersNoValueCount)
-            XCTAssertEqual(0, facebookTracker.logEventNoValueNoParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueAndParametersCount)
-            XCTAssertEqual(0, facebookTracker.logEventWithValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+            XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
+            XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
         }
         expect.fulfill()
         wait(for: [expect], timeout: 5.0)

@@ -13,11 +13,11 @@ import FacebookCore
 
 class FacebookCommandTests: XCTestCase {
 
-    let facebookTracker = FacebookTracker()
+    let facebookInstance = FacebookInstance()
     var facebookCommand: FacebookRemoteCommand!
 
     override func setUp() {
-        facebookCommand = FacebookRemoteCommand(facebookTracker: facebookTracker)
+        facebookCommand = FacebookRemoteCommand(facebookInstance: facebookInstance)
     }
 
     override func tearDown() { }

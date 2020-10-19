@@ -19,11 +19,11 @@ import Foundation
 
 public class FacebookRemoteCommand: RemoteCommand {
 
-    var facebookTracker: FacebookTrackable?
+    var facebookInstance: FacebookCommand?
     var debug = false
 
-    public init(facebookTracker: FacebookTrackable = FacebookTracker(), type: RemoteCommandType = .webview) {
-        self.facebookTracker = facebookTracker
+    public init(facebookInstance: FacebookCommand = FacebookInstance(), type: RemoteCommandType = .webview) {
+        self.facebookInstance = facebookInstance
         weak var selfWorkaround: FacebookRemoteCommand?
         super.init(commandId: FacebookConstants.commandId,
                    description: FacebookConstants.description,
@@ -38,7 +38,7 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
 
     func processRemoteCommand(with payload: [String: Any]) {
-        guard let facebookTracker = facebookTracker,
+        guard let facebookInstance = facebookInstance,
             let command = payload[FacebookConstants.commandName] as? String else {
                 return
         }
@@ -56,7 +56,7 @@ public class FacebookRemoteCommand: RemoteCommand {
 
             switch command {
             case .initialize:
-                facebookTracker.initialize()
+                facebookInstance.initialize()
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {
@@ -64,7 +64,7 @@ public class FacebookRemoteCommand: RemoteCommand {
                     }
                     return
                 }
-                return facebookTracker.setAutoLogAppEventsEnabled(autoLogEvents)
+                return facebookInstance.setAutoLogAppEventsEnabled(autoLogEvents)
             case .enableAdvertiserIDCollection:
                 guard let enableAidCollection = payload[FacebookConstants.Settings.advertiserIDCollectionEnabled] as? Bool else {
                     if debug {
@@ -72,7 +72,7 @@ public class FacebookRemoteCommand: RemoteCommand {
                     }
                     return
                 }
-                return facebookTracker.enableAdvertiserIDCollection(enableAidCollection)
+                return facebookInstance.enableAdvertiserIDCollection(enableAidCollection)
             case .logPurchase:
                 var amount: Double = 0.0
                 guard let purchase = payload[FacebookConstants.Purchase.purchase] as? [String: Any],
@@ -93,12 +93,12 @@ public class FacebookRemoteCommand: RemoteCommand {
                 }
                 
                 if let parameters = purchase[FacebookConstants.Purchase.purchaseParameters] as? [String: Any] {
-                    return facebookTracker.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
+                    return facebookInstance.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
                 }
                 if let parameters = payload[FacebookConstants.Purchase.purchaseParameters] as? [String: Any] {
-                    return facebookTracker.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
+                    return facebookInstance.logPurchase(of: amount, with: currency, and: typeCheck(parameters))
                 }
-                return facebookTracker.logPurchase(of: amount, with: currency)
+                return facebookInstance.logPurchase(of: amount, with: currency)
             case .setUser:
                 guard let userData = payload[FacebookConstants.User.user] as? [String: String] else {
                     if debug {
@@ -114,15 +114,15 @@ public class FacebookRemoteCommand: RemoteCommand {
                     }
                     return
                 }
-                facebookTracker.setUserId(to: userId)
+                facebookInstance.setUserId(to: userId)
             case .clearUserId:
-                facebookTracker.clearUserId()
+                facebookInstance.clearUserId()
             case .clearUser:
-                facebookTracker.clearUser()
+                facebookInstance.clearUser()
             case .updateUserValue:
                 if let userValue = payload[FacebookConstants.User.userParameterValue] as? String,
                     let userKey = payload[FacebookConstants.User.userParameter] as? String {
-                    return facebookTracker.setUser(value: userValue, for: userKey)
+                    return facebookInstance.setUser(value: userValue, for: userKey)
                 } else if debug {
                     print("""
                         \(FacebookConstants.errorPrefix)updateUserValue - \(FacebookConstants.User.userParameter)
@@ -143,9 +143,9 @@ public class FacebookRemoteCommand: RemoteCommand {
                     print("\(FacebookConstants.errorPrefix)setFlushBehavior - \(FacebookConstants.Flush.flushBehavior) must be populated.")
                     return
                 }
-                return facebookTracker.setFlushBehavior(flushBehavior: UInt(flush))
+                return facebookInstance.setFlushBehavior(flushBehavior: UInt(flush))
             case .flush:
-                return facebookTracker.flush()
+                return facebookInstance.flush()
             case .achievedLevel:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.level] else {
@@ -154,7 +154,7 @@ public class FacebookRemoteCommand: RemoteCommand {
                         }
                         return
                 }
-                return facebookTracker.logEvent(AppEvents.Name.achievedLevel, with: typeCheck(eventParameters))
+                return facebookInstance.logEvent(AppEvents.Name.achievedLevel, with: typeCheck(eventParameters))
             case .unlockedAchievement:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.description] as? String else {
@@ -163,7 +163,7 @@ public class FacebookRemoteCommand: RemoteCommand {
                         }
                         return
                 }
-                return facebookTracker.logEvent(AppEvents.Name.unlockedAchievement, with: typeCheck(eventParameters))
+                return facebookInstance.logEvent(AppEvents.Name.unlockedAchievement, with: typeCheck(eventParameters))
             case .completedRegistration:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.registrationMethod] as? String else {
@@ -172,7 +172,7 @@ public class FacebookRemoteCommand: RemoteCommand {
                         }
                         return
                 }
-                return facebookTracker.logEvent(AppEvents.Name.completedRegistration, with: typeCheck(eventParameters))
+                return facebookInstance.logEvent(AppEvents.Name.completedRegistration, with: typeCheck(eventParameters))
             case .completedTutorial:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.contentID] as? String else {
@@ -181,7 +181,7 @@ public class FacebookRemoteCommand: RemoteCommand {
                         }
                         return
                 }
-                return facebookTracker.logEvent(AppEvents.Name.completedTutorial, with: typeCheck(eventParameters))
+                return facebookInstance.logEvent(AppEvents.Name.completedTutorial, with: typeCheck(eventParameters))
             case .initiatedCheckout:
                 guard let value = payload[FacebookConstants.Event.valueToSum] as? Double else {
                     if debug {
@@ -189,7 +189,7 @@ public class FacebookRemoteCommand: RemoteCommand {
                     }
                     return
                 }
-                return facebookTracker.logEvent(AppEvents.Name.initiatedCheckout, with: value)
+                return facebookInstance.logEvent(AppEvents.Name.initiatedCheckout, with: value)
             case .searched:
                 guard let eventParameters = payload[FacebookConstants.Event.eventParameters] as? [String: Any],
                     let _ = eventParameters[FacebookConstants.Event.searchString] as? String else {
@@ -198,20 +198,20 @@ public class FacebookRemoteCommand: RemoteCommand {
                         }
                         return
                 }
-                return facebookTracker.logEvent(AppEvents.Name.searched, with: typeCheck(eventParameters))
+                return facebookInstance.logEvent(AppEvents.Name.searched, with: typeCheck(eventParameters))
             default:
                 if let fbEvent = FacebookConstants.StandardEventNames(rawValue: $0.lowercased()) {
                     let event = AppEvents.Name(eventName: fbEvent)
                     if let valueToSum = payload[FacebookConstants.Event.valueToSum] as? Double {
                         if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
-                            return facebookTracker.logEvent(event, with: valueToSum, and: typeCheck(properties))
+                            return facebookInstance.logEvent(event, with: valueToSum, and: typeCheck(properties))
                         } else {
-                            return facebookTracker.logEvent(event, with: valueToSum)
+                            return facebookInstance.logEvent(event, with: valueToSum)
                         }
                     } else if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
-                        return facebookTracker.logEvent(event, with: typeCheck(properties))
+                        return facebookInstance.logEvent(event, with: typeCheck(properties))
                     } else {
-                        return facebookTracker.logEvent(event)
+                        return facebookInstance.logEvent(event)
                     }
                 }
                 break
@@ -260,7 +260,7 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
     
     private func logProductItem(with productData: [String: Any]) {
-        guard let facebookTracker = facebookTracker else {
+        guard let facebookInstance = facebookInstance else {
             return
         }
         
@@ -268,7 +268,7 @@ public class FacebookRemoteCommand: RemoteCommand {
             let validatedProductData = typeCheck(productData)
             do {
                 let json = try JSONSerialization.data(withJSONObject: validatedProductData, options: .prettyPrinted)
-                return facebookTracker.logProductItem(using: json)
+                return facebookInstance.logProductItem(using: json)
             } catch {
                 if debug {
                     print("\(FacebookConstants.errorPrefix)logProductItem - Could not convert productItemData to json.")
@@ -286,7 +286,7 @@ public class FacebookRemoteCommand: RemoteCommand {
             let validatedProductData = typeCheck(productData, and: $0.offset)
             do {
                 let json = try JSONSerialization.data(withJSONObject: validatedProductData, options: .prettyPrinted)
-                return facebookTracker.logProductItem(using: json)
+                return facebookInstance.logProductItem(using: json)
             } catch {
                 if debug {
                     print("\(FacebookConstants.errorPrefix)logProductItem - Could not convert productItemData to json.")
@@ -296,12 +296,12 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
     
     private func setUser(with userData: [String: Any]) {
-        guard let facebookTracker = facebookTracker else {
+        guard let facebookInstance = facebookInstance else {
             return
         }
         do {
             let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
-            return facebookTracker.setUser(from: json)
+            return facebookInstance.setUser(from: json)
         } catch {
             if debug {
                 print("\(FacebookConstants.errorPrefix)setUser - Could not convert userData to json.")
