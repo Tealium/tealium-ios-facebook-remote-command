@@ -5,26 +5,37 @@ PODS:
   - FBSDKCoreKit/Basics (8.0.0)
   - FBSDKCoreKit/Core (8.0.0):
     - FBSDKCoreKit/Basics
-  - tealium-swift (2.0.1):
-    - tealium-swift/TealiumFull (= 2.0.1)
-  - tealium-swift/TealiumFull (2.0.1)
+  - tealium-swift/Core (2.1.0)
+  - tealium-swift/Lifecycle (2.1.0):
+    - tealium-swift/Core
+  - tealium-swift/RemoteCommands (2.1.0):
+    - tealium-swift/Core
+  - tealium-swift/TagManagement (2.1.0):
+    - tealium-swift/Core
+  - TealiumFacebook (1.0.0):
+    - FBSDKCoreKit
+    - tealium-swift/Core (~> 2.1)
+    - tealium-swift/RemoteCommands (~> 2.1)
+    - tealium-swift/TagManagement (~> 2.1)
 
 DEPENDENCIES:
-  - FBSDKCoreKit
-  - tealium-swift (from `/Users/christina/Projects/work-repos/github/tealium-swift-builder`)
+  - tealium-swift/Lifecycle (~> 2.1)
+  - TealiumFacebook (from `../`)
 
 SPEC REPOS:
   trunk:
     - FBSDKCoreKit
+    - tealium-swift
 
 EXTERNAL SOURCES:
-  tealium-swift:
-    :path: "/Users/christina/Projects/work-repos/github/tealium-swift-builder"
+  TealiumFacebook:
+    :path: "../"
 
 SPEC CHECKSUMS:
   FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
-  tealium-swift: 076272449cf1c60fd9d15b156e0204fdf02da37f
+  tealium-swift: a670c2c6f3e7e5d775d9507387e8858a8541e526
+  TealiumFacebook: d242a2c003957c28d7283bbc2c477fdf470ba65d
 
-PODFILE CHECKSUM: ee6a577614c0fb55a515014475f5d108c4c5dc1e
+PODFILE CHECKSUM: 0b632f68c83764ba7ca0d76fc223292b6cd2af07
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

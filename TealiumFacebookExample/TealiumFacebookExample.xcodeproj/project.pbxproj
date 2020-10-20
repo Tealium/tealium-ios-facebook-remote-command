@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6275AF643F962908F09E617D /* Pods_TealiumFacebookExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39AE12E5F2F53A53EF14799 /* Pods_TealiumFacebookExample.framework */; };
 		CF9F5A7B237CAD730007FB0D /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F5A7A237CAD730007FB0D /* Profile.swift */; };
 		CF9F5A8C237DD9CC0007FB0D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F5A8B237DD9CC0007FB0D /* Product.swift */; };
 		CF9F5A8E237DD9DB0007FB0D /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F5A8D237DD9DB0007FB0D /* Purchase.swift */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22452506E2579B96DC111AD8 /* Pods-TealiumFacebookExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TealiumFacebookExample.debug.xcconfig"; path = "Target Support Files/Pods-TealiumFacebookExample/Pods-TealiumFacebookExample.debug.xcconfig"; sourceTree = "<group>"; };
+		C39AE12E5F2F53A53EF14799 /* Pods_TealiumFacebookExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TealiumFacebookExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9F5A7A237CAD730007FB0D /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		CF9F5A8B237DD9CC0007FB0D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		CF9F5A8D237DD9DB0007FB0D /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		CFB3684C2360CF7A00CAEF99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFB368542360F12A00CAEF99 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		CFEF6B852526801100902EC6 /* facebook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = facebook.json; sourceTree = "<group>"; };
+		F59ADD8F2DD7AA28B26F282E /* Pods-TealiumFacebookExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TealiumFacebookExample.release.xcconfig"; path = "Target Support Files/Pods-TealiumFacebookExample/Pods-TealiumFacebookExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,12 +49,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6275AF643F962908F09E617D /* Pods_TealiumFacebookExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		85D74B0891888D1E259FE3BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C39AE12E5F2F53A53EF14799 /* Pods_TealiumFacebookExample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CF284C90237CA9900065FC9E /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +80,7 @@
 				CFB3683D2360CF7900CAEF99 /* TealiumFacebookExample */,
 				CFB3683C2360CF7900CAEF99 /* Products */,
 				D0200EC920C0EB0F8A9FE9C9 /* Pods */,
+				85D74B0891888D1E259FE3BD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +122,8 @@
 		D0200EC920C0EB0F8A9FE9C9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				22452506E2579B96DC111AD8 /* Pods-TealiumFacebookExample.debug.xcconfig */,
+				F59ADD8F2DD7AA28B26F282E /* Pods-TealiumFacebookExample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -119,9 +135,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CFB3684F2360CF7A00CAEF99 /* Build configuration list for PBXNativeTarget "TealiumFacebookExample" */;
 			buildPhases = (
+				420C05EB49C059651C43F0B3 /* [CP] Check Pods Manifest.lock */,
 				CFB368372360CF7900CAEF99 /* Sources */,
 				CFB368382360CF7900CAEF99 /* Frameworks */,
 				CFB368392360CF7900CAEF99 /* Resources */,
+				29D87B9ABDB97C77C12C8E40 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -178,6 +196,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		29D87B9ABDB97C77C12C8E40 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TealiumFacebookExample/Pods-TealiumFacebookExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TealiumFacebookExample/Pods-TealiumFacebookExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TealiumFacebookExample/Pods-TealiumFacebookExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		420C05EB49C059651C43F0B3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TealiumFacebookExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CFB368372360CF7900CAEF99 /* Sources */ = {
@@ -326,6 +386,7 @@
 		};
 		CFB368502360CF7A00CAEF99 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22452506E2579B96DC111AD8 /* Pods-TealiumFacebookExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -346,6 +407,7 @@
 		};
 		CFB368512360CF7A00CAEF99 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F59ADD8F2DD7AA28B26F282E /* Pods-TealiumFacebookExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
