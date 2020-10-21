@@ -24,7 +24,7 @@ public class FacebookRemoteCommand: RemoteCommand {
 
     public init(facebookInstance: FacebookCommand = FacebookInstance(), type: RemoteCommandType = .webview) {
         self.facebookInstance = facebookInstance
-        weak var selfWorkaround: FacebookRemoteCommand?
+        weak var weakSelf: FacebookRemoteCommand?
         super.init(commandId: FacebookConstants.commandId,
                    description: FacebookConstants.description,
             type: type,
@@ -32,9 +32,9 @@ public class FacebookRemoteCommand: RemoteCommand {
                 guard let payload = response.payload else {
                     return
                 }
-                selfWorkaround?.processRemoteCommand(with: payload)
+                weakSelf?.processRemoteCommand(with: payload)
             })
-        selfWorkaround = self
+        weakSelf = self
     }
 
     func processRemoteCommand(with payload: [String: Any]) {
