@@ -1,20 +1,21 @@
 //
 //  HttpTestHelpers.swift
-//  TealiumBraze
+//  TealiumFacebook
 //
 //  Created by Jonathan Wong on 8/8/19.
-//  Copyright © 2019 Jonathan Wong. All rights reserved.
+//  Copyright © 2019 Tealium. All rights reserved.
 //
 
 import Foundation
+import TealiumRemoteCommands
 
 struct RemoteCommandResponsePayload: Codable {
     var config: [String: String]
     var payload: [String: String]
 }
 
-public class HttpTestHelpers {
-    public class func httpRequest(commandId: String, payload: [String: String]) -> URLRequest? {
+class HttpTestHelpers {
+    class func httpRequest(commandId: String, payload: [String: String]) -> URLRequest? {
         let url = "tealium://\(commandId)?request="
         
         let response = RemoteCommandResponsePayload(config: ["response_id": "00000"], payload: payload)
@@ -29,7 +30,7 @@ public class HttpTestHelpers {
         return nil
     }
     
-    public class func httpRequest(commandId: String, config: [String: Any], payload: [String: Any]) -> URLRequest? {
+    class func httpRequest(commandId: String, config: [String: Any], payload: [String: Any]) -> URLRequest? {
         let url = "tealium://\(commandId)?request="
         let remoteCommandrc = ["config": config, "payload": payload] as [String: Any]
         let json = try! JSONSerialization.data(withJSONObject: remoteCommandrc, options: .prettyPrinted)
@@ -50,6 +51,20 @@ public class HttpTestHelpers {
             return URLRequest(url: url).description
         }
         
+        return nil
+    }
+    
+    class func createRemoteCommandResponse(type: SimpleCommandType, commandId: String, payload: [String: Any]) -> RemoteCommandResponseProtocol? {
+        switch type {
+        case .webview:
+            let responseDescription = HttpTestHelpers.httpRequestDescription(commandId: commandId, config: [:], payload: payload)
+            if let description = responseDescription {
+                return RemoteCommandResponse(urlString: description)
+            }
+        case .JSON:
+            return JSONRemoteCommandResponse(with: payload)
+        }
+        print("Could not create Remote Command Response description from stubs provided")
         return nil
     }
     

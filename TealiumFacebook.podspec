@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name         = "TealiumFacebook"
     s.module_name  = "TealiumFacebook"
-    s.version      = "0.0.1"
+    s.version      = "1.0.0"
     s.summary      = "Tealium Swift and Facebook integration"
     s.description  = <<-DESC
     Tealium's integration with Facebook for iOS.
@@ -21,7 +21,11 @@ Pod::Spec.new do |s|
     # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.swift_version = "4.2"
     s.platform     = :ios, "10.0"
-    s.ios.deployment_target = "10.0"    
+    s.ios.deployment_target = "10.0"
+
+    # ――― Excluded Archs ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+    s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }      
 
     # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.source       = { :git => "https://github.com/Tealium/tealium-ios-facebook-remote-command.git", :tag => "#{s.version}" }
@@ -30,10 +34,9 @@ Pod::Spec.new do |s|
     s.ios.source_files      = "Sources/*.{swift}"
 
     # ――― Dependencies ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-    s.ios.dependency 'tealium-swift/Core', ' ~> 1.9'
-    s.ios.dependency 'tealium-swift/TealiumRemoteCommands', ' ~> 1.9'
-    s.ios.dependency 'tealium-swift/TealiumDelegate', ' ~> 1.9'
-    s.ios.dependency 'tealium-swift/TealiumTagManagement', ' ~> 1.9'
-    s.ios.dependency 'FBSDKCoreKit', '~> 6.0'
+    s.ios.dependency 'tealium-swift/Core', ' ~> 2.1'
+    s.ios.dependency 'tealium-swift/RemoteCommands', ' ~> 2.1'
+    s.ios.dependency 'tealium-swift/TagManagement', ' ~> 2.1'
+    s.ios.dependency 'FBSDKCoreKit'
 
 end
