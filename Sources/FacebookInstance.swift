@@ -135,7 +135,7 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     }
     
     public func setUser(value: String?, for key: String) {
-        AppEvents.setUserData(value, forType: AppEvents.UserDataType(key))
+        AppEvents.setUserData(value, forType: FBSDKAppEventUserDataType(key))
     }
     
     public func clearUser() {

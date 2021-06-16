@@ -1,30 +1,32 @@
 PODS:
-  - FBSDKCoreKit (8.0.0):
-    - FBSDKCoreKit/Basics (= 8.0.0)
-    - FBSDKCoreKit/Core (= 8.0.0)
-  - FBSDKCoreKit/Basics (8.0.0)
-  - FBSDKCoreKit/Core (8.0.0):
-    - FBSDKCoreKit/Basics
-  - tealium-swift/Core (2.1.0)
-  - tealium-swift/Lifecycle (2.1.0):
+  - FBSDKCoreKit (11.0.0):
+    - FBSDKCoreKit/Core (= 11.0.0)
+  - FBSDKCoreKit/Core (11.0.0):
+    - FBSDKCoreKit_Basics (~> 11.0.0)
+  - FBSDKCoreKit_Basics (11.0.0):
+    - FBSDKCoreKit_Basics/Basics (= 11.0.0)
+  - FBSDKCoreKit_Basics/Basics (11.0.0)
+  - tealium-swift/Core (2.3.1)
+  - tealium-swift/Lifecycle (2.3.1):
     - tealium-swift/Core
-  - tealium-swift/RemoteCommands (2.1.0):
+  - tealium-swift/RemoteCommands (2.3.1):
     - tealium-swift/Core
-  - tealium-swift/TagManagement (2.1.0):
+  - tealium-swift/TagManagement (2.3.1):
     - tealium-swift/Core
-  - TealiumFacebook (1.0.0):
-    - FBSDKCoreKit
-    - tealium-swift/Core (~> 2.1)
-    - tealium-swift/RemoteCommands (~> 2.1)
-    - tealium-swift/TagManagement (~> 2.1)
+  - TealiumFacebook (1.0.1):
+    - FBSDKCoreKit (~> 11.0)
+    - tealium-swift/Core (~> 2.3)
+    - tealium-swift/RemoteCommands (~> 2.3)
+    - tealium-swift/TagManagement (~> 2.3)
 
 DEPENDENCIES:
-  - tealium-swift/Lifecycle (~> 2.1)
+  - tealium-swift/Lifecycle (~> 2.3)
   - TealiumFacebook (from `../`)
 
 SPEC REPOS:
   trunk:
     - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
     - tealium-swift
 
 EXTERNAL SOURCES:
@@ -32,10 +34,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
-  tealium-swift: a670c2c6f3e7e5d775d9507387e8858a8541e526
-  TealiumFacebook: 19ba32093189297498bb12e97eb7b2ad403b5ab2
+  FBSDKCoreKit: 3e6f565de8b4fbe11f8ee5d499f5898b0bde2cdd
+  FBSDKCoreKit_Basics: 9cf699662174870962deb39f07a5d70d4594c4b7
+  tealium-swift: 755e1ab63dc619709ec550c868ee5c293b05c10c
+  TealiumFacebook: 2aefa55e00857676f74c616e4d50acfb1df8b02c
 
-PODFILE CHECKSUM: 0b632f68c83764ba7ca0d76fc223292b6cd2af07
+PODFILE CHECKSUM: a22df764f4a46466f1c6e2c20c30a8f253e5ea9b
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
