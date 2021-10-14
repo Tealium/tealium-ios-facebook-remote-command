@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tealium. All rights reserved.
 //
 
+import AppTrackingTransparency
 import Foundation
 #if COCOAPODS
     import TealiumSwift
@@ -23,6 +24,7 @@ public protocol FacebookCommand {
     // Settings
     func setAutoLogAppEventsEnabled(_ enabled: Bool)
     func enableAdvertiserIDCollection(_ enabled: Bool)
+    func checkAdvertiserTracking()
     // Facebook Standard Events
     func logEvent(_ event: AppEvents.Name, with parameters: [String: Any])
     func logEvent(_ event: AppEvents.Name, with valueToSum: Double)
@@ -53,18 +55,30 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     public func initialize() {
         DispatchQueue.main.async {
             ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
-            Settings.enableLoggingBehavior(.appEvents)
-            AppEvents.activateApp()
+            Settings.shared.enableLoggingBehavior(.appEvents)
+            AppEvents.shared.activateApp()
         }
     }
     
     // MARK: Settings
     public func setAutoLogAppEventsEnabled(_ enabled: Bool) {
-        Settings.isAutoLogAppEventsEnabled = enabled
+        Settings.shared.isAutoLogAppEventsEnabled = enabled
     }
     
     public func enableAdvertiserIDCollection(_ enabled: Bool) {
-        Settings.isAdvertiserIDCollectionEnabled = enabled
+        Settings.shared.isAdvertiserIDCollectionEnabled = enabled
+    }
+    
+    public func checkAdvertiserTracking() {
+        if #available(iOS 14, *) {
+            if ATTrackingManager.trackingAuthorizationStatus == .authorized {
+                Settings.shared.isAdvertiserTrackingEnabled = true
+            } else  {
+                Settings.shared.isAdvertiserTrackingEnabled = false
+            }
+        } else {
+            Settings.shared.isAdvertiserTrackingEnabled = true
+        }
     }
     
     // MARK: Facebook Standard Events
@@ -101,6 +115,7 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     public func application(_ application: UIApplication,
                             didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        guard let userInfo = userInfo as NSDictionary? as? [String: Any] else {return}
         AppEvents.logPushNotificationOpen(userInfo)
     }
     
@@ -128,18 +143,18 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     public func setUser(from data: Data) {
         do {
             let user = try JSONDecoder().decode(FacebookUser.self, from: data)
-            AppEvents.setUser(email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, dateOfBirth: user.dob, gender: user.gender, city: user.city, state: user.state, zip: user.zip, country: user.country)
+            AppEvents.shared.setUser(email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, dateOfBirth: user.dob, gender: user.gender, city: user.city, state: user.state, zip: user.zip, country: user.country)
         } catch {
             print("\(FacebookConstants.errorPrefix)setUser - Could not decode UserParameters: \(error)")
         }
     }
     
     public func setUser(value: String?, for key: String) {
-        AppEvents.setUserData(value, forType: AppEvents.UserDataType(key))
+        AppEvents.shared.setUserData(value, forType: .lastName)
     }
     
     public func clearUser() {
-        AppEvents.clearUserData()
+        AppEvents.shared.clearUserData()
     }
     
     public func clearUserId() {

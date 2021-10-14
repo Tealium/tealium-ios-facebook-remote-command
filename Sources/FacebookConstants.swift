@@ -166,8 +166,8 @@ enum FacebookConstants {
     
     enum User {
         static let user = "user" // userData object
-        static let userParameter = "fb_user_value"
-        static let userParameterValue = "fb_user_key"
+        static let userParameter = "fb_user_key"
+        static let userParameterValue = "fb_user_value"
         static let userId = "fb_user_id"
     }
     

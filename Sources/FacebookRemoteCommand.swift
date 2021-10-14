@@ -38,6 +38,7 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
 
     func processRemoteCommand(with payload: [String: Any]) {
+        facebookInstance?.checkAdvertiserTracking()
         guard let facebookInstance = facebookInstance,
             let command = payload[FacebookConstants.commandName] as? String else {
                 return
@@ -200,21 +201,18 @@ public class FacebookRemoteCommand: RemoteCommand {
                 }
                 return facebookInstance.logEvent(AppEvents.Name.searched, with: typeCheck(eventParameters))
             default:
-                if let fbEvent = FacebookConstants.StandardEventNames(rawValue: $0.lowercased()) {
-                    let event = AppEvents.Name(eventName: fbEvent)
-                    if let valueToSum = payload[FacebookConstants.Event.valueToSum] as? Double {
-                        if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
-                            return facebookInstance.logEvent(event, with: valueToSum, and: typeCheck(properties))
-                        } else {
-                            return facebookInstance.logEvent(event, with: valueToSum)
-                        }
-                    } else if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
-                        return facebookInstance.logEvent(event, with: typeCheck(properties))
+                let event = AppEvents.Name(eventName: $0.lowercased())
+                if let valueToSum = payload[FacebookConstants.Event.valueToSum] as? Double {
+                    if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
+                        return facebookInstance.logEvent(event, with: valueToSum, and: typeCheck(properties))
                     } else {
-                        return facebookInstance.logEvent(event)
+                        return facebookInstance.logEvent(event, with: valueToSum)
                     }
+                } else if let properties = payload[FacebookConstants.Event.eventParameters] as? [String: Any] {
+                    return facebookInstance.logEvent(event, with: typeCheck(properties))
+                } else {
+                    return facebookInstance.logEvent(event)
                 }
-                break
             }
         }
     }
@@ -312,40 +310,44 @@ public class FacebookRemoteCommand: RemoteCommand {
 }
 
 fileprivate extension AppEvents.Name {
-    init(eventName: FacebookConstants.StandardEventNames) {
-        switch eventName {
-        case .adclick:
-            self = AppEvents.Name.adClick
-        case .adimpression:
-            self = AppEvents.Name.adImpression
-        case .addedpaymentinfo:
-            self = AppEvents.Name.addedPaymentInfo
-        case .addedtocart:
-            self = AppEvents.Name.addedToCart
-        case .addedtowishlist:
-            self = AppEvents.Name.addedToWishlist
-        case .contact:
-            self = AppEvents.Name.contact
-        case .viewedcontent:
-            self = AppEvents.Name.viewedContent
-        case .rated:
-            self = AppEvents.Name.rated
-        case .customizeproduct:
-            self = AppEvents.Name.customizeProduct
-        case .donate:
-            self = AppEvents.Name.donate
-        case .findlocation:
-            self = AppEvents.Name.findLocation
-        case .schedule:
-            self = AppEvents.Name.schedule
-        case .starttrial:
-            self = AppEvents.Name.startTrial
-        case .submitapplication:
-            self = AppEvents.Name.submitApplication
-        case .subscribe:
-            self = AppEvents.Name.subscribe
-        case .spentcredits:
-            self = AppEvents.Name.spentCredits
+    init(eventName: String) {
+        if let fbEvent = FacebookConstants.StandardEventNames(rawValue: eventName) {
+            switch fbEvent {
+            case .adclick:
+                self = AppEvents.Name.adClick
+            case .adimpression:
+                self = AppEvents.Name.adImpression
+            case .addedpaymentinfo:
+                self = AppEvents.Name.addedPaymentInfo
+            case .addedtocart:
+                self = AppEvents.Name.addedToCart
+            case .addedtowishlist:
+                self = AppEvents.Name.addedToWishlist
+            case .contact:
+                self = AppEvents.Name.contact
+            case .viewedcontent:
+                self = AppEvents.Name.viewedContent
+            case .rated:
+                self = AppEvents.Name.rated
+            case .customizeproduct:
+                self = AppEvents.Name.customizeProduct
+            case .donate:
+                self = AppEvents.Name.donate
+            case .findlocation:
+                self = AppEvents.Name.findLocation
+            case .schedule:
+                self = AppEvents.Name.schedule
+            case .starttrial:
+                self = AppEvents.Name.startTrial
+            case .submitapplication:
+                self = AppEvents.Name.submitApplication
+            case .subscribe:
+                self = AppEvents.Name.subscribe
+            case .spentcredits:
+                self = AppEvents.Name.spentCredits
+            }
+        } else {
+            self = AppEvents.Name(eventName)
         }
     }
 }

@@ -29,7 +29,7 @@ class TealiumHelper {
     var tealium: Tealium?
     
     // JSON Remote Command
-    let facebookRemoteCommand = FacebookRemoteCommand(type: .remote(url: "https://tags.tiqcdn.com/dle/tealiummobile/demo/facebook.json"))
+    let facebookRemoteCommand = FacebookRemoteCommand(type: .local(file: "facebook", bundle: Bundle.main))
     
     private init() {
         config.shouldUseRemotePublishSettings = false
