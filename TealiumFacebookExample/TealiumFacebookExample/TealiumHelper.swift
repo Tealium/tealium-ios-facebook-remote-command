@@ -9,8 +9,8 @@ import Foundation
 import TealiumSwift
 import TealiumFacebook
 
-let tealiumFacebookVersion = "1.0.0"
-let tealiumLibraryVersion = "2.1.0"
+let tealiumFacebookVersion = "1.1.0"
+let tealiumLibraryVersion = "2.4.6"
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"
