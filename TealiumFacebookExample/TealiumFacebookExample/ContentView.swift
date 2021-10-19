@@ -26,7 +26,10 @@ struct ContentView: View {
                     ButtonView(event: "Completed Registration", ["registration_method": profile.registrationMethod])
                     ButtonView(event: "Unlock Achievement", ["achievement_type": profile.achievementType])
                     ButtonView(event: "Log Product Item", product.dictionary)
-                    ButtonView(event: "Flush")
+                    Group {
+                        ButtonView(event: "Flush")
+                        ButtonView(event: "Custom FB Event")
+                    }
                 }
                 Spacer()
             }

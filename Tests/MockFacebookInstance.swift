@@ -14,6 +14,7 @@ class MockFacebookInstance: FacebookCommand {
     
     var initializeCount = 0
     var setAutoLogAppEventsEnabledCount = 0
+    var setAdvertisingTrackingCount = 0
     var setAutoInitEnabledCount = 0
     var enableAdvertiserIDCollectionCount = 0
     var logEventWithParametersNoValueCount = 0
@@ -39,6 +40,10 @@ class MockFacebookInstance: FacebookCommand {
     
     func setAutoLogAppEventsEnabled(_ enabled: Bool) {
         setAutoLogAppEventsEnabledCount += 1
+    }
+    
+    func checkAdvertiserTracking() {
+        setAdvertisingTrackingCount += 1
     }
     
     func setAutoInitEnabled(_ enabled: Bool) {

@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Facebook",
+        "repositoryURL": "https://github.com/facebook/facebook-ios-sdk",
+        "state": {
+          "branch": null,
+          "revision": "df7adad973b4eb877708b73b11039c97d27be529",
+          "version": "12.0.0"
+        }
+      },
+      {
+        "package": "TealiumSwift",
+        "repositoryURL": "https://github.com/tealium/tealium-swift",
+        "state": {
+          "branch": null,
+          "revision": "6f726c76be6e3fc3a699de6a97ab9691b0d16dcf",
+          "version": "2.4.6"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

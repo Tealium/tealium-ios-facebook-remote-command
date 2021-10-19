@@ -9,8 +9,8 @@ import Foundation
 import TealiumSwift
 import TealiumFacebook
 
-let tealiumFacebookVersion = "1.0.0"
-let tealiumLibraryVersion = "2.1.0"
+let tealiumFacebookVersion = "1.1.0"
+let tealiumLibraryVersion = "2.4.6"
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"
@@ -29,7 +29,7 @@ class TealiumHelper {
     var tealium: Tealium?
     
     // JSON Remote Command
-    let facebookRemoteCommand = FacebookRemoteCommand(type: .remote(url: "https://tags.tiqcdn.com/dle/tealiummobile/demo/facebook.json"))
+    let facebookRemoteCommand = FacebookRemoteCommand(type: .local(file: "facebook", bundle: Bundle.main))
     
     private init() {
         config.shouldUseRemotePublishSettings = false

@@ -54,6 +54,7 @@
     "addtocart": "addedtocart",
     "logproductitem": "logproductitem",
     "logpurchase": "logpurchase",
-    "flush": "flush"
+    "flush": "flush",
+    "customfbevent": "customfbevent"
   }
 }

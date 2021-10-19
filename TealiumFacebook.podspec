@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name         = "TealiumFacebook"
     s.module_name  = "TealiumFacebook"
-    s.version      = "1.0.0"
+    s.version      = "1.1.0"
     s.summary      = "Tealium Swift and Facebook integration"
     s.description  = <<-DESC
     Tealium's integration with Facebook for iOS.
@@ -20,8 +20,8 @@ Pod::Spec.new do |s|
 
     # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.swift_version = "4.2"
-    s.platform     = :ios, "10.0"
-    s.ios.deployment_target = "10.0"
+    s.platform     = :ios, "9.0"
+    s.ios.deployment_target = "9.0"
 
     # ――― Excluded Archs ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
@@ -37,6 +37,6 @@ Pod::Spec.new do |s|
     s.ios.dependency 'tealium-swift/Core', ' ~> 2.1'
     s.ios.dependency 'tealium-swift/RemoteCommands', ' ~> 2.1'
     s.ios.dependency 'tealium-swift/TagManagement', ' ~> 2.1'
-    s.ios.dependency 'FBSDKCoreKit'
+    s.ios.dependency 'FBSDKCoreKit', ' ~> 12.0'
 
 end
