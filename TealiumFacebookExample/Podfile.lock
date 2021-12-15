@@ -5,21 +5,27 @@ PODS:
     - FBAEMKit (= 12.0.0)
     - FBSDKCoreKit_Basics (= 12.0.0)
   - FBSDKCoreKit_Basics (12.0.0)
-  - tealium-swift/Core (2.4.6)
-  - tealium-swift/Lifecycle (2.4.6):
+  - tealium-swift/Attribution (2.5.1):
     - tealium-swift/Core
-  - tealium-swift/RemoteCommands (2.4.6):
+  - tealium-swift/Collect (2.5.1):
     - tealium-swift/Core
-  - tealium-swift/TagManagement (2.4.6):
+  - tealium-swift/Core (2.5.1)
+  - tealium-swift/Lifecycle (2.5.1):
     - tealium-swift/Core
-  - TealiumFacebook (1.0.0):
+  - tealium-swift/RemoteCommands (2.5.1):
+    - tealium-swift/Core
+  - tealium-swift/TagManagement (2.5.1):
+    - tealium-swift/Core
+  - TealiumFacebook (1.2.0):
     - FBSDKCoreKit (~> 12.0)
     - tealium-swift/Core (~> 2.1)
     - tealium-swift/RemoteCommands (~> 2.1)
     - tealium-swift/TagManagement (~> 2.1)
 
 DEPENDENCIES:
-  - tealium-swift/Lifecycle (~> 2.1)
+  - tealium-swift/Attribution (from `https://github.com/Tealium/tealium-swift.git`, branch `mt-779`)
+  - tealium-swift/Collect (from `https://github.com/Tealium/tealium-swift.git`, branch `mt-779`)
+  - tealium-swift/Lifecycle (from `https://github.com/Tealium/tealium-swift.git`, branch `mt-779`)
   - TealiumFacebook (from `../`)
 
 SPEC REPOS:
@@ -27,19 +33,26 @@ SPEC REPOS:
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
-    - tealium-swift
 
 EXTERNAL SOURCES:
+  tealium-swift:
+    :branch: mt-779
+    :git: https://github.com/Tealium/tealium-swift.git
   TealiumFacebook:
     :path: "../"
+
+CHECKOUT OPTIONS:
+  tealium-swift:
+    :commit: d6d93ed5d4c3f470a035d5381e4091fdf09b58e1
+    :git: https://github.com/Tealium/tealium-swift.git
 
 SPEC CHECKSUMS:
   FBAEMKit: 7eff0522e86d66591d080612882fa0784026926b
   FBSDKCoreKit: 23481c9231b64ce25b0980b0a270f1b10aae91ee
   FBSDKCoreKit_Basics: 99ca5885c4fe153462ae3370edd60077394911c1
-  tealium-swift: 4e3d50e04e79eabd84b272d066659f5234d74b55
-  TealiumFacebook: 26fe4138b7b3d71b39f95601b399a31d762e1855
+  tealium-swift: a7c0f2b6bff641abb1818efbcf22598c99af0517
+  TealiumFacebook: 0493a84dbb1dfa318af740a7cb9ff12f37a49e26
 
-PODFILE CHECKSUM: 0b632f68c83764ba7ca0d76fc223292b6cd2af07
+PODFILE CHECKSUM: 6d8eb5d2de35d0eb0a4f010393202a7894dd8d5d
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.10.1

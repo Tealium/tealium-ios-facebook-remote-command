@@ -19,6 +19,10 @@ import Foundation
 
 public class FacebookRemoteCommand: RemoteCommand {
 
+    override public var version: String? {
+        FacebookConstants.version
+    }
+
     var facebookInstance: FacebookCommand?
     var debug = false
 
