@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
@@ -16,11 +16,17 @@ let package = Package(
     targets: [
         .target(
             name: "TealiumFacebook",
-            dependencies: ["FacebookCore", "TealiumCore", "TealiumRemoteCommands", "TealiumTagManagement"],
-            path: "./Sources"),
+            dependencies: [
+                .product(name: "TealiumCore", package: "tealium-swift"),
+                .product(name: "TealiumRemoteCommands", package: "tealium-swift"),
+                .product(name: "FacebookCore", package: "facebook-ios-sdk")
+            ],
+            path: "./Sources",
+            exclude: ["Support"]),
         .testTarget(
             name: "TealiumFacebookTests",
             dependencies: ["TealiumFacebook"],
-            path: "./Tests")
+            path: "./Tests",
+            exclude: ["Support"])
     ]
 )
