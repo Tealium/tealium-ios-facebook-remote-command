@@ -8,7 +8,7 @@
 
 import Foundation
 @testable import TealiumFacebook
-import FacebookCore
+import FBSDKCoreKit
 
 class MockFacebookInstance: FacebookCommand {
     

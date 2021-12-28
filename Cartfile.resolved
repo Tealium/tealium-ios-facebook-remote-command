@@ -1,0 +1,2 @@
+github "facebook/facebook-ios-sdk" "v12.2.1"
+github "tealium/tealium-swift" "2.5.1"

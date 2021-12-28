@@ -19,9 +19,8 @@ Pod::Spec.new do |s|
     s.social_media_url   = "https://twitter.com/tealium"
 
     # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-    s.swift_version = "4.2"
+    s.swift_version = "5.2"
     s.platform     = :ios, "11.0"
-    s.ios.deployment_target = "11.0"
 
     # ――― Excluded Archs ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
@@ -37,6 +36,6 @@ Pod::Spec.new do |s|
     s.ios.dependency 'tealium-swift/Core', ' ~> 2.6'
     s.ios.dependency 'tealium-swift/RemoteCommands', ' ~> 2.6'
     s.ios.dependency 'tealium-swift/TagManagement', ' ~> 2.6'
-    s.ios.dependency 'FBSDKCoreKit', ' ~> 12.0'
+    s.ios.dependency 'FBSDKCoreKit', ' ~> 12.2'
 
 end

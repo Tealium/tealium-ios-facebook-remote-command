@@ -4,14 +4,14 @@ import PackageDescription
 let package = Package(
     name: "TealiumFacebook",
     platforms: [
-        .iOS(.v9)
+        .iOS(.v10)
     ],
     products: [
         .library(name: "TealiumFacebook", targets: ["TealiumFacebook"])
     ],
     dependencies: [
-        .package(url: "https://github.com/tealium/tealium-swift", from: "2.6.0"),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "12.0.0")
+        .package(url: "https://github.com/tealium/tealium-swift", from: "2.5.0"),
+        .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "12.2.0")
     ],
     targets: [
         .target(
