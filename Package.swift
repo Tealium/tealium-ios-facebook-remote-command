@@ -10,8 +10,8 @@ let package = Package(
         .library(name: "TealiumFacebook", targets: ["TealiumFacebook"])
     ],
     dependencies: [
-        .package(url: "https://github.com/tealium/tealium-swift", from: "2.6.0"),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "12.2.0")
+        .package(url: "https://github.com/tealium/tealium-swift", .upToNextMajor(from: "2.6.0")),
+        .package(url: "https://github.com/facebook/facebook-ios-sdk", .upToNextMajor(from: "12.2.0"))
     ],
     targets: [
         .target(
