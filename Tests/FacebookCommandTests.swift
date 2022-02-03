@@ -9,7 +9,7 @@
 import XCTest
 @testable import TealiumFacebook
 import TealiumRemoteCommands
-import FacebookCore
+import FBSDKCoreKit
 
 class FacebookCommandTests: XCTestCase {
 

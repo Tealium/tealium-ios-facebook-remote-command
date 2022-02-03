@@ -7,19 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15A82EC6277B61A600A29E32 /* FBSDKCoreKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A82EC2277B5ED200A29E32 /* FBSDKCoreKit.xcframework */; };
+		15A82EC7277B61A600A29E32 /* TealiumCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A82EC0277B5ED200A29E32 /* TealiumCore.xcframework */; };
+		15A82EC8277B61A600A29E32 /* TealiumRemoteCommands.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A82EC1277B5ED200A29E32 /* TealiumRemoteCommands.xcframework */; };
+		15A82EC9277B6FFC00A29E32 /* TealiumFacebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */; };
+		15A82ECC277B7E1000A29E32 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A82ECB277B7E1000A29E32 /* Info.plist */; };
 		CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */; };
 		CF9B51BC232AF3BC003019F9 /* FacebookInstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51B9232AF3BB003019F9 /* FacebookInstanceTests.swift */; };
 		CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */; };
 		CF9B51BE232AF3BC003019F9 /* MockFacebookInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BB232AF3BC003019F9 /* MockFacebookInstance.swift */; };
-		CFAD5FF32540B472007D4EDB /* TealiumLifecycle in Frameworks */ = {isa = PBXBuildFile; productRef = CFAD5FF22540B472007D4EDB /* TealiumLifecycle */; };
-		CFAD5FF92540B541007D4EDB /* TealiumCore in Frameworks */ = {isa = PBXBuildFile; productRef = CFAD5FF82540B541007D4EDB /* TealiumCore */; };
-		CFAD5FFB2540B542007D4EDB /* TealiumRemoteCommands in Frameworks */ = {isa = PBXBuildFile; productRef = CFAD5FFA2540B542007D4EDB /* TealiumRemoteCommands */; };
-		CFAD5FFD2540B542007D4EDB /* TealiumTagManagement in Frameworks */ = {isa = PBXBuildFile; productRef = CFAD5FFC2540B542007D4EDB /* TealiumTagManagement */; };
-		CFAD5FFF2540B54E007D4EDB /* TealiumRemoteCommands in Frameworks */ = {isa = PBXBuildFile; productRef = CFAD5FFE2540B54E007D4EDB /* TealiumRemoteCommands */; };
-		CFAD60012540B551007D4EDB /* TealiumCore in Frameworks */ = {isa = PBXBuildFile; productRef = CFAD60002540B551007D4EDB /* TealiumCore */; };
-		CFC7B1BD2526388000289E1B /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = CFC7B1BC2526388000289E1B /* FacebookCore */; };
 		CFC8D9B3232AB3A400A4987F /* TealiumFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CFEF6B722526777400902EC6 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = CFEF6B712526777400902EC6 /* FacebookCore */; };
 		CFEF6B9C2526936800902EC6 /* FacebookInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF6B982526936800902EC6 /* FacebookInstance.swift */; };
 		CFEF6B9D2526936800902EC6 /* FacebookRemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF6B992526936800902EC6 /* FacebookRemoteCommand.swift */; };
 		CFEF6B9E2526936800902EC6 /* FacebookConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF6B9A2526936800902EC6 /* FacebookConstants.swift */; };
@@ -37,36 +34,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15A82EC0277B5ED200A29E32 /* TealiumCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TealiumCore.xcframework; path = Carthage/Build/TealiumCore.xcframework; sourceTree = "<group>"; };
+		15A82EC1277B5ED200A29E32 /* TealiumRemoteCommands.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TealiumRemoteCommands.xcframework; path = Carthage/Build/TealiumRemoteCommands.xcframework; sourceTree = "<group>"; };
+		15A82EC2277B5ED200A29E32 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = Carthage/Build/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
+		15A82ECB277B7E1000A29E32 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15A82ECE277B7E1900A29E32 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTestHelpers.swift; sourceTree = "<group>"; };
-		CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Carthage/Build/iOS/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		CF0D0216232AC283005BFE15 /* TealiumCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumCore.framework; path = Carthage/Build/iOS/TealiumCore.framework; sourceTree = "<group>"; };
-		CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumRemoteCommands.framework; path = Carthage/Build/iOS/TealiumRemoteCommands.framework; sourceTree = "<group>"; };
-		CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumDelegate.framework; path = Carthage/Build/iOS/TealiumDelegate.framework; sourceTree = "<group>"; };
-		CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumTagManagement.framework; path = Carthage/Build/iOS/TealiumTagManagement.framework; sourceTree = "<group>"; };
-		CF3F32D623639EFB00C3F41D /* TealiumLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumLogger.framework; path = Carthage/Build/iOS/TealiumLogger.framework; sourceTree = "<group>"; };
-		CF3F32D723639EFB00C3F41D /* TealiumLifecycle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumLifecycle.framework; path = Carthage/Build/iOS/TealiumLifecycle.framework; sourceTree = "<group>"; };
-		CF616D31236CC7AF00F34BAD /* TealiumConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumConnectivity.framework; path = Carthage/Build/iOS/TealiumConnectivity.framework; sourceTree = "<group>"; };
-		CF616D32236CC7AF00F34BAD /* TealiumAttribution.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumAttribution.framework; path = Carthage/Build/iOS/TealiumAttribution.framework; sourceTree = "<group>"; };
-		CF616D33236CC7AF00F34BAD /* TealiumDataSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumDataSource.framework; path = Carthage/Build/iOS/TealiumDataSource.framework; sourceTree = "<group>"; };
-		CF616D34236CC7AF00F34BAD /* TealiumFileStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumFileStorage.framework; path = Carthage/Build/iOS/TealiumFileStorage.framework; sourceTree = "<group>"; };
-		CF616D35236CC7AF00F34BAD /* TealiumDispatchQueue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumDispatchQueue.framework; path = Carthage/Build/iOS/TealiumDispatchQueue.framework; sourceTree = "<group>"; };
-		CF616D36236CC7AF00F34BAD /* TealiumCrashReporteriOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumCrashReporteriOS.framework; path = Carthage/Build/iOS/TealiumCrashReporteriOS.framework; sourceTree = "<group>"; };
-		CF616D37236CC7AF00F34BAD /* TealiumVolatileData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumVolatileData.framework; path = Carthage/Build/iOS/TealiumVolatileData.framework; sourceTree = "<group>"; };
-		CF616D38236CC7AF00F34BAD /* TealiumAutotracking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumAutotracking.framework; path = Carthage/Build/iOS/TealiumAutotracking.framework; sourceTree = "<group>"; };
-		CF616D39236CC7B000F34BAD /* TealiumCollect.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumCollect.framework; path = Carthage/Build/iOS/TealiumCollect.framework; sourceTree = "<group>"; };
-		CF616D3A236CC7B000F34BAD /* TealiumAppData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumAppData.framework; path = Carthage/Build/iOS/TealiumAppData.framework; sourceTree = "<group>"; };
-		CF616D3B236CC7B000F34BAD /* TealiumCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumCrash.framework; path = Carthage/Build/iOS/TealiumCrash.framework; sourceTree = "<group>"; };
-		CF616D3C236CC7B000F34BAD /* TealiumConsentManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumConsentManager.framework; path = Carthage/Build/iOS/TealiumConsentManager.framework; sourceTree = "<group>"; };
-		CF616D3D236CC7B000F34BAD /* TealiumDeviceData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumDeviceData.framework; path = Carthage/Build/iOS/TealiumDeviceData.framework; sourceTree = "<group>"; };
-		CF616D3E236CC7B000F34BAD /* TealiumDefaultsStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumDefaultsStorage.framework; path = Carthage/Build/iOS/TealiumDefaultsStorage.framework; sourceTree = "<group>"; };
 		CF9B51B9232AF3BB003019F9 /* FacebookInstanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookInstanceTests.swift; sourceTree = "<group>"; };
 		CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommandTests.swift; sourceTree = "<group>"; };
 		CF9B51BB232AF3BC003019F9 /* MockFacebookInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFacebookInstance.swift; sourceTree = "<group>"; };
 		CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TealiumFacebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TealiumFacebook.h; sourceTree = "<group>"; };
-		CFC8D9B2232AB3A400A4987F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFC8D9E1232AB52C00A4987F /* TealiumFacebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TealiumFacebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CFC8D9E5232AB52C00A4987F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFEF6B982526936800902EC6 /* FacebookInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookInstance.swift; sourceTree = "<group>"; };
 		CFEF6B992526936800902EC6 /* FacebookRemoteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRemoteCommand.swift; sourceTree = "<group>"; };
 		CFEF6B9A2526936800902EC6 /* FacebookConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookConstants.swift; sourceTree = "<group>"; };
@@ -78,11 +57,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFAD5FFD2540B542007D4EDB /* TealiumTagManagement in Frameworks */,
-				CFAD5FFB2540B542007D4EDB /* TealiumRemoteCommands in Frameworks */,
-				CFAD5FF92540B541007D4EDB /* TealiumCore in Frameworks */,
-				CFC7B1BD2526388000289E1B /* FacebookCore in Frameworks */,
-				CFAD5FF32540B472007D4EDB /* TealiumLifecycle in Frameworks */,
+				15A82EC6277B61A600A29E32 /* FBSDKCoreKit.xcframework in Frameworks */,
+				15A82EC7277B61A600A29E32 /* TealiumCore.xcframework in Frameworks */,
+				15A82EC8277B61A600A29E32 /* TealiumRemoteCommands.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,39 +67,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFAD60012540B551007D4EDB /* TealiumCore in Frameworks */,
-				CFAD5FFF2540B54E007D4EDB /* TealiumRemoteCommands in Frameworks */,
-				CFEF6B722526777400902EC6 /* FacebookCore in Frameworks */,
+				15A82EC9277B6FFC00A29E32 /* TealiumFacebook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15A82ECA277B7E1000A29E32 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				15A82ECB277B7E1000A29E32 /* Info.plist */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		15A82ECD277B7E1900A29E32 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				15A82ECE277B7E1900A29E32 /* Info.plist */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		CF0D0214232AC282005BFE15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CF616D3A236CC7B000F34BAD /* TealiumAppData.framework */,
-				CF616D32236CC7AF00F34BAD /* TealiumAttribution.framework */,
-				CF616D38236CC7AF00F34BAD /* TealiumAutotracking.framework */,
-				CF616D39236CC7B000F34BAD /* TealiumCollect.framework */,
-				CF616D31236CC7AF00F34BAD /* TealiumConnectivity.framework */,
-				CF616D3C236CC7B000F34BAD /* TealiumConsentManager.framework */,
-				CF616D3B236CC7B000F34BAD /* TealiumCrash.framework */,
-				CF616D36236CC7AF00F34BAD /* TealiumCrashReporteriOS.framework */,
-				CF616D33236CC7AF00F34BAD /* TealiumDataSource.framework */,
-				CF616D3E236CC7B000F34BAD /* TealiumDefaultsStorage.framework */,
-				CF616D3D236CC7B000F34BAD /* TealiumDeviceData.framework */,
-				CF616D35236CC7AF00F34BAD /* TealiumDispatchQueue.framework */,
-				CF616D34236CC7AF00F34BAD /* TealiumFileStorage.framework */,
-				CF616D37236CC7AF00F34BAD /* TealiumVolatileData.framework */,
-				CF3F32D723639EFB00C3F41D /* TealiumLifecycle.framework */,
-				CF3F32D623639EFB00C3F41D /* TealiumLogger.framework */,
-				CF0D0215232AC283005BFE15 /* FBSDKCoreKit.framework */,
-				CF0D0216232AC283005BFE15 /* TealiumCore.framework */,
-				CF0D0218232AC283005BFE15 /* TealiumDelegate.framework */,
-				CF0D0217232AC283005BFE15 /* TealiumRemoteCommands.framework */,
-				CF0D0219232AC283005BFE15 /* TealiumTagManagement.framework */,
+				15A82EC2277B5ED200A29E32 /* FBSDKCoreKit.xcframework */,
+				15A82EC0277B5ED200A29E32 /* TealiumCore.xcframework */,
+				15A82EC1277B5ED200A29E32 /* TealiumRemoteCommands.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -149,12 +122,12 @@
 		CFC8D9B0232AB3A400A4987F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				15A82ECD277B7E1900A29E32 /* Support */,
 				CFEF6B9A2526936800902EC6 /* FacebookConstants.swift */,
 				CFEF6B992526936800902EC6 /* FacebookRemoteCommand.swift */,
 				CFEF6B982526936800902EC6 /* FacebookInstance.swift */,
 				CFEF6B9B2526936800902EC6 /* Tealium+Int.swift */,
 				CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */,
-				CFC8D9B2232AB3A400A4987F /* Info.plist */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -162,11 +135,11 @@
 		CFC8D9E2232AB52C00A4987F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				15A82ECA277B7E1000A29E32 /* Support */,
 				CF9B51B9232AF3BB003019F9 /* FacebookInstanceTests.swift */,
 				CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */,
 				CF9B51BB232AF3BC003019F9 /* MockFacebookInstance.swift */,
 				CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */,
-				CFC8D9E5232AB52C00A4987F /* Info.plist */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -200,11 +173,6 @@
 			);
 			name = TealiumFacebook;
 			packageProductDependencies = (
-				CFC7B1BC2526388000289E1B /* FacebookCore */,
-				CFAD5FF22540B472007D4EDB /* TealiumLifecycle */,
-				CFAD5FF82540B541007D4EDB /* TealiumCore */,
-				CFAD5FFA2540B542007D4EDB /* TealiumRemoteCommands */,
-				CFAD5FFC2540B542007D4EDB /* TealiumTagManagement */,
 			);
 			productName = TealiumFacebook;
 			productReference = CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */;
@@ -225,9 +193,6 @@
 			);
 			name = TealiumFacebookTests;
 			packageProductDependencies = (
-				CFEF6B712526777400902EC6 /* FacebookCore */,
-				CFAD5FFE2540B54E007D4EDB /* TealiumRemoteCommands */,
-				CFAD60002540B551007D4EDB /* TealiumCore */,
 			);
 			productName = TealiumFacebookTests;
 			productReference = CFC8D9E1232AB52C00A4987F /* TealiumFacebookTests.xctest */;
@@ -287,6 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15A82ECC277B7E1000A29E32 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +425,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Support/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -491,7 +457,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Support/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -518,9 +484,9 @@
 				DEVELOPMENT_TEAM = XC939GDC9P;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -543,9 +509,9 @@
 				DEVELOPMENT_TEAM = XC939GDC9P;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -609,49 +575,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		CFAD5FF22540B472007D4EDB /* TealiumLifecycle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFAD5FF12540B472007D4EDB /* XCRemoteSwiftPackageReference "tealium-swift" */;
-			productName = TealiumLifecycle;
-		};
-		CFAD5FF82540B541007D4EDB /* TealiumCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFAD5FF12540B472007D4EDB /* XCRemoteSwiftPackageReference "tealium-swift" */;
-			productName = TealiumCore;
-		};
-		CFAD5FFA2540B542007D4EDB /* TealiumRemoteCommands */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFAD5FF12540B472007D4EDB /* XCRemoteSwiftPackageReference "tealium-swift" */;
-			productName = TealiumRemoteCommands;
-		};
-		CFAD5FFC2540B542007D4EDB /* TealiumTagManagement */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFAD5FF12540B472007D4EDB /* XCRemoteSwiftPackageReference "tealium-swift" */;
-			productName = TealiumTagManagement;
-		};
-		CFAD5FFE2540B54E007D4EDB /* TealiumRemoteCommands */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFAD5FF12540B472007D4EDB /* XCRemoteSwiftPackageReference "tealium-swift" */;
-			productName = TealiumRemoteCommands;
-		};
-		CFAD60002540B551007D4EDB /* TealiumCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFAD5FF12540B472007D4EDB /* XCRemoteSwiftPackageReference "tealium-swift" */;
-			productName = TealiumCore;
-		};
-		CFC7B1BC2526388000289E1B /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFC7B1BB2526388000289E1B /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
-		};
-		CFEF6B712526777400902EC6 /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CFC7B1BB2526388000289E1B /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CFC8D9A5232AB3A400A4987F /* Project object */;
 }

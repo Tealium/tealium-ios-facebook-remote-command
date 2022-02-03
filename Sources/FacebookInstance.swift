@@ -7,15 +7,14 @@
 //
 
 import AppTrackingTransparency
-import Foundation
+import UIKit
+import FBSDKCoreKit
+
 #if COCOAPODS
     import TealiumSwift
-    import FBSDKCoreKit
 #else
     import TealiumCore
-    import TealiumTagManagement
     import TealiumRemoteCommands
-    import FacebookCore
 #endif
 
 public protocol FacebookCommand {
@@ -83,40 +82,40 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     
     // MARK: Facebook Standard Events
     public func logEvent(_ event: AppEvents.Name, with parameters: [String: Any]) {
-        AppEvents.logEvent(event, parameters: parameters)
+        AppEvents.shared.logEvent(event, parameters: parameters.toFacebookParameters())
     }
     
     public func logEvent(_ event: AppEvents.Name, with valueToSum: Double) {
-        AppEvents.logEvent(event, valueToSum: valueToSum)
+        AppEvents.shared.logEvent(event, valueToSum: valueToSum)
     }
     
     public func logEvent(_ event: AppEvents.Name, with valueToSum: Double, and parameters: [String: Any]) {
-        AppEvents.logEvent(event, valueToSum: valueToSum, parameters: parameters)
+        AppEvents.shared.logEvent(event, valueToSum: valueToSum, parameters: parameters.toFacebookParameters())
     }
     
     public func logEvent(_ event: AppEvents.Name) {
-        AppEvents.logEvent(event)
+        AppEvents.shared.logEvent(event)
     }
     
     // MARK: Purchase
     public func logPurchase(of amount: Double, with currency: String) {
-        AppEvents.logPurchase(amount, currency: currency)
+        AppEvents.shared.logPurchase(amount: amount, currency: currency)
     }
     
     public func logPurchase(of amount: Double, with currency: String, and parameters: [String: Any]) {
-        AppEvents.logPurchase(amount, currency: currency, parameters: parameters)
+        AppEvents.shared.logPurchase(amount: amount, currency: currency, parameters: parameters)
     }
     
     // MARK: Push Notification
     public func registerPushToken(_ pushToken: String) {
-        AppEvents.setPushNotificationsDeviceToken(pushToken)
+        AppEvents.shared.setPushNotificationsDeviceToken(pushToken)
     }
     
     public func application(_ application: UIApplication,
                             didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         guard let userInfo = userInfo as NSDictionary? as? [String: Any] else {return}
-        AppEvents.logPushNotificationOpen(userInfo)
+        AppEvents.shared.logPushNotificationOpen(payload: userInfo)
     }
     
     // MARK: Product
@@ -127,7 +126,7 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
                 print("\(FacebookConstants.errorPrefix)logProductItem - Product availability and condition are required, the type should be Integer")
                 return
             }
-            AppEvents.logProductItem(product.productId, availability: availability, condition: condition, description: product.productDescription, imageLink: product.productImageLink, link: product.productLink, title: product.productTitle, priceAmount: product.productPrice, currency: product.productCurrency, gtin: product.productGtin, mpn: product.productMpn, brand: product.productBrand, parameters: product.productParameters)
+            AppEvents.shared.logProductItem(id: product.productId, availability: availability, condition: condition, description: product.productDescription, imageLink: product.productImageLink, link: product.productLink, title: product.productTitle, priceAmount: product.productPrice, currency: product.productCurrency, gtin: product.productGtin, mpn: product.productMpn, brand: product.productBrand, parameters: product.productParameters)
         } catch {
             print("\(FacebookConstants.errorPrefix)logProductItem - Unable to decode product item")
         }
@@ -137,7 +136,7 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     
     // MARK: User
     public func setUserId(to userid: String) {
-        AppEvents.userID = userid
+        AppEvents.shared.userID = userid
     }
     
     public func setUser(from data: Data) {
@@ -158,7 +157,7 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     }
     
     public func clearUserId() {
-        AppEvents.clearUserID()
+        AppEvents.shared.userID = nil
     }
     
     // MARK: Flush Events
@@ -167,11 +166,11 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
             print("\(FacebookConstants.errorPrefix)Could not set flush behavior because the value is invalid")
             return
         }
-        AppEvents.flushBehavior = flush
+        AppEvents.shared.flushBehavior = flush
     }
     
     public func flush() {
-        AppEvents.flush()
+        AppEvents.shared.flush()
     }
     
 }

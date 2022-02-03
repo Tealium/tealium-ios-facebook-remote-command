@@ -7,17 +7,19 @@
 //
 
 import Foundation
+import FBSDKCoreKit
 #if COCOAPODS
     import TealiumSwift
-    import FBSDKCoreKit
 #else
     import TealiumCore
-    import TealiumTagManagement
     import TealiumRemoteCommands
-    import FacebookCore
 #endif
 
 public class FacebookRemoteCommand: RemoteCommand {
+
+    override public var version: String? {
+        FacebookConstants.version
+    }
 
     var facebookInstance: FacebookCommand?
     var debug = false
@@ -349,5 +351,16 @@ fileprivate extension AppEvents.Name {
         } else {
             self = AppEvents.Name(eventName)
         }
+    }
+}
+
+
+extension Dictionary where Key == String, Value == Any {
+    
+    func toFacebookParameters() -> [AppEvents.ParameterName: Any] {
+        let kvPairs: [(AppEvents.ParameterName, Any)] = self.map { (key, value) in
+            return (AppEvents.ParameterName(rawValue: key), value)
+        }
+        return [AppEvents.ParameterName: Any](kvPairs, uniquingKeysWith: { f, s in f })
     }
 }

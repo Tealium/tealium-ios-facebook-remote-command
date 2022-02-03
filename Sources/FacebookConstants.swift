@@ -7,15 +7,11 @@
 //
 
 import Foundation
-#if COCOAPODS
-    import FBSDKCoreKit
-#else
-    import FacebookCore
-#endif
+import FBSDKCoreKit
 
 /// All keys associated with Facebook remote command
 enum FacebookConstants {
-    
+    static let version = "1.2.0"
     static let commandId = "facebook"
     static let description = "Facebook Remote Command"
     static let commandName = "command_name"
