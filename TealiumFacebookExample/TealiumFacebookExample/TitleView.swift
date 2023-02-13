@@ -7,12 +7,24 @@
 //
 
 import SwiftUI
+import TealiumSwift
+import TealiumFacebook
+
+extension Bundle {
+    func versionString() -> String {
+        guard let dictionary = self.infoDictionary,
+              let version = dictionary["CFBundleShortVersionString"] as? String else {
+            return "0.0"
+        }
+        return "\(version)"
+    }
+}
 
 struct TitleView: View {
     @State var alertShown = false
     var versions: Alert {
-        Alert(title: Text("Tealium Facebook \(tealiumFacebookVersion)"),
-            message: Text("Tealium Swift \(tealiumLibraryVersion)"),
+        Alert(title: Text("Tealium Facebook \(Bundle(for: FacebookRemoteCommand.self).versionString())"),
+            message: Text("Tealium Swift \(Bundle(for: Tealium.self).versionString())"),
             dismissButton: Alert.Button.default(Text("Ok")))
     }
     var body: some View {
