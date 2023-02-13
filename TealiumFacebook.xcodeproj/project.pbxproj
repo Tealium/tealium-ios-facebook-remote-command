@@ -18,7 +18,6 @@
 		15A82EC7277B61A600A29E32 /* TealiumCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A82EC0277B5ED200A29E32 /* TealiumCore.xcframework */; };
 		15A82EC8277B61A600A29E32 /* TealiumRemoteCommands.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A82EC1277B5ED200A29E32 /* TealiumRemoteCommands.xcframework */; };
 		15A82EC9277B6FFC00A29E32 /* TealiumFacebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */; };
-		CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */; };
 		CF9B51BC232AF3BC003019F9 /* FacebookInstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51B9232AF3BB003019F9 /* FacebookInstanceTests.swift */; };
 		CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */; };
 		CF9B51BE232AF3BC003019F9 /* MockFacebookInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BB232AF3BC003019F9 /* MockFacebookInstance.swift */; };
@@ -47,7 +46,6 @@
 		15A82EC2277B5ED200A29E32 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = Carthage/Build/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
 		15A82ECB277B7E1000A29E32 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15A82ECE277B7E1900A29E32 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTestHelpers.swift; sourceTree = "<group>"; };
 		CF9B51B9232AF3BB003019F9 /* FacebookInstanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookInstanceTests.swift; sourceTree = "<group>"; };
 		CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookCommandTests.swift; sourceTree = "<group>"; };
 		CF9B51BB232AF3BC003019F9 /* MockFacebookInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFacebookInstance.swift; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 				CF9B51B9232AF3BB003019F9 /* FacebookInstanceTests.swift */,
 				CF9B51BA232AF3BC003019F9 /* FacebookCommandTests.swift */,
 				CF9B51BB232AF3BC003019F9 /* MockFacebookInstance.swift */,
-				CF0D01DB232AB5C9005BFE15 /* HttpTestHelpers.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -290,7 +287,6 @@
 			files = (
 				CF9B51BC232AF3BC003019F9 /* FacebookInstanceTests.swift in Sources */,
 				CF9B51BD232AF3BC003019F9 /* FacebookCommandTests.swift in Sources */,
-				CF0D01E0232AB5E1005BFE15 /* HttpTestHelpers.swift in Sources */,
 				CF9B51BE232AF3BC003019F9 /* MockFacebookInstance.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
