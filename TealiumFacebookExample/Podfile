@@ -7,7 +7,7 @@ target 'TealiumFacebookExample' do
 
   # Pods for TealiumFacebookExample
   pod 'TealiumFacebook', :path=> '../'
-  pod 'tealium-swift/Lifecycle', '~> 2.6'
-  pod 'tealium-swift/TagManagement', '~> 2.6'
+  pod 'tealium-swift/Lifecycle'
+  pod 'tealium-swift/TagManagement'
 
 end
