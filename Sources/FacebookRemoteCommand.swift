@@ -21,7 +21,7 @@ public class FacebookRemoteCommand: RemoteCommand {
         FacebookConstants.version
     }
 
-    var facebookInstance: FacebookCommand?
+    let facebookInstance: FacebookCommand
     var debug = false
 
     public init(facebookInstance: FacebookCommand = FacebookInstance(), type: RemoteCommandType = .webview) {
@@ -40,9 +40,8 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
 
     func processRemoteCommand(with payload: [String: Any]) {
-        facebookInstance?.checkAdvertiserTracking()
-        guard let facebookInstance = facebookInstance,
-            let command = payload[FacebookConstants.commandName] as? String else {
+        facebookInstance.checkAdvertiserTracking()
+        guard let command = payload[FacebookConstants.commandName] as? String else {
                 return
         }
         if let tagDebug = payload[FacebookConstants.debug] as? Bool,
@@ -260,10 +259,6 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
     
     private func logProductItem(with productData: [String: Any]) {
-        guard let facebookInstance = facebookInstance else {
-            return
-        }
-        
         if let _ = productData[FacebookConstants.Product.productId] as? String {
             let validatedProductData = typeCheck(productData)
             do {
@@ -296,9 +291,6 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
     
     private func setUser(with userData: [String: Any]) {
-        guard let facebookInstance = facebookInstance else {
-            return
-        }
         do {
             let json = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
             return facebookInstance.setUser(from: json)
