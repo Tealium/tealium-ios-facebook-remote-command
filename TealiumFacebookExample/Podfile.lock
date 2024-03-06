@@ -5,17 +5,17 @@ PODS:
     - FBAEMKit (= 12.2.1)
     - FBSDKCoreKit_Basics (= 12.2.1)
   - FBSDKCoreKit_Basics (12.2.1)
-  - tealium-swift/Core (2.9.1)
-  - tealium-swift/Lifecycle (2.9.1):
+  - tealium-swift/Core (2.12.2)
+  - tealium-swift/Lifecycle (2.12.2):
     - tealium-swift/Core
-  - tealium-swift/RemoteCommands (2.9.1):
+  - tealium-swift/RemoteCommands (2.12.2):
     - tealium-swift/Core
-  - tealium-swift/TagManagement (2.9.1):
+  - tealium-swift/TagManagement (2.12.2):
     - tealium-swift/Core
-  - TealiumFacebook (1.3.0):
+  - TealiumFacebook (1.4.0):
     - FBSDKCoreKit (~> 12.2)
-    - tealium-swift/Core (~> 2.9)
-    - tealium-swift/RemoteCommands (~> 2.9)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
 
 DEPENDENCIES:
   - tealium-swift/Lifecycle
@@ -37,9 +37,9 @@ SPEC CHECKSUMS:
   FBAEMKit: 4cea610d0bc1680572f2aad7b25db7a2f2690d82
   FBSDKCoreKit: 5b1992fe65802ca26be7e68bc4fac5f59fa39908
   FBSDKCoreKit_Basics: a6a92ca628e05f86f458a4721574c5ddfb058ba3
-  tealium-swift: 137769254e97d4c9f7ed6e16e0768b40888e6452
-  TealiumFacebook: d9baef826faedcfc8da041619e7c36c09eb75ced
+  tealium-swift: 4b7e3dda42d7c1de6acb769abad9920346d17d43
+  TealiumFacebook: 9caa67a521c80f939924a78e449f5d177cda12cf
 
-PODFILE CHECKSUM: 269f2a495ec27c79a71c89f3842a044306345277
+PODFILE CHECKSUM: 73c4a5a6c67d9e4aec6d91b5923b0f6e296b6c79
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2
