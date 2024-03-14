@@ -1,2 +1,2 @@
 github "https://github.com/facebook/facebook-ios-sdk" ~> 12.2
-github "https://github.com/tealium/tealium-swift" ~> 2.9
+github "https://github.com/tealium/tealium-swift" ~> 2.12
