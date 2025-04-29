@@ -31,6 +31,6 @@ Pod::Spec.new do |s|
     # ――― Dependencies ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.ios.dependency 'tealium-swift/Core', ' ~> 2.12'
     s.ios.dependency 'tealium-swift/RemoteCommands', ' ~> 2.12'
-    s.ios.dependency 'FBSDKCoreKit', ' ~> 12.2'
+    s.ios.dependency 'FBSDKCoreKit', ' ~> 16.0'
 
 end

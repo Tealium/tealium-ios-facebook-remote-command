@@ -103,7 +103,7 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     }
     
     public func logPurchase(of amount: Double, with currency: String, and parameters: [String: Any]) {
-        AppEvents.shared.logPurchase(amount: amount, currency: currency, parameters: parameters)
+        AppEvents.shared.logPurchase(amount: amount, currency: currency, parameters: parameters.toFacebookParameters())
     }
     
     // MARK: Push Notification
