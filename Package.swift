@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/tealium/tealium-swift", .upToNextMajor(from: "2.16.0")),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk", .upToNextMajor(from: "16.0.0"))
+        .package(url: "https://github.com/facebook/facebook-ios-sdk", .upToNextMajor(from: "18.0.0"))
     ],
     targets: [
         .target(
