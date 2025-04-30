@@ -33,7 +33,7 @@ class MockFacebookInstance: FacebookCommand {
     var setFlushBehaviorCount = 0
     var flushCount = 0
     
-    func initialize() {
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
         initializeCount += 1
     }
     
