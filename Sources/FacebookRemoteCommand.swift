@@ -16,6 +16,8 @@ import UIKit
     import TealiumRemoteCommands
 #endif
 
+public typealias InitializationCallback = () -> Void
+
 public class FacebookRemoteCommand: RemoteCommand {
 
     override public var version: String? {
@@ -25,10 +27,12 @@ public class FacebookRemoteCommand: RemoteCommand {
     let facebookInstance: FacebookCommand
     var debug = false
     private var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    private var onInitialized: InitializationCallback?
 
-    public init(launchOptions: [UIApplication.LaunchOptionsKey: Any]?, facebookInstance: FacebookCommand = FacebookInstance(), type: RemoteCommandType = .webview) {
+    public init(launchOptions: [UIApplication.LaunchOptionsKey: Any]?, facebookInstance: FacebookCommand = FacebookInstance(), type: RemoteCommandType = .webview, onInitialized: InitializationCallback? = nil) {
         self.launchOptions = launchOptions
         self.facebookInstance = facebookInstance
+        self.onInitialized = onInitialized
         weak var weakSelf: FacebookRemoteCommand?
         super.init(commandId: FacebookConstants.commandId,
                    description: FacebookConstants.description,
@@ -61,6 +65,7 @@ public class FacebookRemoteCommand: RemoteCommand {
             switch command {
             case .initialize:
                 facebookInstance.initialize(launchOptions: self.launchOptions)
+                self.onInitialized?()
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {
@@ -301,6 +306,10 @@ public class FacebookRemoteCommand: RemoteCommand {
                 print("\(FacebookConstants.errorPrefix)setUser - Could not convert userData to json.")
             }
         }
+    }
+
+    public func getFacebookInstance() -> FacebookCommand {
+        return facebookInstance
     }
 
 }

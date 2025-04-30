@@ -37,7 +37,13 @@ class TealiumHelper {
         config.collectors = [Collectors.Lifecycle]
         config.dispatchers = [Dispatchers.TagManagement, Dispatchers.RemoteCommands]
         
-        facebookRemoteCommand = FacebookRemoteCommand(launchOptions: launchOptions, type: .local(file: "facebook", bundle: Bundle.main))
+        facebookRemoteCommand = FacebookRemoteCommand(
+            launchOptions: launchOptions,
+            type: .local(file: "facebook", bundle: Bundle.main),
+            onInitialized: {
+                print("Facebook SDK initialized")
+            }
+        )
         
         config.addRemoteCommand(facebookRemoteCommand)
         
