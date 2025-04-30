@@ -19,11 +19,10 @@ import FBSDKCoreKit
 
 public protocol FacebookCommand {
     // Initialize
-    func initialize()
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
     // Settings
     func setAutoLogAppEventsEnabled(_ enabled: Bool)
     func enableAdvertiserIDCollection(_ enabled: Bool)
-    func checkAdvertiserTracking()
     // Facebook Standard Events
     func logEvent(_ event: AppEvents.Name, with parameters: [String: Any])
     func logEvent(_ event: AppEvents.Name, with valueToSum: Double)
@@ -46,14 +45,14 @@ public protocol FacebookCommand {
     func flush()
 }
 
-public class FacebookInstance: FacebookCommand, TealiumRegistration {
+public class FacebookInstance: FacebookCommand {
 
     public init() { }
     
     // MARK: Initialize
-    public func initialize() {
+    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         DispatchQueue.main.async {
-            ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
+            ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions ?? [:])
             Settings.shared.enableLoggingBehavior(.appEvents)
             AppEvents.shared.activateApp()
         }
@@ -66,18 +65,6 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     
     public func enableAdvertiserIDCollection(_ enabled: Bool) {
         Settings.shared.isAdvertiserIDCollectionEnabled = enabled
-    }
-    
-    public func checkAdvertiserTracking() {
-        if #available(iOS 14, *) {
-            if ATTrackingManager.trackingAuthorizationStatus == .authorized {
-                Settings.shared.isAdvertiserTrackingEnabled = true
-            } else  {
-                Settings.shared.isAdvertiserTrackingEnabled = false
-            }
-        } else {
-            Settings.shared.isAdvertiserTrackingEnabled = true
-        }
     }
     
     // MARK: Facebook Standard Events
