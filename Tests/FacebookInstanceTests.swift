@@ -16,7 +16,7 @@ class FacebookInstanceTests: XCTestCase {
     var facebookCommand: FacebookRemoteCommand!
 
     override func setUp() {
-        facebookCommand = FacebookRemoteCommand(facebookInstance: facebookInstance)
+        facebookCommand = FacebookRemoteCommand(launchOptions: nil, facebookInstance: facebookInstance, onInitialized: nil)
     }
 
     override func tearDown() {
