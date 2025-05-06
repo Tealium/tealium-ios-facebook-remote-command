@@ -14,7 +14,6 @@ class MockFacebookInstance: FacebookCommand {
     
     var initializeCount = 0
     var setAutoLogAppEventsEnabledCount = 0
-    var setAutoInitEnabledCount = 0
     var enableAdvertiserIDCollectionCount = 0
     var logEventWithParametersNoValueCount = 0
     var logEventWithValueNoParametersCount = 0
@@ -33,16 +32,13 @@ class MockFacebookInstance: FacebookCommand {
     var setFlushBehaviorCount = 0
     var flushCount = 0
     
-    func initialize(launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey : Any]?, completion: (() -> Void)?) {
         initializeCount += 1
+        completion?()
     }
     
     func setAutoLogAppEventsEnabled(_ enabled: Bool) {
         setAutoLogAppEventsEnabledCount += 1
-    }
-    
-    func setAutoInitEnabled(_ enabled: Bool) {
-        setAutoInitEnabledCount += 1
     }
     
     func enableAdvertiserIDCollection(_ enabled: Bool) {

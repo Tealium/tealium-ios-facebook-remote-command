@@ -19,7 +19,7 @@ import FBSDKCoreKit
 
 public protocol FacebookCommand {
     // Initialize
-    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?, completion: (() -> Void)?)
     // Settings
     func setAutoLogAppEventsEnabled(_ enabled: Bool)
     func enableAdvertiserIDCollection(_ enabled: Bool)
@@ -50,11 +50,14 @@ public class FacebookInstance: FacebookCommand {
     public init() { }
     
     // MARK: Initialize
-    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions ?? [:])
             Settings.shared.enableLoggingBehavior(.appEvents)
             AppEvents.shared.activateApp()
+            
+            // Notify completion of initialization
+            completion?()
         }
     }
     

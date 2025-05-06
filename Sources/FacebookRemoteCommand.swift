@@ -29,10 +29,14 @@ public class FacebookRemoteCommand: RemoteCommand {
     private var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     private var onInitialized: InitializationCallback?
 
-    public init(launchOptions: [UIApplication.LaunchOptionsKey: Any]?, facebookInstance: FacebookCommand = FacebookInstance(), type: RemoteCommandType = .webview, onInitialized: InitializationCallback? = nil) {
+    public init(launchOptions: [UIApplication.LaunchOptionsKey: Any]?,
+               type: RemoteCommandType = .webview,
+               facebookInstance: FacebookCommand = FacebookInstance(),
+               onInitialized: InitializationCallback? = nil) {
         self.launchOptions = launchOptions
         self.facebookInstance = facebookInstance
         self.onInitialized = onInitialized
+        
         weak var weakSelf: FacebookRemoteCommand?
         super.init(commandId: FacebookConstants.commandId,
                    description: FacebookConstants.description,
@@ -64,8 +68,9 @@ public class FacebookRemoteCommand: RemoteCommand {
 
             switch command {
             case .initialize:
-                facebookInstance.initialize(launchOptions: self.launchOptions)
-                self.onInitialized?()
+                facebookInstance.initialize(launchOptions: self.launchOptions) { [weak self] in
+                    self?.onInitialized?()
+                }
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {
