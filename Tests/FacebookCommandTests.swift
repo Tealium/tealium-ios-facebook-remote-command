@@ -17,7 +17,7 @@ class FacebookCommandTests: XCTestCase {
     var facebookCommand: FacebookRemoteCommand!
 
     override func setUp() {
-        facebookCommand = FacebookRemoteCommand(launchOptions: nil, facebookInstance: facebookInstance, onInitialized: nil)
+        facebookCommand = FacebookRemoteCommand(facebookInstance: facebookInstance)
     }
 
     override func tearDown() { }
@@ -116,6 +116,81 @@ class FacebookCommandTests: XCTestCase {
             return
         }
         XCTAssertEqual(AppEvents.ProductCondition.used, productCondition)
+    }
+
+    func testLogEventInitiatedCheckoutNoRequiredParameter() {
+        let payload: [String: Any] = ["command_name": "initiatedcheckout"]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
+        XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
+        XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
+    }
+    
+    func testOnReady() {
+        let payload: [String: Any] = ["command_name": "initialize"]
+        facebookCommand.processRemoteCommand(with: payload)
+        let expect = expectation(description: "Facebook is ready after init")
+        facebookCommand.onReady {
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 2.0)
+    }
+
+    func testHandleInvalidUserData() {
+        let invalidPayload: [String: Any] = ["invalid_key": "test@test.com", "fn": 12345] // Wrong type
+        
+        do {
+            let userData = try JSONSerialization.data(withJSONObject: invalidPayload, options: .prettyPrinted)
+            let user = try JSONDecoder().decode(FacebookUser.self, from: userData)
+            XCTFail("Should not decode invalid user data")
+        } catch {
+            // We expect an error here
+            XCTAssertTrue(error is DecodingError, "Should be a DecodingError")
+        }
+    }
+
+    func testProcessCommandWithEmptyPayload() {
+        let emptyPayload: [String: Any] = [:]
+        // Should not crash
+        facebookCommand.processRemoteCommand(with: emptyPayload)
+        
+        // No methods should be called
+        XCTAssertEqual(0, facebookInstance.initializeCount)
+        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testProcessCommandWithInvalidCommandName() {
+        let payload: [String: Any] = ["command_name": "invalidCommand"]
+        // Should not crash and handle unknown command
+        facebookCommand.processRemoteCommand(with: payload)
+        
+        // Verify no unexpected methods were called
+        XCTAssertEqual(0, facebookInstance.initializeCount)
+        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testSetUserMalformedJSON() {
+        // Test handling of malformed user data that can't be serialized
+        let payload: [String: Any] = [
+            "command_name": "setuser",
+            "user": NSObject() // Non-serializable object
+        ]
+        // This should not crash
+        facebookCommand.processRemoteCommand(with: payload)
+    }
+
+    func testLogProductItemInvalidJSON() {
+        // Test handling of product data that can't be serialized
+        let payload: [String: Any] = [
+            "command_name": "logproductitem",
+            "product_item": [
+                "fb_product_item_id": "id1",
+                "non_serializable": NSObject() // Non-serializable object
+            ]
+        ]
+        // This should not crash
+        facebookCommand.processRemoteCommand(with: payload)
     }
 
 }

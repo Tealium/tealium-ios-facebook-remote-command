@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name         = "TealiumFacebook"
     s.module_name  = "TealiumFacebook"
-    s.version      = "1.4.0"
+    s.version      = "2.0.0"
     s.summary      = "Tealium Swift and Facebook integration"
     s.description  = <<-DESC
     Tealium's integration with Facebook for iOS.

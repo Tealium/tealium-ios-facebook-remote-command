@@ -40,11 +40,8 @@ final class TealiumHelper {
     
     func configure(with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         facebookRemoteCommand = FacebookRemoteCommand(
-            launchOptions: launchOptions,
             type: .local(file: "facebook", bundle: Bundle.main),
-            onInitialized: {
-                print("Facebook SDK initialized")
-            }
+            launchOptions: launchOptions ?? [:]
         )
         
         config.addRemoteCommand(facebookRemoteCommand!)
@@ -62,7 +59,4 @@ final class TealiumHelper {
         TealiumHelper.shared.tealium?.track(tealiumEvent)
     }
 
-    class func getFacebookInstance() -> FacebookCommand? {
-        return TealiumHelper.shared.facebookRemoteCommand?.getFacebookInstance()
-    }
 }

@@ -18,11 +18,13 @@ import FBSDKCoreKit
 #endif
 
 public protocol FacebookCommand {
+    func onReady(_ onReady: @escaping () -> Void)
     // Initialize
-    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?, completion: (() -> Void)?)
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any])
     // Settings
     func setAutoLogAppEventsEnabled(_ enabled: Bool)
     func enableAdvertiserIDCollection(_ enabled: Bool)
+    func checkAdvertiserTracking()
     // Facebook Standard Events
     func logEvent(_ event: AppEvents.Name, with parameters: [String: Any])
     func logEvent(_ event: AppEvents.Name, with valueToSum: Double)
@@ -30,8 +32,6 @@ public protocol FacebookCommand {
     func logEvent(_ event: AppEvents.Name)
     func logPurchase(of amount: Double, with currency: String)
     func logPurchase(of amount: Double, with currency: String, and parameters: [String: Any])
-    // Push Notification
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     // Product
     func logProductItem(using data: Data)
     // User
@@ -46,19 +46,23 @@ public protocol FacebookCommand {
 }
 
 public class FacebookInstance: FacebookCommand {
+    
+    private var _onReady = TealiumReplaySubject<Void>(cacheSize: 1)
 
     public init() { }
     
     // MARK: Initialize
-    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?, completion: (() -> Void)? = nil) {
+    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]) {
         DispatchQueue.main.async {
-            ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions ?? [:])
+            ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions)
             Settings.shared.enableLoggingBehavior(.appEvents)
             AppEvents.shared.activateApp()
-            
-            // Notify completion of initialization
-            completion?()
+            self._onReady.publish()
         }
+    }
+
+    public func onReady(_ onReady: @escaping () -> Void) {
+        _onReady.subscribeOnce(onReady)
     }
     
     // MARK: Settings
@@ -68,6 +72,20 @@ public class FacebookInstance: FacebookCommand {
     
     public func enableAdvertiserIDCollection(_ enabled: Bool) {
         Settings.shared.isAdvertiserIDCollectionEnabled = enabled
+    }
+
+    public func checkAdvertiserTracking() {
+        if #unavailable(iOS 17) {
+            if #available(iOS 14, *) {
+                // Check ATT permission for iOS 14+ devices
+                let status = ATTrackingManager.trackingAuthorizationStatus
+                if status == .authorized {
+                    Settings.shared.isAdvertiserTrackingEnabled = true
+                } else {
+                    Settings.shared.isAdvertiserTrackingEnabled = false
+                }
+            }
+        }
     }
     
     // MARK: Facebook Standard Events
@@ -96,18 +114,6 @@ public class FacebookInstance: FacebookCommand {
         AppEvents.shared.logPurchase(amount: amount, currency: currency, parameters: parameters.toFacebookParameters())
     }
     
-    // MARK: Push Notification
-    public func registerPushToken(_ pushToken: String) {
-        AppEvents.shared.setPushNotificationsDeviceToken(pushToken)
-    }
-    
-    public func application(_ application: UIApplication,
-                            didReceiveRemoteNotification userInfo: [AnyHashable : Any],
-                            fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        guard let userInfo = userInfo as NSDictionary? as? [String: Any] else {return}
-        AppEvents.shared.logPushNotificationOpen(payload: userInfo)
-    }
-    
     // MARK: Product
     public func logProductItem(using data: Data) {
         do {
@@ -121,7 +127,6 @@ public class FacebookInstance: FacebookCommand {
             print("\(FacebookConstants.errorPrefix)logProductItem - Unable to decode product item")
         }
         
-
     }
     
     // MARK: User

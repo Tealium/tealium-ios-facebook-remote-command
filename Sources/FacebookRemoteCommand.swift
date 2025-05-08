@@ -16,8 +16,6 @@ import UIKit
     import TealiumRemoteCommands
 #endif
 
-public typealias InitializationCallback = () -> Void
-
 public class FacebookRemoteCommand: RemoteCommand {
 
     override public var version: String? {
@@ -26,16 +24,13 @@ public class FacebookRemoteCommand: RemoteCommand {
 
     let facebookInstance: FacebookCommand
     var debug = false
-    private var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    private var onInitialized: InitializationCallback?
+    private var launchOptions: [UIApplication.LaunchOptionsKey: Any]
 
-    public init(launchOptions: [UIApplication.LaunchOptionsKey: Any]?,
-               type: RemoteCommandType = .webview,
+    public init(type: RemoteCommandType = .webview,
                facebookInstance: FacebookCommand = FacebookInstance(),
-               onInitialized: InitializationCallback? = nil) {
-        self.launchOptions = launchOptions
+               launchOptions: [UIApplication.LaunchOptionsKey: Any] = [:]) {
         self.facebookInstance = facebookInstance
-        self.onInitialized = onInitialized
+        self.launchOptions = launchOptions
         
         weak var weakSelf: FacebookRemoteCommand?
         super.init(commandId: FacebookConstants.commandId,
@@ -50,7 +45,14 @@ public class FacebookRemoteCommand: RemoteCommand {
         weakSelf = self
     }
 
+    public func onReady(_ onReady: @escaping () -> Void) {
+        TealiumQueues.backgroundSerialQueue.async {
+            self.facebookInstance.onReady(onReady)
+        }
+    }
+
     func processRemoteCommand(with payload: [String: Any]) {
+        facebookInstance.checkAdvertiserTracking()
         guard let command = payload[FacebookConstants.commandName] as? String else {
                 return
         }
@@ -68,9 +70,7 @@ public class FacebookRemoteCommand: RemoteCommand {
 
             switch command {
             case .initialize:
-                facebookInstance.initialize(launchOptions: self.launchOptions) { [weak self] in
-                    self?.onInitialized?()
-                }
+                facebookInstance.initialize(launchOptions: self.launchOptions)
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {
@@ -311,10 +311,6 @@ public class FacebookRemoteCommand: RemoteCommand {
                 print("\(FacebookConstants.errorPrefix)setUser - Could not convert userData to json.")
             }
         }
-    }
-
-    public func getFacebookInstance() -> FacebookCommand {
-        return facebookInstance
     }
 
 }

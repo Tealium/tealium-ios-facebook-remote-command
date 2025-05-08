@@ -16,7 +16,7 @@ class FacebookInstanceTests: XCTestCase {
     var facebookCommand: FacebookRemoteCommand!
 
     override func setUp() {
-        facebookCommand = FacebookRemoteCommand(launchOptions: nil, facebookInstance: facebookInstance, onInitialized: nil)
+        facebookCommand = FacebookRemoteCommand(facebookInstance: facebookInstance)
     }
 
     override func tearDown() {
@@ -175,5 +175,135 @@ class FacebookInstanceTests: XCTestCase {
         XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
         XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
         XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
+    }
+
+    func testLogPurchaseWithInvalidParameters() {
+        // Missing currency, which is required
+        let payload: [String: Any] = ["command_name": "logpurchase", "purchase": [
+            "fb_purchase_amount": 9.99
+        ]]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(0, facebookInstance.logPurchaseNoParametersCount)
+        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
+    }
+
+    func testMultipleCommandsInSinglePayload() {
+        let payload: [String: Any] = ["command_name": "initialize,flush,clearuser"]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.initializeCount)
+        XCTAssertEqual(1, facebookInstance.flushCount)
+        XCTAssertEqual(1, facebookInstance.clearUserCount)
+    }
+
+    func testDebugModeEnabled() {
+        let payload: [String: Any] = ["command_name": "initialize", "debug": true]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.initializeCount)
+    }
+
+    func testAchievedLevelWithRequiredParameter() {
+        let payload: [String: Any] = [
+            "command_name": "achievedlevel",
+            "event": ["fb_level": 5]
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testAchievedLevelNoRequiredParameter() {
+        let payload: [String: Any] = [
+            "command_name": "achievedlevel",
+            "event": ["some_other_param": "value"]
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testUnlockedAchievementWithRequiredParameter() {
+        let payload: [String: Any] = [
+            "command_name": "unlockedachievement",
+            "event": ["fb_description": "Master Achiever"]
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testUnlockedAchievementNoRequiredParameter() {
+        let payload: [String: Any] = [
+            "command_name": "unlockedachievement",
+            "event": ["some_other_param": "value"]
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testSetAutoLogAppEventsEnabled() {
+        let payload: [String: Any] = [
+            "command_name": "setautologappeventsenabled",
+            "auto_log_events_enabled": true
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.setAutoLogAppEventsEnabledCount)
+    }
+
+    func testSetAutoLogAppEventsEnabledMissingParameter() {
+        let payload: [String: Any] = [
+            "command_name": "setautologappeventsenabled"
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(0, facebookInstance.setAutoLogAppEventsEnabledCount)
+    }
+
+    func testEnableAdvertiserIDCollection() {
+        let payload: [String: Any] = [
+            "command_name": "enableadvertiseridcollection",
+            "advertiser_id_collection_enabled": true
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.enableAdvertiserIDCollectionCount)
+    }
+
+    func testEnableAdvertiserIDCollectionMissingParameter() {
+        let payload: [String: Any] = [
+            "command_name": "enableadvertiseridcollection"
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(0, facebookInstance.enableAdvertiserIDCollectionCount)
+    }
+
+    func testCompletedTutorialWithRequiredParameter() {
+        let payload: [String: Any] = [
+            "command_name": "completedtutorial",
+            "event": ["fb_content_id": "tutorial_1"]
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testSearchedWithRequiredParameter() {
+        let payload: [String: Any] = [
+            "command_name": "searched",
+            "event": ["fb_search_string": "product xyz"]
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+    }
+
+    func testSetFlushBehavior() {
+        let payload: [String: Any] = [
+            "command_name": "setflushbehavior",
+            "flush_behavior": "1"  // Valid flush behavior value
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(1, facebookInstance.setFlushBehaviorCount)
+    }
+
+    func testSetFlushBehaviorInvalidValue() {
+        let payload: [String: Any] = [
+            "command_name": "setflushbehavior",
+            "flush_behavior": "invalid"  // Not a number
+        ]
+        facebookCommand.processRemoteCommand(with: payload)
+        XCTAssertEqual(0, facebookInstance.setFlushBehaviorCount)
     }
 }
