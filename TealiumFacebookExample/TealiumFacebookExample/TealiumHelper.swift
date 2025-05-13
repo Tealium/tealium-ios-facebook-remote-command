@@ -41,7 +41,7 @@ final class TealiumHelper {
     func configure(with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         facebookRemoteCommand = FacebookRemoteCommand(
             type: .local(file: "facebook", bundle: Bundle.main),
-            launchOptions: launchOptions ?? [:]
+            launchOptions: launchOptions
         )
         
         config.addRemoteCommand(facebookRemoteCommand!)

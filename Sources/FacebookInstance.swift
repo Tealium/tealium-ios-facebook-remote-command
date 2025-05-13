@@ -20,7 +20,7 @@ import FBSDKCoreKit
 public protocol FacebookCommand {
     func onReady(_ onReady: @escaping () -> Void)
     // Initialize
-    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any])
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
     // Settings
     func setAutoLogAppEventsEnabled(_ enabled: Bool)
     func enableAdvertiserIDCollection(_ enabled: Bool)
@@ -52,7 +52,7 @@ public class FacebookInstance: FacebookCommand {
     public init() { }
     
     // MARK: Initialize
-    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]) {
+    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         DispatchQueue.main.async {
             ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions)
             Settings.shared.enableLoggingBehavior(.appEvents)
@@ -62,7 +62,9 @@ public class FacebookInstance: FacebookCommand {
     }
 
     public func onReady(_ onReady: @escaping () -> Void) {
-        _onReady.subscribeOnce(onReady)
+        TealiumQueues.secureMainThreadExecution {  
+            self._onReady.subscribeOnce(onReady)
+        }
     }
     
     // MARK: Settings

@@ -24,11 +24,11 @@ public class FacebookRemoteCommand: RemoteCommand {
 
     let facebookInstance: FacebookCommand
     var debug = false
-    private var launchOptions: [UIApplication.LaunchOptionsKey: Any]
+    private let launchOptions: [UIApplication.LaunchOptionsKey: Any]?
 
     public init(type: RemoteCommandType = .webview,
                facebookInstance: FacebookCommand = FacebookInstance(),
-               launchOptions: [UIApplication.LaunchOptionsKey: Any] = [:]) {
+               launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         self.facebookInstance = facebookInstance
         self.launchOptions = launchOptions
         
@@ -46,9 +46,7 @@ public class FacebookRemoteCommand: RemoteCommand {
     }
 
     public func onReady(_ onReady: @escaping () -> Void) {
-        TealiumQueues.backgroundSerialQueue.async {
-            self.facebookInstance.onReady(onReady)
-        }
+        self.facebookInstance.onReady(onReady)
     }
 
     func processRemoteCommand(with payload: [String: Any]) {
@@ -70,7 +68,7 @@ public class FacebookRemoteCommand: RemoteCommand {
 
             switch command {
             case .initialize:
-                facebookInstance.initialize(launchOptions: self.launchOptions)
+                facebookInstance.initialize(launchOptions: self.launchOptions ?? [:])
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {
