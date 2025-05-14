@@ -20,8 +20,6 @@
 		15A82EC9277B6FFC00A29E32 /* TealiumFacebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC8D9AE232AB3A400A4987F /* TealiumFacebook.framework */; };
 		9E8995A82DD4DA2300078F57 /* FacebookRemoteCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8995A52DD4DA2300078F57 /* FacebookRemoteCommandTests.swift */; };
 		9E8995A92DD4DA2300078F57 /* FacebookDataModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8995A42DD4DA2300078F57 /* FacebookDataModelTests.swift */; };
-		9E8995AB2DD4DA2300078F57 /* FacebookRemoteCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8995A52DD4DA2300078F57 /* FacebookRemoteCommandTests.swift */; };
-		9E8995AC2DD4DA2300078F57 /* FacebookDataModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8995A42DD4DA2300078F57 /* FacebookDataModelTests.swift */; };
 		CF9B51BE232AF3BC003019F9 /* MockFacebookInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9B51BB232AF3BC003019F9 /* MockFacebookInstance.swift */; };
 		CFC8D9B3232AB3A400A4987F /* TealiumFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = CFC8D9B1232AB3A400A4987F /* TealiumFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CFEF6B9C2526936800902EC6 /* FacebookInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF6B982526936800902EC6 /* FacebookInstance.swift */; };
@@ -279,8 +277,6 @@
 				CFEF6B9E2526936800902EC6 /* FacebookConstants.swift in Sources */,
 				CFEF6B9C2526936800902EC6 /* FacebookInstance.swift in Sources */,
 				CFEF6B9D2526936800902EC6 /* FacebookRemoteCommand.swift in Sources */,
-				9E8995AB2DD4DA2300078F57 /* FacebookRemoteCommandTests.swift in Sources */,
-				9E8995AC2DD4DA2300078F57 /* FacebookDataModelTests.swift in Sources */,
 				CFEF6B9F2526936800902EC6 /* Tealium+Int.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

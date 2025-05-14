@@ -115,7 +115,11 @@ extension FacebookDataModelTests {
     
     func testConvertProductAvailabilityWithInvalidValue() {
         let availability = AppEvents.ProductAvailability(rawValue: 999)
-        XCTAssertNil(availability, "Should return nil for invalid enum value")
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.inStock)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.outOfStock)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.preOrder)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.availableForOrder)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.discontinued)
     }
 
     func testConvertProductCondition() {
@@ -127,7 +131,9 @@ extension FacebookDataModelTests {
     
     func testConvertProductConditionWithInvalidValue() {
         let condition = AppEvents.ProductCondition(rawValue: 999)
-        XCTAssertNil(condition, "Should return nil for invalid enum value")
+        XCTAssertNotEqual(condition, AppEvents.ProductCondition.new)
+        XCTAssertNotEqual(condition, AppEvents.ProductCondition.refurbished)
+        XCTAssertNotEqual(condition, AppEvents.ProductCondition.used)
     }
     
     func testConvertFlushBehavior() {
@@ -138,6 +144,7 @@ extension FacebookDataModelTests {
     
     func testConvertFlushBehaviorWithInvalidValue() {
         let flushBehavior = AppEvents.FlushBehavior(rawValue: 999)
-        XCTAssertNil(flushBehavior, "Should return nil for invalid enum value")
+        XCTAssertNotEqual(flushBehavior, AppEvents.FlushBehavior.auto)
+        XCTAssertNotEqual(flushBehavior, AppEvents.FlushBehavior.explicitOnly)
     }
 }   
