@@ -12,10 +12,11 @@ import TealiumRemoteCommands
 
 class FacebookRemoteCommandTests: XCTestCase {
 
-    let facebookInstance = MockFacebookInstance()
+    var facebookInstance: MockFacebookInstance!
     var facebookCommand: FacebookRemoteCommand!
 
     override func setUp() {
+        facebookInstance = MockFacebookInstance()
         facebookCommand = FacebookRemoteCommand(facebookInstance: facebookInstance)
     }
 
@@ -40,7 +41,7 @@ extension FacebookRemoteCommandTests {
     func testInitialize() {
         let payload: [String: Any] = ["command_name": "initialize"]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.initializeCount)
+        XCTAssertTrue(facebookInstance.isInitialized)
     }
 
     func testSetAutoLogAppEventsEnabled() {
@@ -49,7 +50,7 @@ extension FacebookRemoteCommandTests {
             "auto_log_events_enabled": true
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.setAutoLogAppEventsEnabledCount)
+        XCTAssertEqual(true, facebookInstance.autoLogAppEventsEnabled)
     }
 
     func testSetAutoLogAppEventsEnabledMissingParameter() {
@@ -57,7 +58,7 @@ extension FacebookRemoteCommandTests {
             "command_name": "setautologappeventsenabled"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.setAutoLogAppEventsEnabledCount)
+        XCTAssertNil(facebookInstance.autoLogAppEventsEnabled)
     }
   
     func testEnableAdvertiserIDCollection() {
@@ -66,7 +67,7 @@ extension FacebookRemoteCommandTests {
             "advertiser_id_collection_enabled": true
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.enableAdvertiserIDCollectionCount)
+        XCTAssertEqual(true, facebookInstance.advertiserIDCollectionEnabled)
     }
 
     func testEnableAdvertiserIDCollectionMissingParameter() {
@@ -74,7 +75,7 @@ extension FacebookRemoteCommandTests {
             "command_name": "enableadvertiseridcollection"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.enableAdvertiserIDCollectionCount)
+        XCTAssertNil(facebookInstance.advertiserIDCollectionEnabled)
     }
 
     func testLogPurchaseWithParameters() {
@@ -90,8 +91,10 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logPurchaseWithParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseNoParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedPurchases.count)
+        XCTAssertEqual(9.99, facebookInstance.loggedPurchases[0].amount)
+        XCTAssertEqual("USD", facebookInstance.loggedPurchases[0].currency)
+        XCTAssertNotNil(facebookInstance.loggedPurchases[0].parameters)
     }
     
     func testLogPurchaseNoParameters() {
@@ -103,8 +106,10 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
-        XCTAssertEqual(1, facebookInstance.logPurchaseNoParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedPurchases.count)
+        XCTAssertEqual(9.99, facebookInstance.loggedPurchases[0].amount)
+        XCTAssertEqual("USD", facebookInstance.loggedPurchases[0].currency)
+        XCTAssertNil(facebookInstance.loggedPurchases[0].parameters)
     }
 
     func testLogPurchaseMissingPurchaseObject() {
@@ -112,8 +117,7 @@ extension FacebookRemoteCommandTests {
             "command_name": "logpurchase"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logPurchaseNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
+        XCTAssertEqual(0, facebookInstance.loggedPurchases.count)
     }
     
     func testLogPurchaseMissingCurrency() {
@@ -124,8 +128,7 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logPurchaseNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
+        XCTAssertEqual(0, facebookInstance.loggedPurchases.count)
     }
     
     func testLogPurchaseWithStringAmount() {
@@ -137,8 +140,9 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logPurchaseNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedPurchases.count)
+        XCTAssertEqual(19.99, facebookInstance.loggedPurchases[0].amount)
+        XCTAssertEqual("EUR", facebookInstance.loggedPurchases[0].currency)
     }
 
     func testLogPurchaseWithDoubleAmount() {
@@ -150,8 +154,9 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logPurchaseNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedPurchases.count)
+        XCTAssertEqual(19.99, facebookInstance.loggedPurchases[0].amount)
+        XCTAssertEqual("USD", facebookInstance.loggedPurchases[0].currency)
     }
      
     func testLogPurchaseWithIntAmount() {
@@ -163,8 +168,9 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logPurchaseNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedPurchases.count)
+        XCTAssertEqual(25.0, facebookInstance.loggedPurchases[0].amount)
+        XCTAssertEqual("USD", facebookInstance.loggedPurchases[0].currency)
     }
     
     func testLogPurchaseWithParametersInPayload() {
@@ -180,8 +186,10 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logPurchaseWithParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseNoParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedPurchases.count)
+        XCTAssertEqual(14.99, facebookInstance.loggedPurchases[0].amount)
+        XCTAssertEqual("USD", facebookInstance.loggedPurchases[0].currency)
+        XCTAssertNotNil(facebookInstance.loggedPurchases[0].parameters)
     }
     
     func testLogPurchaseMissingAmount() {
@@ -192,8 +200,8 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logPurchaseNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logPurchaseWithParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedPurchases.count)
+        XCTAssertEqual("USD", facebookInstance.loggedPurchases[0].currency)
     }
 
     func testSetUser() {
@@ -213,7 +221,7 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.setUserCount)
+        XCTAssertNotNil(facebookInstance.userDataParam)
     }
 
     func testSetUserMissingParameters() {
@@ -221,7 +229,7 @@ extension FacebookRemoteCommandTests {
             "command_name": "setuser"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.setUserCount)
+        XCTAssertNil(facebookInstance.userDataParam)
     }
 
     func testSetUserId() {
@@ -230,7 +238,7 @@ extension FacebookRemoteCommandTests {
             "fb_user_id": "ABC123"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.setUserIdCount)
+        XCTAssertEqual("ABC123", facebookInstance.userIdParam)
     }
 
     func testSetUserIdMissingParameters() {
@@ -238,19 +246,19 @@ extension FacebookRemoteCommandTests {
             "command_name": "setuserid"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.setUserIdCount)
+        XCTAssertNil(facebookInstance.userIdParam)
     }
     
     func testClearUserId() {
         let payload: [String: Any] = ["command_name": "clearuserid"]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.clearUserIdCount)
+        XCTAssertTrue(facebookInstance.didClearUserId)
     }
     
     func testClearUser() {
         let payload: [String: Any] = ["command_name": "clearuser"]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.clearUserCount)
+        XCTAssertTrue(facebookInstance.didClearUser)
     }
 
     func testSetUserValue() {
@@ -260,7 +268,9 @@ extension FacebookRemoteCommandTests {
             "fb_user_key": "ln"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.setUserValueCount)
+        XCTAssertEqual(1, facebookInstance.userKeyValueParams.count)
+        XCTAssertEqual("ln", facebookInstance.userKeyValueParams[0].key)
+        XCTAssertEqual("test", facebookInstance.userKeyValueParams[0].value)
     }
     
     func testSetUserValueMissingValue() {
@@ -269,7 +279,7 @@ extension FacebookRemoteCommandTests {
             "fb_user_key": "ln"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.setUserValueCount)
+        XCTAssertEqual(0, facebookInstance.userKeyValueParams.count)
     }
     
     func testSetUserValueMissingKey() {
@@ -278,7 +288,7 @@ extension FacebookRemoteCommandTests {
             "fb_user_value": "test"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.setUserValueCount)
+        XCTAssertEqual(0, facebookInstance.userKeyValueParams.count)
     }
 
     func testProductItem() {
@@ -299,7 +309,7 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logProductItemCount)
+        XCTAssertNotNil(facebookInstance.loggedProductItemData)
     }
 
     func testProductItemMissingParameters() {
@@ -307,7 +317,7 @@ extension FacebookRemoteCommandTests {
             "command_name": "logproductitem"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logProductItemCount)
+        XCTAssertNil(facebookInstance.loggedProductItemData)
     }
 
     func testProductItemWithParametersInPayload() {
@@ -331,7 +341,7 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logProductItemCount)
+        XCTAssertNotNil(facebookInstance.loggedProductItemData)
     }
 
     func testProductItemWithMultipleProducts() {
@@ -350,7 +360,7 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(3, facebookInstance.logProductItemCount)
+        XCTAssertNotNil(facebookInstance.loggedProductItemData)
     }
 
     func testSetFlushBehavior() {
@@ -359,7 +369,7 @@ extension FacebookRemoteCommandTests {
             "flush_behavior": "0"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.setFlushBehaviorCount)
+        XCTAssertEqual(0, facebookInstance.flushBehaviorParam)
     }
 
     func testSetFlushBehaviorMissingParameter() {
@@ -367,13 +377,13 @@ extension FacebookRemoteCommandTests {
             "command_name": "setflushbehavior"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.setFlushBehaviorCount)
+        XCTAssertNil(facebookInstance.flushBehaviorParam)
     }
 
     func testFlush() {
         let payload = ["command_name": "flush"]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.flushCount)
+        XCTAssertTrue(facebookInstance.didFlush)
     }
     
     func testAchievedLevel() {
@@ -382,7 +392,8 @@ extension FacebookRemoteCommandTests {
             "event": ["fb_level": "5"]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(1, facebookInstance.loggedEvents.count)
+        XCTAssertNotNil(facebookInstance.loggedEvents[0].parameters)
     }
 
     func testAchievedLevelMissingParameter() {
@@ -390,10 +401,7 @@ extension FacebookRemoteCommandTests {
             "command_name": "achievedlevel"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
-        XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
+        XCTAssertEqual(0, facebookInstance.loggedEvents.count)
     }
 
     func testUnlockedAchievement() {
@@ -402,7 +410,8 @@ extension FacebookRemoteCommandTests {
             "event": ["fb_description": "Gold Medal"]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(1, facebookInstance.loggedEvents.count)
+        XCTAssertNotNil(facebookInstance.loggedEvents[0].parameters)
     }
 
     func testUnlockedAchievementMissingParameter() {
@@ -410,26 +419,21 @@ extension FacebookRemoteCommandTests {
             "command_name": "unlockedachievement"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
-        XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
+        XCTAssertEqual(0, facebookInstance.loggedEvents.count)
     }
     
     func testLogEventCompletedRegistrationWithReqParameter() {
         let payload: [String: Any] = ["command_name": "completedregistration",
                                       "event": ["fb_registration_method": "twitter"]]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(1, facebookInstance.loggedEvents.count)
+        XCTAssertNotNil(facebookInstance.loggedEvents[0].parameters)
     }
     
     func testLogEventCompletedRegistrationNoRequiredParameter() {
         let payload: [String: Any] = ["command_name": "completedregistration"]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
-        XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
+        XCTAssertEqual(0, facebookInstance.loggedEvents.count)
     }
     
     func testCompletedTutorial() {
@@ -438,7 +442,8 @@ extension FacebookRemoteCommandTests {
             "event": ["fb_content_id": "tutorial_1"]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(1, facebookInstance.loggedEvents.count)
+        XCTAssertNotNil(facebookInstance.loggedEvents[0].parameters)
     }
 
     func testCompletedTutorialMissingParameter() {
@@ -446,25 +451,20 @@ extension FacebookRemoteCommandTests {
             "command_name": "completedtutorial"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
-        XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
+        XCTAssertEqual(0, facebookInstance.loggedEvents.count)
     }
 
     func testLogEventInitiatedCheckoutWithReqParameter() {
         let payload: [String: Any] = ["command_name": "initiatedcheckout","_valueToSum": 21.99]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logEventWithValueNoParametersCount)
+        XCTAssertEqual(1, facebookInstance.loggedEvents.count)
+        XCTAssertEqual(21.99, facebookInstance.loggedEvents[0].valueToSum)
     }
     
     func testLogEventInitiatedCheckoutNoRequiredParameter() {
         let payload: [String: Any] = ["command_name": "initiatedcheckout"]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
-        XCTAssertEqual(0, facebookInstance.logEventNoValueNoParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueAndParametersCount)
-        XCTAssertEqual(0, facebookInstance.logEventWithValueNoParametersCount)
+        XCTAssertEqual(0, facebookInstance.loggedEvents.count)
     }
     
     func testSearched() {
@@ -473,7 +473,8 @@ extension FacebookRemoteCommandTests {
             "event": ["fb_search_string": "test search"]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(1, facebookInstance.loggedEvents.count)
+        XCTAssertNotNil(facebookInstance.loggedEvents[0].parameters)
     }
 
     func testSearchedMissingParameter() {
@@ -481,7 +482,7 @@ extension FacebookRemoteCommandTests {
             "command_name": "searched"
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(0, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(0, facebookInstance.loggedEvents.count)
     }
 
     func testLogEventWithParametersNoValue() {
@@ -494,7 +495,11 @@ extension FacebookRemoteCommandTests {
             ]
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(3, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(3, facebookInstance.loggedEvents.count)
+        for event in facebookInstance.loggedEvents {
+            XCTAssertNotNil(event.parameters)
+            XCTAssertNil(event.valueToSum)
+        }
     }
 
     func testLogEventWithValueNoParameters() {
@@ -503,7 +508,11 @@ extension FacebookRemoteCommandTests {
             "_valueToSum": 21.99
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(3, facebookInstance.logEventWithValueNoParametersCount)
+        XCTAssertEqual(3, facebookInstance.loggedEvents.count)
+        for event in facebookInstance.loggedEvents {
+            XCTAssertEqual(21.99, event.valueToSum)
+            XCTAssertNil(event.parameters)
+        }
     }
 
     func testLogEventWithValueAndParameters() {
@@ -519,13 +528,29 @@ extension FacebookRemoteCommandTests {
             "_valueToSum": 21.99
         ]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(1, facebookInstance.logEventWithValueAndParametersCount)
-        XCTAssertEqual(2, facebookInstance.logEventWithParametersNoValueCount)
+        XCTAssertEqual(3, facebookInstance.loggedEvents.count)
+        var eventWithValueAndParamsCount = 0
+        var eventWithParamsNoValueCount = 0
+        
+        for event in facebookInstance.loggedEvents {
+            if event.valueToSum != nil && event.parameters != nil {
+                eventWithValueAndParamsCount += 1
+            } else if event.parameters != nil && event.valueToSum == nil {
+                eventWithParamsNoValueCount += 1
+            }
+        }
+        
+        XCTAssertEqual(1, eventWithValueAndParamsCount)
+        XCTAssertEqual(2, eventWithParamsNoValueCount)
     }
 
     func testLogEventNoValueNoParameters() {
         let payload: [String: Any] = ["command_name": "rated, spentcredits, contact"]
         facebookCommand.processRemoteCommand(with: payload)
-        XCTAssertEqual(3, facebookInstance.logEventNoValueNoParametersCount)
+        XCTAssertEqual(3, facebookInstance.loggedEvents.count)
+        for event in facebookInstance.loggedEvents {
+            XCTAssertNil(event.valueToSum)
+            XCTAssertNil(event.parameters)
+        }
     }
 }

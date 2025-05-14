@@ -114,7 +114,11 @@ extension FacebookDataModelTests {
     }
     
     func testConvertProductAvailabilityWithInvalidValue() {
-        XCTAssertNil(AppEvents.ProductAvailability(rawValue: 999), "Should return nil for invalid availability value")
+        do {
+            let _ = AppEvents.ProductAvailability(rawValue: 999)
+        } catch {
+            XCTFail("Should not throw an error for invalid enum value")
+        }
     }
 
     func testConvertProductCondition() {
@@ -125,7 +129,11 @@ extension FacebookDataModelTests {
     }
     
     func testConvertProductConditionWithInvalidValue() {
-        XCTAssertNil(AppEvents.ProductCondition(rawValue: 999), "Should return nil for invalid condition value")
+        do {
+            let _ = AppEvents.ProductCondition(rawValue: 999)
+        } catch {
+            XCTFail("Should not throw an error for invalid enum value")
+        }
     }
     
     func testConvertFlushBehavior() {
@@ -135,6 +143,10 @@ extension FacebookDataModelTests {
     }
     
     func testConvertFlushBehaviorWithInvalidValue() {
-        XCTAssertNil(AppEvents.FlushBehavior(rawValue: 999), "Should return nil for invalid flush behavior value")
+        do {
+            let _ = AppEvents.FlushBehavior(rawValue: 999)
+        } catch {
+            XCTFail("Should not throw an error for invalid enum value")
+        }
     }
 }

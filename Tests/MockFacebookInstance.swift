@@ -31,27 +31,6 @@ class MockFacebookInstance: FacebookCommand {
     var userKeyValueParams: [(key: String, value: String?)] = []
     var flushBehaviorParam: UInt?
     
-    func reset() {
-        didCallOnReady = false
-        isInitialized = false
-        didCheckAdvertiserTracking = false
-        didClearUser = false
-        didClearUserId = false
-        didFlush = false
-        
-        onReadyCallbacks = []
-        launchOptionsParam = nil
-        autoLogAppEventsEnabled = nil
-        advertiserIDCollectionEnabled = nil
-        loggedEvents = []
-        loggedPurchases = []
-        loggedProductItemData = nil
-        userIdParam = nil
-        userDataParam = nil
-        userKeyValueParams = []
-        flushBehaviorParam = nil
-    }
-    
     func triggerOnReadyCallbacks() {
         for callback in onReadyCallbacks {
             callback()
