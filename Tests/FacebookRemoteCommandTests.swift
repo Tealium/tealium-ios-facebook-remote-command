@@ -10,7 +10,7 @@ import XCTest
 @testable import TealiumFacebook
 import TealiumRemoteCommands
 
-class FacebookInstanceTests: XCTestCase {
+class FacebookRemoteCommandTests: XCTestCase {
 
     let facebookInstance = MockFacebookInstance()
     var facebookCommand: FacebookRemoteCommand!
@@ -21,9 +21,22 @@ class FacebookInstanceTests: XCTestCase {
 
     override func tearDown() {
     }
-    
-    // MARK: Webview Remote Command Tests
+}
 
+// MARK: - onReady Tests
+extension FacebookRemoteCommandTests {
+    func testOnReady() {
+        var callbackExecuted = false
+        facebookCommand.onReady {
+            callbackExecuted = true
+        }
+        XCTAssertTrue(callbackExecuted)
+        XCTAssertTrue(facebookInstance.didCallOnReady)
+    }
+}
+
+// MARK: - processRemoteCommand Tests
+extension FacebookRemoteCommandTests {
     func testInitialize() {
         let payload: [String: Any] = ["command_name": "initialize"]
         facebookCommand.processRemoteCommand(with: payload)
@@ -80,7 +93,7 @@ class FacebookInstanceTests: XCTestCase {
         XCTAssertEqual(1, facebookInstance.logPurchaseWithParametersCount)
         XCTAssertEqual(0, facebookInstance.logPurchaseNoParametersCount)
     }
-
+    
     func testLogPurchaseNoParameters() {
         let payload: [String: Any] = [
             "command_name": "logpurchase", 
@@ -515,5 +528,4 @@ class FacebookInstanceTests: XCTestCase {
         facebookCommand.processRemoteCommand(with: payload)
         XCTAssertEqual(3, facebookInstance.logEventNoValueNoParametersCount)
     }
-
 }
