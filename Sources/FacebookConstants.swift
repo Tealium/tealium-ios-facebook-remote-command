@@ -11,7 +11,7 @@ import FBSDKCoreKit
 
 /// All keys associated with Facebook remote command
 enum FacebookConstants {
-    static let version = "1.4.0"
+    static let version = "2.0.0"
     static let commandId = "facebook"
     static let description = "Facebook Remote Command"
     static let commandName = "command_name"

@@ -8,6 +8,7 @@
 
 import Foundation
 import FBSDKCoreKit
+import UIKit
 #if COCOAPODS
     import TealiumSwift
 #else
@@ -23,20 +24,29 @@ public class FacebookRemoteCommand: RemoteCommand {
 
     let facebookInstance: FacebookCommand
     var debug = false
+    private let launchOptions: [UIApplication.LaunchOptionsKey: Any]?
 
-    public init(facebookInstance: FacebookCommand = FacebookInstance(), type: RemoteCommandType = .webview) {
+    public init(type: RemoteCommandType = .webview,
+               facebookInstance: FacebookCommand = FacebookInstance(),
+               launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         self.facebookInstance = facebookInstance
+        self.launchOptions = launchOptions
+        
         weak var weakSelf: FacebookRemoteCommand?
         super.init(commandId: FacebookConstants.commandId,
                    description: FacebookConstants.description,
-            type: type,
-            completion: { response in
-                guard let payload = response.payload else {
-                    return
-                }
-                weakSelf?.processRemoteCommand(with: payload)
-            })
+                   type: type,
+                   completion: { response in
+                       guard let payload = response.payload else {
+                           return
+                       }
+                       weakSelf?.processRemoteCommand(with: payload)
+                   })
         weakSelf = self
+    }
+
+    public func onReady(_ onReady: @escaping () -> Void) {
+        self.facebookInstance.onReady(onReady)
     }
 
     func processRemoteCommand(with payload: [String: Any]) {
@@ -58,7 +68,7 @@ public class FacebookRemoteCommand: RemoteCommand {
 
             switch command {
             case .initialize:
-                facebookInstance.initialize()
+                facebookInstance.initialize(launchOptions: self.launchOptions)
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {

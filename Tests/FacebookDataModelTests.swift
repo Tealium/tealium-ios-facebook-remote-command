@@ -1,5 +1,5 @@
 //
-//  FacebookCommandTests.swift
+//  FacebookDataModelTests.swift
 //  TealiumFacebook
 //
 //  Created by Christina S on 5/22/19.
@@ -11,17 +11,15 @@ import XCTest
 import TealiumRemoteCommands
 import FBSDKCoreKit
 
-class FacebookCommandTests: XCTestCase {
+class FacebookDataModelTests: XCTestCase {
 
-    let facebookInstance = FacebookInstance()
-    var facebookCommand: FacebookRemoteCommand!
-
-    override func setUp() {
-        facebookCommand = FacebookRemoteCommand(facebookInstance: facebookInstance)
-    }
+    override func setUp() { }
 
     override func tearDown() { }
+}
 
+// MARK: - User Model Tests
+extension FacebookDataModelTests {
     func testDecodeUser() {
         let payload: [String: Any] = ["em": "test@test.com",
                                       "fn": "john",
@@ -50,7 +48,10 @@ class FacebookCommandTests: XCTestCase {
             XCTFail("Decoding user failed with error: \(error)")
         }
     }
+}
 
+// MARK: - Product Model Tests
+extension FacebookDataModelTests {
     func testDecodeProductItemsWithAllRequiredValues() {
         let payload: [String: Any] = ["fb_product_item_id": "asdf123",
                                       "fb_product_availability": 0,
@@ -99,23 +100,51 @@ class FacebookCommandTests: XCTestCase {
             XCTAssertTrue(true, "This should fail because all required params are not present")
         }
     }
+}
 
+// MARK: - Conversion Tests
+extension FacebookDataModelTests {
     func testConvertProductAvailability() {
-        let availability = 1
-        guard let productAvailability: AppEvents.ProductAvailability = AppEvents.ProductAvailability(rawValue: availability.toUInt) else {
-            XCTFail("Could not convert product availability")
-            return
-        }
-        XCTAssertEqual(AppEvents.ProductAvailability.outOfStock, productAvailability)
+        // Test all valid availability values
+        XCTAssertEqual(AppEvents.ProductAvailability.inStock, AppEvents.ProductAvailability(rawValue: 0))
+        XCTAssertEqual(AppEvents.ProductAvailability.outOfStock, AppEvents.ProductAvailability(rawValue: 1))
+        XCTAssertEqual(AppEvents.ProductAvailability.preOrder, AppEvents.ProductAvailability(rawValue: 2))
+        XCTAssertEqual(AppEvents.ProductAvailability.availableForOrder, AppEvents.ProductAvailability(rawValue: 3))
+        XCTAssertEqual(AppEvents.ProductAvailability.discontinued, AppEvents.ProductAvailability(rawValue: 4))
+    }
+    
+    func testConvertProductAvailabilityWithInvalidValue() {
+        let availability = AppEvents.ProductAvailability(rawValue: 999)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.inStock)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.outOfStock)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.preOrder)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.availableForOrder)
+        XCTAssertNotEqual(availability, AppEvents.ProductAvailability.discontinued)
     }
 
     func testConvertProductCondition() {
-        let condition = 2
-        guard let productCondition: AppEvents.ProductCondition = AppEvents.ProductCondition(rawValue: condition.toUInt) else {
-            XCTFail("Could not convert product condition")
-            return
-        }
-        XCTAssertEqual(AppEvents.ProductCondition.used, productCondition)
+        // Test all valid condition values
+        XCTAssertEqual(AppEvents.ProductCondition.new, AppEvents.ProductCondition(rawValue: 0))
+        XCTAssertEqual(AppEvents.ProductCondition.refurbished, AppEvents.ProductCondition(rawValue: 1))
+        XCTAssertEqual(AppEvents.ProductCondition.used, AppEvents.ProductCondition(rawValue: 2))
     }
-
-}
+    
+    func testConvertProductConditionWithInvalidValue() {
+        let condition = AppEvents.ProductCondition(rawValue: 999)
+        XCTAssertNotEqual(condition, AppEvents.ProductCondition.new)
+        XCTAssertNotEqual(condition, AppEvents.ProductCondition.refurbished)
+        XCTAssertNotEqual(condition, AppEvents.ProductCondition.used)
+    }
+    
+    func testConvertFlushBehavior() {
+        // Test all valid flush behavior values
+        XCTAssertEqual(AppEvents.FlushBehavior.auto, AppEvents.FlushBehavior(rawValue: 0))
+        XCTAssertEqual(AppEvents.FlushBehavior.explicitOnly, AppEvents.FlushBehavior(rawValue: 1))
+    }
+    
+    func testConvertFlushBehaviorWithInvalidValue() {
+        let flushBehavior = AppEvents.FlushBehavior(rawValue: 999)
+        XCTAssertNotEqual(flushBehavior, AppEvents.FlushBehavior.auto)
+        XCTAssertNotEqual(flushBehavior, AppEvents.FlushBehavior.explicitOnly)
+    }
+}   

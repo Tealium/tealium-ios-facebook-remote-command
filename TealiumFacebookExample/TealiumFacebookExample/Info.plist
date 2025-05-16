@@ -63,13 +63,15 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb9999999999999999</string>
+				<string>fbYOUR_APP_ID_HERE</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
-	<string>9999999999999999</string>
+	<string>YOUR_APP_ID_HERE</string>
 	<key>FacebookDisplayName</key>
-	<string>TealiumFacebookExample</string>
+	<string>YOUR_DISPLAY_NAME_HERE</string>
+	<key>FacebookClientToken</key>
+	<string>YOUR_CLIENT_TOKEN_HERE</string>
 </dict>
 </plist>
