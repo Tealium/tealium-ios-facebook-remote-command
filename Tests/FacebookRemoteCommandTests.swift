@@ -30,6 +30,16 @@ extension FacebookRemoteCommandTests {
         facebookCommand.onReady { }  
         XCTAssertTrue(facebookInstance.didCallOnReady)  
     }
+
+    func testOnReadyCalledAfterInitialize() {
+        let onReadyIsCalled = expectation(description: "onReady is called")
+        let command = FacebookRemoteCommand(facebookInstance: FacebookInstance())
+        command.onReady {
+            onReadyIsCalled.fulfill()
+        }
+        command.processRemoteCommand(with: ["command_name": "initialize"])
+        waitForExpectations(timeout: 3.0)
+    }
 }
 
 // MARK: - processRemoteCommand Tests
