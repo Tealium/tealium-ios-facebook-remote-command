@@ -18,8 +18,9 @@ import FBSDKCoreKit
 #endif
 
 public protocol FacebookCommand {
+    func onReady(_ onReady: @escaping () -> Void)
     // Initialize
-    func initialize()
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
     // Settings
     func setAutoLogAppEventsEnabled(_ enabled: Bool)
     func enableAdvertiserIDCollection(_ enabled: Bool)
@@ -31,8 +32,6 @@ public protocol FacebookCommand {
     func logEvent(_ event: AppEvents.Name)
     func logPurchase(of amount: Double, with currency: String)
     func logPurchase(of amount: Double, with currency: String, and parameters: [String: Any])
-    // Push Notification
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     // Product
     func logProductItem(using data: Data)
     // User
@@ -46,16 +45,25 @@ public protocol FacebookCommand {
     func flush()
 }
 
-public class FacebookInstance: FacebookCommand, TealiumRegistration {
+public class FacebookInstance: FacebookCommand {
+    
+    private var _onReady = TealiumReplaySubject<Void>(cacheSize: 1)
 
     public init() { }
     
     // MARK: Initialize
-    public func initialize() {
+    public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         DispatchQueue.main.async {
-            ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: [:])
+            ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions)
             Settings.shared.enableLoggingBehavior(.appEvents)
             AppEvents.shared.activateApp()
+            self._onReady.publish()
+        }
+    }
+
+    public func onReady(_ onReady: @escaping () -> Void) {
+        TealiumQueues.secureMainThreadExecution {  
+            self._onReady.subscribeOnce(onReady)
         }
     }
     
@@ -67,16 +75,18 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     public func enableAdvertiserIDCollection(_ enabled: Bool) {
         Settings.shared.isAdvertiserIDCollectionEnabled = enabled
     }
-    
+
     public func checkAdvertiserTracking() {
-        if #available(iOS 14, *) {
-            if ATTrackingManager.trackingAuthorizationStatus == .authorized {
-                Settings.shared.isAdvertiserTrackingEnabled = true
-            } else  {
-                Settings.shared.isAdvertiserTrackingEnabled = false
+        if #unavailable(iOS 17) {
+            if #available(iOS 14, *) {
+                // Check ATT permission for iOS 14+ devices
+                let status = ATTrackingManager.trackingAuthorizationStatus
+                if status == .authorized {
+                    Settings.shared.isAdvertiserTrackingEnabled = true
+                } else {
+                    Settings.shared.isAdvertiserTrackingEnabled = false
+                }
             }
-        } else {
-            Settings.shared.isAdvertiserTrackingEnabled = true
         }
     }
     
@@ -103,19 +113,7 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
     }
     
     public func logPurchase(of amount: Double, with currency: String, and parameters: [String: Any]) {
-        AppEvents.shared.logPurchase(amount: amount, currency: currency, parameters: parameters)
-    }
-    
-    // MARK: Push Notification
-    public func registerPushToken(_ pushToken: String) {
-        AppEvents.shared.setPushNotificationsDeviceToken(pushToken)
-    }
-    
-    public func application(_ application: UIApplication,
-                            didReceiveRemoteNotification userInfo: [AnyHashable : Any],
-                            fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        guard let userInfo = userInfo as NSDictionary? as? [String: Any] else {return}
-        AppEvents.shared.logPushNotificationOpen(payload: userInfo)
+        AppEvents.shared.logPurchase(amount: amount, currency: currency, parameters: parameters.toFacebookParameters())
     }
     
     // MARK: Product
@@ -131,7 +129,6 @@ public class FacebookInstance: FacebookCommand, TealiumRegistration {
             print("\(FacebookConstants.errorPrefix)logProductItem - Unable to decode product item")
         }
         
-
     }
     
     // MARK: User

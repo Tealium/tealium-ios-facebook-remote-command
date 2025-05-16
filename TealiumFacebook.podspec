@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.name         = "TealiumFacebook"
     s.module_name  = "TealiumFacebook"
-    s.version      = "1.4.0"
+    s.version      = "2.0.0"
     s.summary      = "Tealium Swift and Facebook integration"
     s.description  = <<-DESC
     Tealium's integration with Facebook for iOS.
@@ -31,6 +31,6 @@ Pod::Spec.new do |s|
     # ――― Dependencies ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     s.ios.dependency 'tealium-swift/Core', ' ~> 2.12'
     s.ios.dependency 'tealium-swift/RemoteCommands', ' ~> 2.12'
-    s.ios.dependency 'FBSDKCoreKit', ' ~> 12.2'
+    s.ios.dependency 'FBSDKCoreKit', ' ~> 18.0'
 
 end

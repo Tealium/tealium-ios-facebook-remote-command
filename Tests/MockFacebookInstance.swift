@@ -11,107 +11,112 @@ import Foundation
 import FBSDKCoreKit
 
 class MockFacebookInstance: FacebookCommand {
+
+    var didCallOnReady = false
+    var isInitialized = false
+    var didCheckAdvertiserTracking = false
+    var didClearUser = false
+    var didClearUserId = false
+    var didFlush = false
     
-    var initializeCount = 0
-    var setAutoLogAppEventsEnabledCount = 0
-    var setAdvertisingTrackingCount = 0
-    var setAutoInitEnabledCount = 0
-    var enableAdvertiserIDCollectionCount = 0
-    var logEventWithParametersNoValueCount = 0
-    var logEventWithValueNoParametersCount = 0
-    var logEventWithValueAndParametersCount = 0
-    var logEventNoValueNoParametersCount = 0
-    var logPurchaseNoParametersCount = 0
-    var logPurchaseWithParametersCount = 0
-    var logPushNotificationOpenNoActionCount = 0
-    var logPushNotificationOpenWithActionCount = 0
-    var logProductItemCount = 0
-    var setUserCount = 0
-    var setUserIdCount = 0
-    var clearUserCount = 0
-    var clearUserIdCount = 0
-    var setUserValueCount = 0
-    var setFlushBehaviorCount = 0
-    var flushCount = 0
+    private var onReadyCallbacks: [() -> Void] = []
+    var launchOptionsParam: [UIApplication.LaunchOptionsKey: Any]?
+    var autoLogAppEventsEnabled: Bool?
+    var advertiserIDCollectionEnabled: Bool?
+    var loggedEvents: [(name: AppEvents.Name, valueToSum: Double?, parameters: [String: Any]?)] = []
+    var loggedPurchases: [(amount: Double, currency: String, parameters: [String: Any]?)] = []
+    var loggedProductItemData: Data?
+    var userIdParam: String?
+    var userDataParam: Data?
+    var userKeyValueParams: [(key: String, value: String?)] = []
+    var flushBehaviorParam: UInt?
     
-    func initialize() {
-        initializeCount += 1
+    func triggerOnReadyCallbacks() {
+        for callback in onReadyCallbacks {
+            callback()
+        }
+    }
+    
+    func onReady(_ onReady: @escaping () -> Void) {
+        didCallOnReady = true
+        onReadyCallbacks.append(onReady)
+        onReady()
+    }
+    
+    func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        isInitialized = true
+        launchOptionsParam = launchOptions
+        
+        triggerOnReadyCallbacks()
     }
     
     func setAutoLogAppEventsEnabled(_ enabled: Bool) {
-        setAutoLogAppEventsEnabledCount += 1
-    }
-    
-    func checkAdvertiserTracking() {
-        setAdvertisingTrackingCount += 1
-    }
-    
-    func setAutoInitEnabled(_ enabled: Bool) {
-        setAutoInitEnabledCount += 1
+        autoLogAppEventsEnabled = enabled
     }
     
     func enableAdvertiserIDCollection(_ enabled: Bool) {
-        enableAdvertiserIDCollectionCount += 1
+        advertiserIDCollectionEnabled = enabled
     }
     
-    func logEvent(_ event: AppEvents.Name, with parameters: [String : Any]) {
-        logEventWithParametersNoValueCount += 1
+    func checkAdvertiserTracking() {
+        didCheckAdvertiserTracking = true
+    }
+    
+    func logEvent(_ event: AppEvents.Name, with parameters: [String: Any]) {
+        loggedEvents.append((name: event, valueToSum: nil, parameters: parameters))
     }
     
     func logEvent(_ event: AppEvents.Name, with valueToSum: Double) {
-        logEventWithValueNoParametersCount += 1
+        loggedEvents.append((name: event, valueToSum: valueToSum, parameters: nil))
     }
     
-    func logEvent(_ event: AppEvents.Name, with valueToSum: Double, and parameters: [String : Any]) {
-        logEventWithValueAndParametersCount += 1
+    func logEvent(_ event: AppEvents.Name, with valueToSum: Double, and parameters: [String: Any]) {
+        loggedEvents.append((name: event, valueToSum: valueToSum, parameters: parameters))
     }
     
     func logEvent(_ event: AppEvents.Name) {
-        logEventNoValueNoParametersCount += 1
+        loggedEvents.append((name: event, valueToSum: nil, parameters: nil))
     }
     
     func logPurchase(of amount: Double, with currency: String) {
-        logPurchaseNoParametersCount += 1
+        loggedPurchases.append((amount: amount, currency: currency, parameters: nil))
     }
     
-    func logPurchase(of amount: Double, with currency: String, and parameters: [String : Any]) {
-        logPurchaseWithParametersCount += 1
-    }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        logPushNotificationOpenNoActionCount += 1
+    func logPurchase(of amount: Double, with currency: String, and parameters: [String: Any]) {
+        loggedPurchases.append((amount: amount, currency: currency, parameters: parameters))
     }
     
     func logProductItem(using data: Data) {
-        logProductItemCount += 1
-    }
-    
-    func setUser(from data: Data) {
-        setUserCount += 1
-    }
-    
-    func setUser(value: String?, for key: String) {
-        setUserValueCount += 1
+        loggedProductItemData = data
     }
     
     func setUserId(to userid: String) {
-        setUserIdCount += 1
+        userIdParam = userid
+    }
+    
+    func setUser(from data: Data) {
+        userDataParam = data
+    }
+    
+    func setUser(value: String?, for key: String) {
+        userKeyValueParams.append((key: key, value: value))
     }
     
     func clearUser() {
-        clearUserCount += 1
+        didClearUser = true
+        userKeyValueParams = []
     }
     
     func clearUserId() {
-        clearUserIdCount += 1
+        didClearUserId = true
+        userIdParam = nil
     }
     
     func setFlushBehavior(flushBehavior: UInt) {
-        setFlushBehaviorCount += 1
+        flushBehaviorParam = flushBehavior
     }
     
     func flush() {
-        flushCount += 1
+        didFlush = true
     }
-    
 }

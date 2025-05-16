@@ -8,6 +8,7 @@
 import Foundation
 import TealiumSwift
 import TealiumFacebook
+import UIKit
 
 enum TealiumConfiguration {
     static let account = "tealiummobile"
@@ -15,18 +16,9 @@ enum TealiumConfiguration {
     static let environment = "dev"
 }
 
-class TealiumHelper {
+final class TealiumHelper {
 
     static let shared = TealiumHelper()
-
-    let config = TealiumConfig(account: TealiumConfiguration.account,
-                               profile: TealiumConfiguration.profile,
-                               environment: TealiumConfiguration.environment)
-
-    var tealium: Tealium?
-    
-    // JSON Remote Command
-    let facebookRemoteCommand = FacebookRemoteCommand(type: .local(file: "facebook", bundle: Bundle.main))
     
     private init() {
         config.shouldUseRemotePublishSettings = false
@@ -35,16 +27,26 @@ class TealiumHelper {
         config.logLevel = .info
         config.collectors = [Collectors.Lifecycle]
         config.dispatchers = [Dispatchers.TagManagement, Dispatchers.RemoteCommands]
-        
-        config.addRemoteCommand(facebookRemoteCommand)
-        
-        tealium = Tealium(config: config)
-
     }
 
+    let config = TealiumConfig(account: TealiumConfiguration.account,
+                               profile: TealiumConfiguration.profile,
+                               environment: TealiumConfiguration.environment)
 
-    class func start() {
-        _ = TealiumHelper.shared
+    var tealium: Tealium?
+    
+    // JSON Remote Command
+    var facebookRemoteCommand: FacebookRemoteCommand?
+    
+    func configure(with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        facebookRemoteCommand = FacebookRemoteCommand(
+            type: .local(file: "facebook", bundle: Bundle.main),
+            launchOptions: launchOptions
+        )
+        
+        config.addRemoteCommand(facebookRemoteCommand!)
+        
+        tealium = Tealium(config: config)
     }
 
     class func trackView(title: String, data: [String: Any]?) {
