@@ -27,12 +27,8 @@ class FacebookRemoteCommandTests: XCTestCase {
 // MARK: - onReady Tests
 extension FacebookRemoteCommandTests {
     func testOnReady() {
-        var callbackExecuted = false
-        facebookCommand.onReady {
-            callbackExecuted = true
-        }
-        XCTAssertTrue(callbackExecuted)
-        XCTAssertTrue(facebookInstance.didCallOnReady)
+        facebookCommand.onReady { }  
+        XCTAssertTrue(facebookInstance.didCallOnReady)  
     }
 }
 

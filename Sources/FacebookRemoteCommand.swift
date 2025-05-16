@@ -68,7 +68,7 @@ public class FacebookRemoteCommand: RemoteCommand {
 
             switch command {
             case .initialize:
-                facebookInstance.initialize(launchOptions: self.launchOptions ?? [:])
+                facebookInstance.initialize(launchOptions: self.launchOptions)
             case .setAutoLogAppEventsEnabled:
                 guard let autoLogEvents = payload[FacebookConstants.Settings.autoLogEventsEnabled] as? Bool else {
                     if debug {
