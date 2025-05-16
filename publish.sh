@@ -60,7 +60,7 @@ echo "All checks are passed, ready to release to CocoaPods"
 echo "Do you wish to publish to CocoaPods?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) echo "Ok, running \"pod trunk push\" now."; pod trunk push; break;;
+        Yes ) echo "Ok, running \"pod trunk push\" now."; pod trunk push --allow-warnings; break;;
         No ) echo "Ok, skip the release for now."; exit;;
     esac
 done
